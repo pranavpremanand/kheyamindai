@@ -1,5 +1,10 @@
 import React from "react";
-import { companyDetails, logo, services } from "../../data/constant";
+import {
+  companyDetails,
+  logo,
+  LogoSvgFooter,
+  services,
+} from "../../data/constant";
 import { websiteLinks } from "./Header";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
@@ -10,7 +15,7 @@ const Footer = () => {
     <div className="relative bg-primary mt-[4rem]">
       <div className="wrapper text-secondary grid lg:grid-cols-[30%_auto] gap-5">
         <div className="bg-white w-full lg:h-[calc(100%+2rem)] relative z-10 px-5 py-[2rem] flex flex-col gap-6 items-center">
-          <img src={logo} className="w-[15rem] object-contain" alt="Logo" />
+          <LogoSvgFooter className="w-[16rem] object-contain" />
           <p className="text-black max-w-sm text-center">
             Empowering businesses with innovative solutions and unmatched
             expertise to drive growth and success in the digital age.
@@ -52,7 +57,7 @@ const Footer = () => {
               to={companyDetails.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="w-7 h-7 flex justify-center items-center rounded-full border border-secondary"
+              className="w-8 h-8 flex justify-center items-center rounded-full border border-secondary"
             >
               <FaLinkedinIn
                 className="fill-secondary"
@@ -64,7 +69,7 @@ const Footer = () => {
               to={companyDetails.instagram}
               target="_blank"
               rel="noreferrer"
-              className="w-7 h-7 flex justify-center items-center rounded-full border border-secondary"
+              className="w-8 h-8 flex justify-center items-center rounded-full border border-secondary"
             >
               <FaInstagram
                 className="fill-secondary text-secondary"
@@ -76,7 +81,7 @@ const Footer = () => {
               to={companyDetails.facebook}
               target="_blank"
               rel="noreferrer"
-              className="w-7 h-7 flex justify-center items-center rounded-full border border-secondary"
+              className="w-8 h-8 flex justify-center items-center rounded-full border border-secondary"
             >
               <FaFacebookF
                 className="fill-secondary"
@@ -90,7 +95,7 @@ const Footer = () => {
       <div className="py-4 lg:py-0 lg:h-[2rem] relative bottom-0 w-full bg-secondary">
         <div className="flex justify-end items-center h-full wrapper">
           <span className="text-sm text-center text-white">
-            Copyright &copy; {new Date().getFullYear()} | KheyaMind  AI
+            Copyright &copy; {new Date().getFullYear()} | KheyaMind AI
             Technologies Private Limited
           </span>
         </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { companyDetails, logo } from "../../data/constant";
+import { companyDetails, logo, LogoSvg } from "../../data/constant";
 import { Divide as Hamburger } from "hamburger-react";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
@@ -37,21 +37,33 @@ const LandingHeader = () => {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <Link className="w-7 h-7 flex hover:bg-primary transition-all duration-200 justify-center items-center rounded-full border border-white">
+            <Link
+              to={companyDetails.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="w-8 h-8 flex hover:bg-primary transition-all duration-200 justify-center items-center rounded-full border border-white"
+            >
               <FaLinkedinIn className="fill-white" size={16} strokeWidth={1} />
             </Link>
-            <Link className="w-7 h-7 flex hover:bg-primary transition-all duration-200 justify-center items-center rounded-full border border-white">
+            <Link
+              to={companyDetails.instagram}
+              target="_blank"
+              rel="noreferrer"
+              className="w-8 h-8 flex hover:bg-primary transition-all duration-200 justify-center items-center rounded-full border border-white"
+            >
               <FaInstagram
                 className="fill-white text-secondary"
                 size={16}
                 strokeWidth={1}
               />
             </Link>
-            <Link className="w-7 h-7 flex hover:bg-primary transition-all duration-200 justify-center items-center rounded-full border border-white">
+            <Link
+              to={companyDetails.facebook}
+              target="_blank"
+              rel="noreferrer"
+              className="w-8 h-8 flex hover:bg-primary transition-all duration-200 justify-center items-center rounded-full border border-white"
+            >
               <FaFacebookF className="fill-white" size={16} strokeWidth={1} />
-            </Link>
-            <Link className="w-7 h-7 flex hover:bg-primary transition-all duration-200 justify-center items-center rounded-full border border-white">
-              <FaXTwitter className="fill-white" size={16} strokeWidth={1} />
             </Link>
           </div>
         </div>
@@ -59,11 +71,7 @@ const LandingHeader = () => {
       <div className="py-4 bg-white">
         <div className="wrapper flex items-center justify-between gap-10">
           <Scroll smooth spy to="banner">
-            <img
-              src={logo}
-              alt="logo"
-              className="w-[6.5rem] md:w-[8rem] object-contain cursor-pointer"
-            />
+            <LogoSvg className="w-[9rem] md:w-[180px] object-contain cursor-pointer" />
           </Scroll>
           <div className="hidden md:flex items-center gap-7">
             {websiteLinks.map((link) =>
@@ -116,13 +124,7 @@ const LandingHeader = () => {
         className="z-10 p-2"
       >
         <div className="mb-6 flex items-center justify-between px-[.7rem] py-[.4rem]">
-          <img
-            src={logo}
-            width="auto"
-            height="auto"
-            alt="logo"
-            className="h-[2rem] object-contain"
-          />
+          <LogoSvg className="h-[2rem] object-contain" />
           <button onClick={() => setIsOpen(false)}>
             <IoClose size={28} />
           </button>

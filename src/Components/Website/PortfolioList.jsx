@@ -22,7 +22,7 @@ const categoryList = [
 ];
 
 const PortfolioList = () => {
-  const [selectedCategory, setSelectedCategory] = useState(categoryList[1]);
+  const [selectedCategory, setSelectedCategory] = useState(categoryList[0]);
 
   const getAllItems = () => {
     if (selectedCategory.key === "all") {

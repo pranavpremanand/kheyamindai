@@ -16,21 +16,25 @@ const AboutUs = () => {
       <section className="pt-[5rem] wrapper grid md:grid-cols-2 gap-7">
         <div data-aos="fade-up" className="space-y-4">
           <p className="uppercase text-primary font-medium text-start">
-            Our Vision
+            About Us
           </p>
           <h3 className="section-heading">
-            Transforming Ideas into Innovative Digital Solutions
+          Welcome to KheyaMind.ai
           </h3>
           <HrLine />
           <p>
-            At KheyaMind  AI, we specialize in creating intelligent systems that
-            empower businesses to thrive in an increasingly digital world. Our
-            expertise spans a wide range of advanced technologies, from
-            AI-driven solutions to mobile app development, each designed to
-            streamline operations, enhance customer experiences, and fuel
-            business growth. Explore how we can partner with you to unlock the
-            full potential of your business.
+            We help businesses simplify complexity and unlock growth with intelligent, AI-powered
+            solutions. Our team crafts tailored Chatbots, Voice Assistants, ERP Automations, NLP tools, and
+            custom AI applications to streamline operations and elevate customer experiences.
           </p>
+          <p className="font-semibold mt-4">What Sets Us Apart:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>AI-First Thinking — Innovation is the foundation of every solution</li>
+            <li>Scalable Systems — Built to grow with your business</li>
+            <li>Clarity-Driven Design — Intuitive and user-friendly workflows</li>
+            <li>Dedicated Support — From consultation to deployment & beyond</li>
+          </ul>
+          <p className="mt-2">Let's build the future of work together.</p>
           <div className="flex flex-col-reverse sm:flex-row items-center gap-5 sm:gap-10 pt-5">
             <Link to="/contact-us" className="primary-btn sm:w-fit w-full">
               Request A Quote
@@ -125,14 +129,27 @@ const AboutUs = () => {
               alt="Our Mission"
             />
           </div>
-          <p>
-            At KheyaMind  AI, we do more than just provide technical solutions—we
-            help you drive tangible results. Our team of experts works closely
-            with you to deliver innovative, intelligent systems that address
-            your specific challenges and unlock new opportunities. Whether it's
-            AI-powered tools, cloud infrastructure, or custom mobile apps, we
-            bring the latest technology to your business.
-          </p>
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-bold text-lg">AI-First Thinking</h4>
+              <p>Innovation isn't an add-on — it's the foundation of every solution we build. We engineer AI at the core to automate, optimize, and enhance business processes.</p>
+            </div>
+            
+            <div>
+              <h4 className="font-bold text-lg">Scalable Architecture</h4>
+              <p>Our solutions are built for growth. Whether you start with a single chatbot or a complete ERP system, scalability ensures your technology grows with your business.</p>
+            </div>
+            
+            <div>
+              <h4 className="font-bold text-lg">Clarity-Driven Design</h4>
+              <p>Complexity made simple. Our team prioritizes intuitive user experiences, intelligent workflows, and solutions your team can adopt quickly.</p>
+            </div>
+            
+            <div>
+              <h4 className="font-bold text-lg">Strategic Consulting</h4>
+              <p>We do more than build software. We analyze your challenges, identify opportunities, and guide your business toward digital transformation with data-backed insights.</p>
+            </div>
+          </div>
           <div className="flex flex-col-reverse sm:flex-row items-center gap-5 sm:gap-10 pt-5">
             <Link to="/contact-us" className="primary-btn sm:w-fit w-full">
               Request A Quote

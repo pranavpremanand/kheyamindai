@@ -9,6 +9,7 @@ import ScrollToTop from "./Components/ScrollToTop";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Toaster } from "react-hot-toast";
 
 const Home = lazy(() => import("./Pages/Home"));
 const AboutUs = lazy(() => import("./Pages/AboutUs"));
@@ -17,6 +18,7 @@ const ServiceDetails = lazy(() => import("./Pages/ServiceDetails"));
 const Blogs = lazy(() => import("./Pages/Blogs"));
 const BlogDetails = lazy(() => import("./Pages/BlogDetails"));
 const ContactUs = lazy(() => import("./Pages/ContactUs"));
+const ThankYou = lazy(() => import("./Pages/ThankYou"));
 const LandingPage = lazy(() => import("./Pages/LandingPage"));
 const ChatbotVoiceAILanding = lazy(() =>
   import("./Pages/landingPages/ChatbotVoiceAILanding")
@@ -37,6 +39,7 @@ function App() {
     <BrowserRouter>
       <ScrollToTopButton />
       <ScrollToTop />
+      <Toaster position="top-center" />
       <SpinnerContextProvider>
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
@@ -49,6 +52,7 @@ function App() {
               <Route path="blogs" element={<Blogs />} />
               <Route path="blogs/:title" element={<BlogDetails />} />
               <Route path="contact-us" element={<ContactUs />} />
+              <Route path="thank-you" element={<ThankYou />} />
             </Route>
 
             <Route path="/" element={<LandingPageLayout />}>

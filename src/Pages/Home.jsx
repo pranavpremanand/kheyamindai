@@ -9,12 +9,24 @@ import aboutImg from "../assets/images/about.webp";
 import whyChooseImg from "../assets/images/whychooseus.webp";
 import Services from "../Components/Services";
 import ContactForm from "../Components/ContactForm";
-import { FaBrain, FaCheckDouble, FaChessKnight, FaEye, FaIndustry, FaNetworkWired, FaUserFriends, FaUsers } from "react-icons/fa";
+import {
+  FaBrain,
+  FaCheckDouble,
+  FaChessKnight,
+  FaEye,
+  FaIndustry,
+  FaNetworkWired,
+  FaUserFriends,
+  FaUsers,
+} from "react-icons/fa";
 import { GiCheckMark } from "react-icons/gi";
 import { BiSupport } from "react-icons/bi";
 import Testimonials from "../Components/Testimonials";
 import BlogsSection from "../Components/Website/BlogsSection";
 import PortfolioList from "../Components/Website/PortfolioList";
+import { ImPhone } from "react-icons/im";
+import aiEnterpriseBanner from "../assets/images/ai-enterprise-banner.webp";
+import Faq from "../Components/Faq";
 
 const Home = () => {
   return (
@@ -29,7 +41,7 @@ const Home = () => {
               Vision Beyond AI: Intelligent Solutions for the Next Era
             </h1>
             <p>
-              KheyaMind  combines cognitive automation, design-led thinking, and
+              KheyaMind combines cognitive automation, design-led thinking, and
               future-focused AI to help enterprises grow smarter.
             </p>
             <div className="flex sm:flex-row flex-col justify-center gap-5 mt-5">
@@ -175,7 +187,7 @@ const Home = () => {
             <h3 className="section-heading">Welcome to KheyaMind .ai</h3>
             <HrLine />
             <p>
-              Founded in 2025 by Niraj Modak, KheyaMind  is a boutique AI
+              Founded in 2025 by Niraj Modak, KheyaMind is a boutique AI
               consulting and solutions company based in India with global
               aspirations. We specialize in deploying AI-driven automation and
               digital products across enterprise verticals, empowering clients
@@ -223,14 +235,16 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="wrapper pt-[5rem]">
+      <section className="wrapper py-[5rem]">
         <div
           data-aos="fade-up"
           className="space-y-4 flex flex-col sm:items-center sm:text-center max-w-2xl mx-auto"
         >
-          <p className="uppercase text-primary font-medium">Why Choose KheyaMind </p>
+          <p className="uppercase text-primary font-medium">
+            Why Choose KheyaMind{" "}
+          </p>
           <h3 className="section-heading">
-            Why Choose KheyaMind  For Your Business
+            Why Choose KheyaMind For Your Business
           </h3>
           <HrLine />
         </div>
@@ -292,6 +306,45 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <section className="py-[5rem] bg-secondary/5 relative">
+        <img
+          src={aiEnterpriseBanner}
+          className="absolute inset-0 z-[-2] h-full w-full object-cover"
+          alt=""
+        />
+        <div className="absolute inset-0 z-[-1] bg-gradient-to-tr from-primary/40 via-black/70 to-secondary/80"></div>
+        <div className="wrapper text-center text-white">
+          <div data-aos="fade-up" className="max-w-4xl mx-auto">
+            <h2 className="section-heading">
+              Ready to unlock new growth opportunities?
+            </h2>
+            <p className="mt-4">
+              We ask for a few details so we can better understand your business
+              challenges and recommend the right AI solutions — whether it’s
+              Chatbots, Voice AI, ERP Automation, or a custom AI-driven app.
+              <br />
+              <br />
+              Our team reviews every request carefully to provide tailored
+              solutions designed to save time, reduce costs, and help you scale
+              with confidence. <br />
+              <br />
+              Let’s start building smarter solutions, together.
+            </p>
+            <div className="flex sm:flex-row flex-col justify-center gap-5 mt-8">
+              <Link to="/contact-us" className="primary-btn">
+                Get Started
+              </Link>
+              <Link
+                to={`tel:${companyDetails.phone}`}
+                className="transparent-btn border-white text-white hover:bg-white hover:text-primary"
+              >
+                <ImPhone className="inline mr-2" /> Call Us Now
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
       <Services
         title="our services"
         heading="AI-Powered Services Crafted to Deliver Business Results"
@@ -301,6 +354,7 @@ const Home = () => {
       <ContactForm />
       <Testimonials />
       <BlogsSection />
+      <Faq />
     </div>
   );
 };

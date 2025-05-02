@@ -27,6 +27,7 @@ import { Link as Scroll } from "react-scroll";
 import { companyDetails } from "../../data/constant";
 import ReactPlayer from "react-player";
 import bannerVid from "../../assets/vid/banner.mp4";
+import Faq from "../../Components/Faq";
 
 const EnterpriseAILanding = () => {
   const services = [
@@ -564,7 +565,7 @@ const EnterpriseAILanding = () => {
             <h2 className="section-heading text-white">
               Ready to Transform Your Enterprise with AI?
             </h2>
-            <p className="mt-4 text-lg">
+            <p className="mt-4">
               Schedule a consultation with our AI architects to discuss your
               automation and optimization challenges.
             </p>
@@ -592,6 +593,7 @@ const EnterpriseAILanding = () => {
 
       <Testimonials />
       <ContactForm />
+      <Faq />
     </div>
   );
 };

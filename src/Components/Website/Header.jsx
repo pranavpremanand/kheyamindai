@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { companyDetails, logo } from "../../data/constant";
+import { companyDetails, logo, LogoSvg } from "../../data/constant";
 import { Divide as Hamburger } from "hamburger-react";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
@@ -42,7 +42,7 @@ const Header = () => {
               to={companyDetails.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="w-7 h-7 flex hover:bg-primary transition-all duration-200 justify-center items-center rounded-full border border-white"
+              className="w-8 h-8 flex hover:bg-primary transition-all duration-200 justify-center items-center rounded-full border border-white"
             >
               <FaLinkedinIn className="fill-white" size={16} strokeWidth={1} />
             </Link>
@@ -50,7 +50,7 @@ const Header = () => {
               to={companyDetails.instagram}
               target="_blank"
               rel="noreferrer"
-              className="w-7 h-7 flex hover:bg-primary transition-all duration-200 justify-center items-center rounded-full border border-white"
+              className="w-8 h-8 flex hover:bg-primary transition-all duration-200 justify-center items-center rounded-full border border-white"
             >
               <FaInstagram
                 className="fill-white text-secondary"
@@ -62,7 +62,7 @@ const Header = () => {
               to={companyDetails.facebook}
               target="_blank"
               rel="noreferrer"
-              className="w-7 h-7 flex hover:bg-primary transition-all duration-200 justify-center items-center rounded-full border border-white"
+              className="w-8 h-8 flex hover:bg-primary transition-all duration-200 justify-center items-center rounded-full border border-white"
             >
               <FaFacebookF className="fill-white" size={16} strokeWidth={1} />
             </Link>
@@ -72,11 +72,12 @@ const Header = () => {
       <div className="py-4 bg-white">
         <div className="wrapper flex items-center justify-between gap-10">
           <Link to="/">
-            <img
+            {/* <img
               src={logo}
               alt="logo"
               className="w-[6.5rem] md:w-[8rem] object-contain"
-            />
+            /> */}
+            <LogoSvg className="w-[9rem] md:w-[180px] object-contain" />
           </Link>
           <div className="hidden md:flex items-center gap-7">
             {websiteLinks.map((link) => (
@@ -115,13 +116,7 @@ const Header = () => {
         className="z-10 p-2"
       >
         <div className="mb-6 flex items-center justify-between px-[.7rem] py-[.4rem]">
-          <img
-            src={logo}
-            width="auto"
-            height="auto"
-            alt="logo"
-            className="h-[2rem] object-contain"
-          />
+          <LogoSvg className="h-[2rem] object-contain" />
           <button onClick={() => setIsOpen(false)}>
             <IoClose size={28} />
           </button>

@@ -16,7 +16,7 @@ const LandingFooter = () => {
               to={companyDetails.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="w-7 h-7 flex justify-center items-center rounded-full border border-secondary"
+              className="w-8 h-8 flex justify-center items-center rounded-full border border-secondary"
             >
               <FaLinkedinIn className="fill-secondary" size={16} strokeWidth={1} />
             </Link>
@@ -24,7 +24,7 @@ const LandingFooter = () => {
               to={companyDetails.instagram}
               target="_blank"
               rel="noreferrer"
-              className="w-7 h-7 flex justify-center items-center rounded-full border border-secondary"
+              className="w-8 h-8 flex justify-center items-center rounded-full border border-secondary"
             >
               <FaInstagram
                 className="fill-secondary"
@@ -36,7 +36,7 @@ const LandingFooter = () => {
               to={companyDetails.facebook}
               target="_blank"
               rel="noreferrer"
-              className="w-7 h-7 flex justify-center items-center rounded-full border border-secondary"
+              className="w-8 h-8 flex justify-center items-center rounded-full border border-secondary"
             >
               <FaFacebookF className="fill-secondary" size={16} strokeWidth={1} />
             </Link>

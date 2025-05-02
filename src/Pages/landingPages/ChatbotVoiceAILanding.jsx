@@ -29,6 +29,7 @@ import { Link as Scroll } from "react-scroll";
 import { companyDetails } from "../../data/constant";
 import ReactPlayer from "react-player";
 import bannerVid from "../../assets/vid/banner.mp4";
+import Faq from "../../Components/Faq";
 
 const ChatbotVoiceAILanding = () => {
   const services = [
@@ -529,7 +530,7 @@ const ChatbotVoiceAILanding = () => {
             <h2 className="section-heading text-white">
               Ready to Transform Your Customer Experience?
             </h2>
-            <p className="mt-4 text-lg">
+            <p className="mt-4">
               Schedule a free consultation to discuss how our AI solutions can
               automate your customer interactions and reduce costs.
             </p>
@@ -557,6 +558,7 @@ const ChatbotVoiceAILanding = () => {
 
       <Testimonials />
       <ContactForm />
+      <Faq />
     </div>
   );
 };

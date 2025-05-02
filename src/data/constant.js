@@ -1,4 +1,6 @@
 import logo from "../assets/logo/logo.png";
+import { ReactComponent as LogoSvg } from "../assets/logo/logo.svg";
+import { ReactComponent as LogoSvgFooter } from "../assets/logo/logo-footer.svg";
 
 // services icons (website)
 import { ReactComponent as icon1 } from "../assets/svg/services/AI Chatbots.svg";
@@ -21,15 +23,15 @@ import { ReactComponent as webIcon2 } from "../assets/svg/services/Social Media 
 import { ReactComponent as webIcon3 } from "../assets/svg/services/Web Development.svg";
 import { ReactComponent as webIcon4 } from "../assets/svg/services/UIUX Design.svg";
 
-export { logo };
+export { logo, LogoSvg, LogoSvgFooter };
 
 export const companyDetails = {
   email: "hello@KheyaMind.ai",
   phone: "+0000000000",
   address: "Dhanbad, Jharkhand, India",
-  linkedin: "https://linkedin.com/company/KheyaMind ai",
-  instagram: "https://instagram.com/KheyaMind ai",
-  facebook: "https://facebook.com/KheyaMind ai",
+  linkedin: "https://linkedin.com/company/kheyamindai",
+  instagram: "https://instagram.com/kheyamindai",
+  facebook: "https://facebook.com/kheyamindai",
 };
 
 export const testimonials = [
