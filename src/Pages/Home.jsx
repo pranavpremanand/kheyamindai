@@ -184,14 +184,15 @@ const Home = () => {
                 className="h-full w-full aspect-video object-cover rounded-xl"
               />
             </div>
-            <h3 className="section-heading">Welcome to KheyaMind .ai</h3>
+            <h3 className="section-heading">Welcome to KheyaMind.ai</h3>
             <HrLine />
             <p>
-              Founded in 2025 by Niraj Modak, KheyaMind is a boutique AI
-              consulting and solutions company based in India with global
-              aspirations. We specialize in deploying AI-driven automation and
-              digital products across enterprise verticals, empowering clients
-              to rethink operations, service delivery, and intelligence.
+              {/* Founded in 2025 by Niraj Modak, */}
+              KheyaMind is a boutique AI consulting and solutions company based
+              in India with global aspirations. We specialize in deploying
+              AI-driven automation and digital products across enterprise
+              verticals, empowering clients to rethink operations, service
+              delivery, and intelligence.
             </p>
             <div className="grid grid-cols-2 gap-5 pt-5">
               {[
