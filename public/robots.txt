@@ -3,4 +3,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://www.kheyamind.ai/sitemap.xml
+Sitemap: https://sitemap.kheyamind.ai/sitemap.xml
