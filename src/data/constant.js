@@ -27,7 +27,7 @@ export { logo, LogoSvg, LogoSvgFooter };
 
 export const companyDetails = {
   email: "hello@KheyaMind.ai",
-  phone: "+0000000000",
+  phone: "+91-9242049993",
   address: "Dhanbad, Jharkhand, India",
   linkedin: "https://linkedin.com/company/kheyamindai",
   instagram: "https://instagram.com/kheyamindai",
