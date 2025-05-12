@@ -18,7 +18,7 @@ const BlogItem = ({ item }) => {
           {item.categoryId.name}
         </p>
         <p className="text-[.7rem] py-1 px-2 text-gray-50 bg-black text-end">
-          {new Date(item.createdAt).toLocaleDateString("en-US", {
+          {new Date(item.publishDate).toLocaleDateString("en-US", {
             month: "short",
             day: "numeric",
             year: "numeric",
