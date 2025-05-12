@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import HrLine from "../HrLine";
 import BlogItem from "./BlogItem";
-import { getBlogs } from "../../utils/api";
+import { getFeaturedBlogs } from "../../utils/api";
 
 const BlogsSection = () => {
   const [blogs, setBlogs] = useState([]);
@@ -14,8 +14,9 @@ const BlogsSection = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await getBlogs();
-        setBlogs(response.data.blogs.slice(0, 6));
+        const response = await getFeaturedBlogs();
+        setBlogs(response.data.blogs);
+        console.log(response.data);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching blogs:", err);
@@ -56,11 +57,11 @@ const BlogsSection = () => {
   const autoplayPlugin = (slider) => {
     let timeout;
     let mouseOver = false;
-    
+
     const clearNextTimeout = () => {
       clearTimeout(timeout);
     };
-    
+
     const nextTimeout = () => {
       clearTimeout(timeout);
       if (mouseOver) return;
@@ -68,7 +69,7 @@ const BlogsSection = () => {
         slider.next();
       }, 2500);
     };
-    
+
     slider.on("created", () => {
       slider.container.addEventListener("mouseover", () => {
         mouseOver = true;
@@ -80,13 +81,15 @@ const BlogsSection = () => {
       });
       nextTimeout();
     });
-    
+
     slider.on("dragStarted", clearNextTimeout);
     slider.on("animationEnded", nextTimeout);
     slider.on("updated", nextTimeout);
   };
 
-  const [sliderRef, instanceRef] = useKeenSlider(sliderOptions, [autoplayPlugin]);
+  const [sliderRef, instanceRef] = useKeenSlider(sliderOptions, [
+    autoplayPlugin,
+  ]);
 
   // Don't render anything if no blogs and not loading
   if (blogs.length === 0 && !loading) {
@@ -120,7 +123,7 @@ const BlogsSection = () => {
               <div className="text-center py-5 w-full">No blogs found</div>
             )}
           </div>
-          
+
           {sliderLoaded && instanceRef.current && blogs.length > 0 && (
             <div
               data-aos="fade-up"
