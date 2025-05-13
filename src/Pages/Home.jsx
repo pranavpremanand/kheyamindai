@@ -27,6 +27,7 @@ import PortfolioList from "../Components/Website/PortfolioList";
 import { ImPhone } from "react-icons/im";
 import aiEnterpriseBanner from "../assets/images/ai-enterprise-banner.webp";
 import Faq from "../Components/Faq";
+import DesignRushIcon from "../assets/images/DesignRushIcon.png";
 
 const Home = () => {
   return (
@@ -351,7 +352,22 @@ const Home = () => {
         heading="AI-Powered Services Crafted to Deliver Business Results"
         data={services}
       />
-      <PortfolioList />
+      <div className="relative wrapper !px-0">
+        <PortfolioList />
+        <div className="wrapper md:block flex justify-center pt-10">
+          <Link
+            to="https://www.designrush.com/agency/profile/kheyamind-ai-technologies-private-limited"
+            target="_blank"
+            className="w-[5rem] md:w-[6rem] z-[40] hover:scale-105 transition-all duration-300 md:absolute right-10 mx-auto bottom-4"
+          >
+            <img
+              src={DesignRushIcon}
+              alt="Verified agency on DesignRush"
+              className="w-[5rem] md:w-[6rem]"
+            />
+          </Link>
+        </div>
+      </div>
       <ContactForm />
       <Testimonials />
       <BlogsSection />

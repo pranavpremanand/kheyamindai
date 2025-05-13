@@ -40,13 +40,6 @@ function App() {
       <ScrollToTopButton />
       <ScrollToTop />
       <Toaster position="top-center" />
-      <Link
-        to="https://www.designrush.com/agency/profile/kheyamind-ai-technologies-private-limited"
-        target="_blank"
-        className="w-[4rem] md:w-[6rem] fixed right-6 md:right-14 bottom-24 md:bottom-32 z-[9999] hover:scale-105 transition-all duration-300"
-      >
-        <img src={DesignRushIcon} alt="Verified agency on DesignRush" />
-      </Link>
       <SpinnerContextProvider>
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
