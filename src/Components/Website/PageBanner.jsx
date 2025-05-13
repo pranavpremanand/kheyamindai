@@ -1,8 +1,7 @@
-import React from "react";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const PageBanner = ({ banner, title }) => {
+const PageBanner = ({ banner, title, breadcrumbs }) => {
   return (
     <div className="pt-[5rem] md:pt-[7rem]">
       <div className="aspect-[6/4] md:aspect-[19/6] relative">
@@ -11,9 +10,17 @@ const PageBanner = ({ banner, title }) => {
           alt={title}
           className="w-full h-full object-cover object-top"
         />
-        {title && (
+        {breadcrumbs ? (
+          <nav
+            aria-label="breadcrumb"
+            className="absolute inset-0 bg-secondary/30 z-10 w-full h-full flex items-center justify-center"
+          >
+            {breadcrumbs}
+          </nav>
+        ) : (
           <div className="absolute inset-0 bg-secondary/30 z-10 w-full h-full flex items-center justify-center">
-            <div
+            <nav
+              aria-label="breadcrumb"
               data-aos="fade-up"
               className="flex text-white items-center text-xl gap-3"
             >
@@ -25,7 +32,7 @@ const PageBanner = ({ banner, title }) => {
               </Link>
               <MdOutlineArrowForwardIos className="-mt-1" />
               <p className="">{title}</p>
-            </div>
+            </nav>
           </div>
         )}
       </div>

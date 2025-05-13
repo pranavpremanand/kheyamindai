@@ -8,10 +8,18 @@ import visionImg from "../assets/images/vision.webp";
 import missionImg from "../assets/images/mission.webp";
 import { ImPhone } from "react-icons/im";
 import Testimonials from "../Components/Testimonials";
+import SEO from "../Components/SEO/SEO";
 
 const AboutUs = () => {
   return (
     <>
+      <SEO 
+        type="about"
+        title="About KheyaMind AI Technologies | AI Solutions Company"
+        description="Learn about KheyaMind AI Technologies, a boutique AI consulting and solutions company specializing in AI-driven automation and digital products."
+        keywords="About KheyaMind, AI Company, AI Solutions, Company History, AI Vision, AI Mission"
+        image={banner}
+      />
       <PageBanner banner={banner} title="About Us" />
       <section className="pt-[5rem] wrapper grid md:grid-cols-2 gap-7">
         <div data-aos="fade-up" className="space-y-4">

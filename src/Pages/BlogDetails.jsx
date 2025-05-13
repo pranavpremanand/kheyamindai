@@ -8,6 +8,8 @@ import { getBlogBySlug, getBlogs } from "../utils/api";
 import { LoadingSpinner } from "../Components/LoadingSpinner";
 import { Helmet } from "react-helmet";
 import { FaCalendarAlt, FaUser, FaTag, FaFolder } from "react-icons/fa";
+import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { div } from "framer-motion/client";
 
 const BlogDetails = () => {
   const { slug } = useParams();
@@ -47,10 +49,9 @@ const BlogDetails = () => {
 
   if (loading) {
     return (
-      <>
-        <PageBanner banner={banner} title="Blogs" />
+      <div className="h-screen">
         <LoadingSpinner />
-      </>
+      </div>
     );
   }
 
@@ -65,6 +66,16 @@ const BlogDetails = () => {
     );
   }
 
+  const bannerBreadcrumbs = () => {
+    return (
+      <>
+        <MdOutlineArrowForwardIos className="-mt-1" />
+        <p className="">{blog.categoryId?.name}</p>
+        <MdOutlineArrowForwardIos className="-mt-1" />
+        <p className="font-semibold">{blog.title}</p>
+      </>
+    );
+  };
   return (
     <>
       <Helmet>
@@ -96,17 +107,48 @@ const BlogDetails = () => {
         <meta property="og:image" content={blog.imageUrl} />
         <meta property="og:type" content="article" />
       </Helmet>
-      <PageBanner banner={banner} title="Blogs" />
-      <div className="wrapper pt-[5rem]">
+      <div className="lg:block hidden">
+        <PageBanner
+          banner={banner}
+          title={blog.title}
+          breadcrumbs={
+            <div className="flex text-white items-center text-xl gap-3">
+              <Link to="/" className="hover:text-primary">
+                Home
+              </Link>
+              <MdOutlineArrowForwardIos className="-mt-1" />
+              <Link to="/blogs" className="hover:text-primary">
+                Blogs
+              </Link>
+              {bannerBreadcrumbs()}
+            </div>
+          }
+        />
+      </div>
+      <div className="wrapper pt-[6rem] sm:pt-[10rem] lg:pt-[5rem]">
+        {/* breadcrumbs on mobile */}
+        <div className="lg:hidden mb-4 text-gray-800 text-sm">
+          <Link to="/" className="hover:text-primary inline-block">
+            Home
+          </Link>
+          <MdOutlineArrowForwardIos size={12} className="inline-block mx-2" />
+          <Link to="/blogs" className="hover:text-primary">
+            Blogs
+          </Link>
+          <MdOutlineArrowForwardIos size={12} className="inline-block mx-2" />
+          <p className="inline-block">{blog.categoryId?.name}</p>
+          <MdOutlineArrowForwardIos size={12} className="inline-block mx-2" />
+          <p className="inline-block">{blog.title}</p>
+        </div>
         <img
           src={blog.imageUrl}
           alt={blog.imageAlt || blog.title}
-          className="md:aspect-video lg:aspect-[13/6] object-cover rounded-lg shadow-lg"
+          className="aspect-[16/9] w-full object-cover rounded-lg shadow-lg"
         />
         <div className="pt-[2rem] space-y-6">
-          <h2 className="section-heading text-3xl md:text-4xl font-bold text-secondary">
+          <h1 className="section-heading text-3xl md:text-4xl font-bold text-secondary">
             {blog.title}
-          </h2>
+          </h1>
 
           {/* Blog metadata section */}
           <div className="flex flex-wrap gap-4 text-sm text-gray-600">

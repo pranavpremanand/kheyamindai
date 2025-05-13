@@ -28,10 +28,17 @@ import { ImPhone } from "react-icons/im";
 import aiEnterpriseBanner from "../assets/images/ai-enterprise-banner.webp";
 import Faq from "../Components/Faq";
 import DesignRushIcon from "../assets/images/DesignRushIcon.png";
+import SEO from "../Components/SEO/SEO";
 
 const Home = () => {
   return (
     <div className="pt-[5rem]">
+      <SEO 
+        type="home"
+        title="AI Chatbots, Voice Assistants & Automation Solutions | KheyaMind AI Technologies"
+        description="KheyaMind AI crafts intelligent solutions including AI Chatbots, Voice Assistants, ERP Automations, and NLP tools. Empower your enterprise with next-gen AI solutions."
+        keywords="AI Solutions, Chatbots, Voice AI, ERP Automation, NLP, AI Company India, AI Development, Business Automation"
+      />
       <section className="relative min-h-screen flex items-center justify-center bg-black/30">
         <div className="pt-[4rem] md:pt-[8rem] pb-[4rem]">
           <div

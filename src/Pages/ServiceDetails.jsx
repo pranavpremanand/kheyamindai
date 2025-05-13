@@ -5,6 +5,7 @@ import ServiceDetailsBanner from "../Components/Website/ServiceDetailsBanner";
 import Testimonials from "../Components/Testimonials";
 import ContactForm from "../Components/ContactForm";
 import { createUrlParam } from "../utils/helper";
+import SEO from "../Components/SEO/SEO";
 
 const ServiceDetails = () => {
   const { title } = useParams();
@@ -12,6 +13,18 @@ const ServiceDetails = () => {
 
   return (
     <>
+      <SEO 
+        type="service"
+        title={`${data.title} | KheyaMind AI Technologies`}
+        description={data.description}
+        keywords={`${data.title}, AI Solutions, KheyaMind AI, ${data.title.toLowerCase()} services`}
+        image={data.detailsPage.banner}
+        pageData={{
+          title: data.title,
+          description: data.description,
+          image: data.detailsPage.banner
+        }}
+      />
       <ServiceDetailsBanner
         banner={data.detailsPage.banner}
         title={data.title}
