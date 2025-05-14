@@ -1,13 +1,6 @@
 import axios from "axios";
 
-// Determine if we're in production
-const isProduction = process.env.NODE_ENV === 'production';
-
-// Use local API proxy in production for server-side rendering and caching
-// In development, use the direct API endpoint
-const baseUrl = isProduction 
-  ? "/api" 
-  : "https://kheyamind-blogplatform-backend.vercel.app/api";
+const baseUrl = "https://kheyamind-blogplatform-backend.vercel.app/api";
 
 // Create an axios instance with default config
 const api = axios.create({
