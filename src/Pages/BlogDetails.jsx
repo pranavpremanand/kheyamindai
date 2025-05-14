@@ -125,7 +125,7 @@ const BlogDetails = () => {
           }
         />
       </div>
-      <div className="wrapper pt-[6rem] sm:pt-[10rem] lg:pt-[5rem]">
+      <div className="wrapper pt-[6rem] sm:pt-[10rem] lg:pt-[2rem]">
         {/* breadcrumbs on mobile */}
         <div className="lg:hidden mb-4 text-gray-800 text-sm">
           <Link to="/" className="hover:text-primary inline-block">
