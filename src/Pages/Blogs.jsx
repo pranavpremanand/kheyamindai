@@ -1,34 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import banner from "../assets/images/banners/blogs.webp";
 import PageBanner from "../Components/Website/PageBanner";
 import BlogItem from "../Components/Website/BlogItem";
 import HrLine from "../Components/HrLine";
 import ContactForm from "../Components/ContactForm";
-import { getBlogs } from "../utils/api";
-import { LoadingSpinner } from "../Components/LoadingSpinner";
+import FancyLoader from "../Components/FancyLoader";
+import { useBlogs } from "../hooks/useBlogs";
 
 const Blogs = () => {
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        setLoading(true);
-        const response = await getBlogs();
-        console.log(response.data);
-        setBlogs(response.data.blogs);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching blogs:", err);
-        setError("Failed to load blogs. Please try again later.");
-        setLoading(false);
-      }
-    };
-
-    fetchBlogs();
-  }, []);
+  // Use the custom hook to fetch blogs with caching
+  const { 
+    data, 
+    isLoading: loading, 
+    error: fetchError 
+  } = useBlogs();
+  
+  // Derived state
+  const blogs = data?.blogs || [];
+  const error = fetchError?.message;
 
   return (
     <>
@@ -46,7 +35,7 @@ const Blogs = () => {
         </div>
 
         {loading ? (
-          <LoadingSpinner />
+          <FancyLoader />
         ) : error ? (
           <div className="text-center py-10 text-red-500">{error}</div>
         ) : (

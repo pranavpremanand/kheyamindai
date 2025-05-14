@@ -1,15 +1,51 @@
 import axios from "axios";
 
-// const baseUrl = "http://localhost:5000/api";
-const baseUrl = "https://kheyamind-blogplatform-backend.vercel.app/api";
+// Determine if we're in production
+const isProduction = process.env.NODE_ENV === 'production';
 
-// get all blogs (published)
-export const getBlogs = () => axios.get(`${baseUrl}/blogs/published`);
+// Use local API proxy in production for server-side rendering and caching
+// In development, use the direct API endpoint
+const baseUrl = isProduction 
+  ? "/api" 
+  : "https://kheyamind-blogplatform-backend.vercel.app/api";
 
-// get blog by slug
-export const getBlogBySlug = (slug) =>
-  axios.get(`${baseUrl}/blogs/slug/${slug}`);
+// Create an axios instance with default config
+const api = axios.create({
+  baseURL: baseUrl,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-// get featured blogs
-export const getFeaturedBlogs = () =>
-  axios.get(`${baseUrl}/blogs/featured`);
+// Query keys for React Query
+export const queryKeys = {
+  blogs: 'blogs',
+  blogBySlug: (slug) => ['blog', slug],
+  featuredBlogs: 'featuredBlogs',
+};
+
+// API functions that return the promise and query key for React Query
+export const blogsApi = {
+  // Get all published blogs
+  getBlogs: async () => {
+    const response = await api.get('/blogs/published');
+    return response.data;
+  },
+
+  // Get blog by slug
+  getBlogBySlug: async (slug) => {
+    const response = await api.get(`/blogs/slug/${slug}`);
+    return response.data;
+  },
+
+  // Get featured blogs
+  getFeaturedBlogs: async () => {
+    const response = await api.get('/blogs/featured');
+    return response.data;
+  },
+};
+
+// Legacy API functions for backward compatibility
+export const getBlogs = () => api.get('/blogs/published');
+export const getBlogBySlug = (slug) => api.get(`/blogs/slug/${slug}`);
+export const getFeaturedBlogs = () => api.get('/blogs/featured');

@@ -1,32 +1,24 @@
 import { useKeenSlider } from "keen-slider/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import HrLine from "../HrLine";
 import BlogItem from "./BlogItem";
-import { getFeaturedBlogs } from "../../utils/api";
+import FancyLoader from "../FancyLoader";
+import { useFeaturedBlogs } from "../../hooks/useBlogs";
 
 const BlogsSection = () => {
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [sliderLoaded, setSliderLoaded] = useState(false);
-
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await getFeaturedBlogs();
-        setBlogs(response.data.blogs);
-        console.log(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching blogs:", err);
-        setError("Failed to load blogs from API.");
-        setLoading(false);
-      }
-    };
-
-    fetchBlogs();
-  }, []);
+  
+  // Use the custom hook to fetch featured blogs with caching
+  const { 
+    data, 
+    isLoading: loading, 
+    error: fetchError 
+  } = useFeaturedBlogs();
+  
+  // Derived state
+  const blogs = data?.blogs || [];
+  const error = fetchError?.message;
 
   const sliderOptions = {
     loop: true,
@@ -108,7 +100,9 @@ const BlogsSection = () => {
       </div>
 
       {loading ? (
-        <div className="text-center py-10">Loading blogs...</div>
+        <div className="py-10">
+          <FancyLoader />
+        </div>
       ) : (
         <>
           {error && (

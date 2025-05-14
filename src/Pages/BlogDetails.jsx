@@ -1,56 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PageBanner from "../Components/Website/PageBanner";
 import banner from "../assets/images/banners/blogs.webp";
 import BlogItem from "../Components/Website/BlogItem";
 import HrLine from "../Components/HrLine";
 import { Link, useParams } from "react-router-dom";
-import { getBlogBySlug, getBlogs } from "../utils/api";
-import { LoadingSpinner } from "../Components/LoadingSpinner";
+import FancyLoader from "../Components/FancyLoader";
 import { Helmet } from "react-helmet";
 import { FaCalendarAlt, FaUser, FaTag, FaFolder } from "react-icons/fa";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { div } from "framer-motion/client";
+import { useBlogBySlug, useBlogs } from "../hooks/useBlogs";
 
 const BlogDetails = () => {
   const { slug } = useParams();
-  const [blog, setBlog] = useState(null);
-  const [recentBlogs, setRecentBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  
+  // Use the custom hooks to fetch data with caching
+  const { 
+    data: blogData, 
+    isLoading: isBlogLoading, 
+    error: blogError 
+  } = useBlogBySlug(slug);
+  
+  const { 
+    data: blogsData, 
+    isLoading: isBlogsLoading 
+  } = useBlogs();
 
-  useEffect(() => {
-    const fetchBlogData = async () => {
-      try {
-        setLoading(true);
-        // Fetch the specific blog by slug
-        const blogResponse = await getBlogBySlug(slug);
-        setBlog(blogResponse.data.blog);
-
-        // Fetch recent blogs
-        const blogsResponse = await getBlogs();
-        // Filter out the current blog and limit to 3 blogs
-        const filteredBlogs = blogsResponse.data.blogs
-          .filter((item) => item.slug !== slug)
-          .slice(0, 3);
-        setRecentBlogs(filteredBlogs);
-
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching blog details:", err);
-        setError("Failed to load blog details. Please try again later.");
-        setLoading(false);
-      }
-    };
-
-    if (slug) {
-      fetchBlogData();
-    }
-  }, [slug]);
+  // Derived state
+  const blog = blogData?.blog;
+  const loading = isBlogLoading || isBlogsLoading;
+  const error = blogError?.message;
+  
+  // Filter recent blogs
+  const recentBlogs = blogsData?.blogs
+    ? blogsData.blogs
+        .filter((item) => item.slug !== slug)
+        .slice(0, 3)
+    : [];
 
   if (loading) {
     return (
-      <div className="h-screen">
-        <LoadingSpinner />
+      <div className="min-h-screen flex items-center justify-center">
+        <FancyLoader />
       </div>
     );
   }

@@ -6,6 +6,7 @@ import SpinnerContextProvider from "./Components/SpinnerContext";
 import { Suspense, lazy } from "react";
 import { LoadingSpinner } from "./Components/LoadingSpinner";
 import ScrollToTop from "./Components/ScrollToTop";
+import QueryProvider from "./utils/QueryProvider";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -36,14 +37,15 @@ AOS.init({
 
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTopButton />
-      <ScrollToTop />
-      <Toaster position="top-center" />
-      <SpinnerContextProvider>
-        <Suspense fallback={<LoadingSpinner />}>
-          <Routes>
-            <Route path="/" element={<MainLayout />}>
+    <QueryProvider>
+      <BrowserRouter>
+        <ScrollToTopButton />
+        <ScrollToTop />
+        <Toaster position="top-center" />
+        <SpinnerContextProvider>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
+              <Route path="/" element={<MainLayout />}>
               <Route index element={<Home />} />
               <Route path="*" element={<Navigate to="/" />} />
               <Route path="about-us" element={<AboutUs />} />
@@ -78,6 +80,7 @@ function App() {
         </Suspense>
       </SpinnerContextProvider>
     </BrowserRouter>
+    </QueryProvider>
   );
 }
 
