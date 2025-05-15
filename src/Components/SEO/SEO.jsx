@@ -53,17 +53,14 @@ const getNormalizedCanonicalUrl = (url) => {
 /**
  * SEO Component
  * 
- * A comprehensive SEO component that handles meta tags and structured data.
- * This component should be included in every page of the application.
- * 
- * Note: OG tags are now handled by _document.js for better reliability with Facebook
- * and other social media platforms.
+ * A comprehensive SEO component that handles canonical URLs and structured data.
+ * Note: OG tags are now handled directly in the static index.html file.
  * 
  * @param {Object} props - Component props
  * @param {string} props.title - Page title
  * @param {string} props.description - Page description
  * @param {string} props.keywords - Page keywords (comma separated)
- * @param {string} props.image - Page image URL (for social sharing)
+ * @param {string} props.image - Page image URL (for schema.org)
  * @param {string} props.url - Current page URL
  * @param {string} props.type - Page type (e.g., 'home', 'service', 'blog', 'contact', 'about')
  * @param {Object} props.pageData - Additional data specific to the page type
@@ -73,7 +70,7 @@ const SEO = ({
   title = "AI Chatbots, Voice Assistants & Automation Solutions | KheyaMind AI Technologies",
   description = "KheyaMind AI crafts intelligent solutions including AI Chatbots, Voice Assistants, ERP Automations, and NLP tools. Empower your enterprise with next-gen AI solutions.",
   keywords = "AI Solutions, Chatbots, Voice AI, ERP Automation, NLP, AI Company India, AI Development, Business Automation",
-  image = "/og-image.png", // Updated to use the new OG image
+  image = "/og-image.png",
   url,
   type = "website",
   pageData = {}
@@ -174,30 +171,6 @@ const SEO = ({
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
-        
-        {/* OG tags are now handled by _document.js for better reliability */}
-        {/* Open Graph / Facebook tags removed to avoid duplication */}
-        {/* 
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={absoluteImageUrl} />
-        <meta property="og:image:secure_url" content={absoluteImageUrl} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="KheyaMind AI Technologies logo" />
-        <meta property="og:site_name" content="KheyaMind AI Technologies" />
-        */}
-        
-        {/* Twitter tags removed to avoid duplication */}
-        {/*
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={canonicalUrl} />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={absoluteImageUrl} />
-        */}
         
         {/* Canonical URL - Using normalized URL */}
         <link rel="canonical" href={canonicalUrl} />
