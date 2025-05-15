@@ -70,22 +70,24 @@ const SEO = ({
   title = "AI Chatbots, Voice Assistants & Automation Solutions | KheyaMind AI Technologies",
   description = "KheyaMind AI crafts intelligent solutions including AI Chatbots, Voice Assistants, ERP Automations, and NLP tools. Empower your enterprise with next-gen AI solutions.",
   keywords = "AI Solutions, Chatbots, Voice AI, ERP Automation, NLP, AI Company India, AI Development, Business Automation",
-  image = "/logo.png",
+  image = "/og-image.png", // Updated to use the new OG image
   url,
   type = "website",
   pageData = {}
 }) => {
   // Get the current URL if not provided
   const rawUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
+  
+  // Use a hardcoded base URL for SSR to ensure absolute paths always work
   const baseUrl = typeof window !== 'undefined' 
-    ? `${window.location.protocol}//${window.location.host}` 
-    : 'https://www.kheyamind.ai'; // Fallback for SSR
+    ? `${window.location.protocol}//${window.location.host}`
+    : 'https://www.kheyamind.ai';
   
   // Get normalized canonical URL
   const canonicalUrl = getNormalizedCanonicalUrl(rawUrl);
   
-  // Ensure image URL is absolute and properly formatted
-  const imageUrl = image.startsWith('http') 
+  // Ensure absolute image URL with proper format
+  const absoluteImageUrl = image.startsWith('http') 
     ? image 
     : `${baseUrl}${image.startsWith('/') ? '' : '/'}${image}`;
   
@@ -97,7 +99,7 @@ const SEO = ({
       getWebsiteSchema(baseUrl)
     ];
     
-    // Add page-specific schema
+    // Add page-specific schema based on type
     switch (type) {
       case 'home':
         return [...baseSchemas, getHomePageSchema(canonicalUrl)];
@@ -109,7 +111,7 @@ const SEO = ({
             canonicalUrl, 
             pageData.title || title, 
             pageData.description || description, 
-            pageData.image || imageUrl
+            pageData.image || absoluteImageUrl
           )
         ];
       
@@ -120,7 +122,7 @@ const SEO = ({
             canonicalUrl,
             pageData.title || title,
             pageData.description || description,
-            pageData.image || imageUrl,
+            pageData.image || absoluteImageUrl,
             pageData.datePublished,
             pageData.dateModified,
             pageData.author || 'KheyaMind AI'
@@ -170,24 +172,24 @@ const SEO = ({
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
         
-        {/* Open Graph / Facebook - Improved for better link sharing */}
+        {/* Open Graph / Facebook - Fixed for better link sharing */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={imageUrl} />
-        <meta property="og:image:secure_url" content={imageUrl} />
+        <meta property="og:image" content={absoluteImageUrl} />
+        <meta property="og:image:secure_url" content={absoluteImageUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="KheyaMind AI Technologies logo" />
         <meta property="og:site_name" content="KheyaMind AI Technologies" />
         
-        {/* Twitter - Improved for better link sharing */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={canonicalUrl} />
-        <meta property="twitter:title" content={title} />
-        <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content={imageUrl} />
+        {/* Twitter - Fixed for better link sharing */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={canonicalUrl} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={absoluteImageUrl} />
         
         {/* Canonical URL - Now using normalized URL */}
         <link rel="canonical" href={canonicalUrl} />
