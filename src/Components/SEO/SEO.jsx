@@ -13,6 +13,44 @@ import {
 } from '../../utils/schemaMarkup';
 
 /**
+ * Normalizes a URL to create a consistent canonical URL format
+ * - Removes query parameters
+ * - Ensures consistent trailing slash handling
+ * - Handles specific problematic URLs
+ */
+const getNormalizedCanonicalUrl = (url) => {
+  if (!url) return '';
+  
+  try {
+    const urlObj = new URL(url);
+    
+    // Remove query parameters
+    urlObj.search = '';
+    
+    // Get the path and normalize trailing slash
+    let path = urlObj.pathname;
+    if (path.endsWith('/') && path !== '/') {
+      path = path.slice(0, -1);
+    }
+    
+    // Handle specific problem URLs from Search Console
+    if (path.includes('/services/cloud-devops.ai')) {
+      path = '/services/cloud-devops-ai';
+    } else if (path.includes('/services/voice.ai-agents')) {
+      path = '/services/voice-ai-agents';
+    }
+    
+    // Reassemble the URL with normalized path
+    urlObj.pathname = path;
+    
+    return urlObj.toString();
+  } catch (e) {
+    console.error('Error normalizing canonical URL:', e);
+    return url;
+  }
+};
+
+/**
  * SEO Component
  * 
  * A comprehensive SEO component that handles both meta tags and structured data.
@@ -38,8 +76,18 @@ const SEO = ({
   pageData = {}
 }) => {
   // Get the current URL if not provided
-  const currentUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
-  const baseUrl = typeof window !== 'undefined' ? `${window.location.protocol}//${window.location.host}` : '';
+  const rawUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
+  const baseUrl = typeof window !== 'undefined' 
+    ? `${window.location.protocol}//${window.location.host}` 
+    : 'https://www.kheyamind.ai'; // Fallback for SSR
+  
+  // Get normalized canonical URL
+  const canonicalUrl = getNormalizedCanonicalUrl(rawUrl);
+  
+  // Ensure image URL is absolute and properly formatted
+  const imageUrl = image.startsWith('http') 
+    ? image 
+    : `${baseUrl}${image.startsWith('/') ? '' : '/'}${image}`;
   
   // Generate schemas based on page type
   const generateSchemas = () => {
@@ -52,16 +100,16 @@ const SEO = ({
     // Add page-specific schema
     switch (type) {
       case 'home':
-        return [...baseSchemas, getHomePageSchema(currentUrl)];
+        return [...baseSchemas, getHomePageSchema(canonicalUrl)];
       
       case 'service':
         return [
           ...baseSchemas, 
           getServicePageSchema(
-            currentUrl, 
+            canonicalUrl, 
             pageData.title || title, 
             pageData.description || description, 
-            pageData.image || `${baseUrl}${image}`
+            pageData.image || imageUrl
           )
         ];
       
@@ -69,10 +117,10 @@ const SEO = ({
         return [
           ...baseSchemas, 
           getBlogPostSchema(
-            currentUrl,
+            canonicalUrl,
             pageData.title || title,
             pageData.description || description,
-            pageData.image || `${baseUrl}${image}`,
+            pageData.image || imageUrl,
             pageData.datePublished,
             pageData.dateModified,
             pageData.author || 'KheyaMind AI'
@@ -89,7 +137,7 @@ const SEO = ({
         return [
           ...baseSchemas,
           getContactPageSchema(
-            currentUrl,
+            canonicalUrl,
             pageData.email || 'contact@kheyamind.ai',
             pageData.phone || '+91-9999999999',
             pageData.address || {
@@ -105,7 +153,7 @@ const SEO = ({
       case 'about':
         return [
           ...baseSchemas,
-          getAboutPageSchema(currentUrl)
+          getAboutPageSchema(canonicalUrl)
         ];
       
       default:
@@ -122,22 +170,27 @@ const SEO = ({
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
         
-        {/* Open Graph / Facebook */}
+        {/* Open Graph / Facebook - Improved for better link sharing */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={currentUrl} />
+        <meta property="og:url" content={canonicalUrl} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={`${baseUrl}${image}`} />
+        <meta property="og:image" content={imageUrl} />
+        <meta property="og:image:secure_url" content={imageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="KheyaMind AI Technologies logo" />
+        <meta property="og:site_name" content="KheyaMind AI Technologies" />
         
-        {/* Twitter */}
+        {/* Twitter - Improved for better link sharing */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={currentUrl} />
+        <meta property="twitter:url" content={canonicalUrl} />
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content={`${baseUrl}${image}`} />
+        <meta property="twitter:image" content={imageUrl} />
         
-        {/* Canonical URL */}
-        <link rel="canonical" href={currentUrl} />
+        {/* Canonical URL - Now using normalized URL */}
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
       
       {/* JSON-LD Structured Data */}
