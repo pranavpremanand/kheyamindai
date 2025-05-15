@@ -53,8 +53,11 @@ const getNormalizedCanonicalUrl = (url) => {
 /**
  * SEO Component
  * 
- * A comprehensive SEO component that handles both meta tags and structured data.
+ * A comprehensive SEO component that handles meta tags and structured data.
  * This component should be included in every page of the application.
+ * 
+ * Note: OG tags are now handled by _document.js for better reliability with Facebook
+ * and other social media platforms.
  * 
  * @param {Object} props - Component props
  * @param {string} props.title - Page title
@@ -172,7 +175,9 @@ const SEO = ({
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
         
-        {/* Open Graph / Facebook - Fixed for better link sharing */}
+        {/* OG tags are now handled by _document.js for better reliability */}
+        {/* Open Graph / Facebook tags removed to avoid duplication */}
+        {/* 
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:title" content={title} />
@@ -183,15 +188,18 @@ const SEO = ({
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="KheyaMind AI Technologies logo" />
         <meta property="og:site_name" content="KheyaMind AI Technologies" />
+        */}
         
-        {/* Twitter - Fixed for better link sharing */}
+        {/* Twitter tags removed to avoid duplication */}
+        {/*
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={canonicalUrl} />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={absoluteImageUrl} />
+        */}
         
-        {/* Canonical URL - Now using normalized URL */}
+        {/* Canonical URL - Using normalized URL */}
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
       
