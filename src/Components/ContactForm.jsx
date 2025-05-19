@@ -240,7 +240,6 @@ const ContactForm = () => {
               <span className="font-bold ml-2">24 hrs telephone support</span>
             </div>
           </div>
-          <p className="mt-5"></p>
           <div className="mt-7 flex gap-3 sm:justify-center sm:w-fit w-full">
             <div className="bg-primary h-full aspect-square flex justify-center items-center p-3">
               <ImPhone size={25} className="text-white" />

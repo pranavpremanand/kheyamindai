@@ -27,6 +27,9 @@ const ChatbotVoiceAILanding = lazy(() =>
 const EnterpriseAILanding = lazy(() =>
   import("./Pages/landingPages/EnterpriseAILanding")
 );
+const RealEstateAILanding = lazy(() =>
+  import("./Pages/landingPages/RealEstateAILanding")
+);
 
 AOS.init({
   once: true,
@@ -74,6 +77,10 @@ function App() {
               <Route
                 path="/ai-enterprise-solutions"
                 element={<EnterpriseAILanding />}
+              />
+              <Route
+                path="/real-estate-ai-solutions"
+                element={<RealEstateAILanding />}
               />
             </Route>
           </Routes>

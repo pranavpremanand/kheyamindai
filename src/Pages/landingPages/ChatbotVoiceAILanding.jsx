@@ -181,7 +181,7 @@ const ChatbotVoiceAILanding = () => {
           </div>
           <div
             data-aos="fade-up"
-            className="bg-[#EAF9FF] w-full text-primary flex gap-3 justify-center p-6"
+            className="bg-white w-full text-primary flex gap-3 justify-center p-6"
           >
             <div className="bg-primary h-full aspect-square flex justify-center items-center p-3">
               <FaCheckDouble size={45} className="text-white" />
