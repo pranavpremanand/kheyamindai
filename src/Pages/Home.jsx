@@ -363,7 +363,7 @@ const Home = () => {
         <PortfolioList />
         <div className="wrapper md:block flex justify-center pt-10">
           <Link
-            to="https://www.designrush.com/agency/profile/kheyamind-ai-technologies-private-limited"
+            to="https://www.designrush.com/agency/profile/kheyamind-ai-technologies"
             target="_blank"
             className="w-[5rem] md:w-[6rem] z-[40] hover:scale-105 transition-all duration-300 md:absolute right-10 mx-auto bottom-4"
           >

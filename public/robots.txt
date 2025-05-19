@@ -1,6 +1,10 @@
 # robots.txt for kheyamind.ai
-
 User-agent: *
-Disallow:
+Allow: /
 
+# Disallow specific folders (if needed)
+# Disallow: /admin/
+# Disallow: /private/
+
+# Sitemaps
 Sitemap: https://sitemap.kheyamind.ai/sitemap.xml
