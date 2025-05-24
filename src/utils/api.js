@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// const baseUrl = "http://localhost:5000/api";
 const baseUrl = "https://kheyamind-blogplatform-backend.vercel.app/api";
 
 // Create an axios instance with default config

@@ -12,29 +12,24 @@ import { useBlogBySlug, useBlogs } from "../hooks/useBlogs";
 
 const BlogDetails = () => {
   const { slug } = useParams();
-  
+
   // Use the custom hooks to fetch data with caching
-  const { 
-    data: blogData, 
-    isLoading: isBlogLoading, 
-    error: blogError 
+  const {
+    data: blogData,
+    isLoading: isBlogLoading,
+    error: blogError,
   } = useBlogBySlug(slug);
-  
-  const { 
-    data: blogsData, 
-    isLoading: isBlogsLoading 
-  } = useBlogs();
+
+  const { data: blogsData, isLoading: isBlogsLoading } = useBlogs();
 
   // Derived state
   const blog = blogData?.blog;
   const loading = isBlogLoading || isBlogsLoading;
-  const error = blogError?.message;
-  
+  const error = blogError?.response.data?.message || blogError?.message;
+
   // Filter recent blogs
   const recentBlogs = blogsData?.blogs
-    ? blogsData.blogs
-        .filter((item) => item.slug !== slug)
-        .slice(0, 3)
+    ? blogsData.blogs.filter((item) => item.slug !== slug).slice(0, 3)
     : [];
 
   if (loading) {
@@ -49,7 +44,7 @@ const BlogDetails = () => {
     return (
       <>
         <PageBanner banner={banner} title="Blogs" />
-        <div className="wrapper pt-[5rem] text-center text-red-500">
+        <div className="h-[40vh] flex items-center justify-center wrapper text-2xl pt-[5rem] text-center text-red-500">
           {error || "Blog not found"}
         </div>
       </>
