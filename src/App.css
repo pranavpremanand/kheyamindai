@@ -12,9 +12,7 @@ p {
   @apply font-poppins font-light;
 }
 
-.reset-html-content h1,
-.reset-html-content h2,
-.reset-html-content p {
+.reset-html-content * {
   all: revert;
 }
 
