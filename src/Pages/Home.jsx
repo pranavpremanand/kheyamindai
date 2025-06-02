@@ -8,7 +8,6 @@ import { companyDetails, services } from "../data/constant";
 import aboutImg from "../assets/images/about.webp";
 import whyChooseImg from "../assets/images/whychooseus.webp";
 import Services from "../Components/Services";
-import ContactForm from "../Components/ContactForm";
 import {
   FaBrain,
   FaCheckDouble,
@@ -21,16 +20,30 @@ import {
 } from "react-icons/fa";
 import { GiCheckMark } from "react-icons/gi";
 import { BiSupport } from "react-icons/bi";
-import Testimonials from "../Components/Testimonials";
-import BlogsSection from "../Components/Website/BlogsSection";
-import PortfolioList from "../Components/Website/PortfolioList";
 import { ImPhone } from "react-icons/im";
 import aiEnterpriseBanner from "../assets/images/ai-enterprise-banner.webp";
-import Faq from "../Components/Faq";
-import DesignRushIcon from "../assets/images/DesignRushIcon.png";
 import SEO from "../Components/SEO/SEO";
+import LazyImage, { OptimizedImage } from "../Components/LazyImage";
+import { 
+  LazyTestimonials, 
+  LazyContactForm, 
+  LazyBlogsSection, 
+  LazyPortfolioList, 
+  LazyFaq 
+} from "../utils/codeSplitting";
+import { preloadImages } from "../utils/imageOptimization";
+import DesignRushIcon from "../assets/images/DesignRushIcon.png";
 
 const Home = () => {
+  // Preload critical images
+  React.useEffect(() => {
+    const criticalImages = [
+      aboutImg,
+      whyChooseImg,
+      aiEnterpriseBanner
+    ];
+    preloadImages(criticalImages);
+  }, []);
   return (
     <div className="pt-[5rem]">
       <SEO 
@@ -210,9 +223,10 @@ const Home = () => {
               About us
             </p>
             <div className="md:hidden flex flex-col pb-3">
-              <img
+              <OptimizedImage
                 src={aboutImg}
-                alt="About Us"
+                alt="About Us - KheyaMind AI Technologies"
+                priority={true}
                 className="h-full w-full aspect-video object-cover rounded-xl"
               />
             </div>
@@ -260,9 +274,10 @@ const Home = () => {
             </div>
           </div>
           <div data-aos="fade-up" className="hidden md:flex flex-col">
-            <img
+            <OptimizedImage
               src={aboutImg}
-              alt="About Us"
+              alt="About Us - KheyaMind AI Technologies"
+              priority={true}
               className="h-full w-full object-cover rounded-xl"
             />
           </div>
@@ -309,9 +324,9 @@ const Home = () => {
             data-aos="fade-up"
             className="sm:row-span-2 md:row-span-1 w-full h-full aspect-[4/3] sm:aspect-auto md:aspect-square overflow-hidden rounded-xl"
           >
-            <img
+            <LazyImage
               src={whyChooseImg}
-              alt="Why Choose Us"
+              alt="Why Choose KheyaMind AI - Leading AI Solutions Provider"
               className="md:aspect-[2/3] w-full h-full object-cover object-bottom"
             />
           </div>
@@ -341,10 +356,10 @@ const Home = () => {
       </section>
 
       <section className="py-[5rem] bg-secondary/5 relative">
-        <img
+        <LazyImage
           src={aiEnterpriseBanner}
           className="absolute inset-0 z-[-2] h-full w-full object-cover"
-          alt=""
+          alt="AI Enterprise Solutions Background"
         />
         <div className="absolute inset-0 z-[-1] bg-gradient-to-tr from-primary/40 via-black/70 to-secondary/80"></div>
         <div className="wrapper text-center text-white">
@@ -384,14 +399,14 @@ const Home = () => {
         data={services}
       />
       <div className="relative wrapper !px-0">
-        <PortfolioList />
+        <LazyPortfolioList />
         <div className="wrapper md:block flex justify-center pt-10">
           <Link
             to="https://www.designrush.com/agency/profile/kheyamind-ai-technologies"
             target="_blank"
             className="w-[5rem] md:w-[6rem] z-[40] hover:scale-105 transition-all duration-300 md:absolute right-10 mx-auto bottom-4"
           >
-            <img
+            <LazyImage
               src={DesignRushIcon}
               alt="Verified agency on DesignRush"
               className="w-[5rem] md:w-[6rem]"
@@ -399,10 +414,10 @@ const Home = () => {
           </Link>
         </div>
       </div>
-      <ContactForm />
-      <Testimonials />
-      <BlogsSection />
-      <Faq />
+      <LazyContactForm />
+      <LazyTestimonials />
+      <LazyBlogsSection />
+      <LazyFaq />
     </div>
   );
 };

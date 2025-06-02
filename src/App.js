@@ -1,17 +1,18 @@
-import { BrowserRouter, Link, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { LandingPageLayout, MainLayout } from "./Layout";
 import ScrollToTopButton from "./Components/ScrollToTopButton";
 import SpinnerContextProvider from "./Components/SpinnerContext";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { LoadingSpinner } from "./Components/LoadingSpinner";
 import ScrollToTop from "./Components/ScrollToTop";
 import QueryProvider from "./utils/QueryProvider";
+import { initPerformanceMonitoring, observePerformance } from "./utils/performanceMonitoring";
+import { optimizeExistingImages } from "./utils/imageOptimization";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Toaster } from "react-hot-toast";
-import DesignRushIcon from "./assets/images/DesignRushIcon.png";
 
 const Home = lazy(() => import("./Pages/Home"));
 const AboutUs = lazy(() => import("./Pages/AboutUs"));
@@ -31,14 +32,28 @@ const RealEstateAILanding = lazy(() =>
   import("./Pages/landingPages/RealEstateAILanding")
 );
 
+// Initialize AOS with performance optimizations
 AOS.init({
   once: true,
   duration: 500,
   easing: "ease-in-out-quart",
   offset: -70,
+  disable: window.innerWidth < 768 ? 'mobile' : false, // Disable on mobile for better performance
 });
 
 function App() {
+  useEffect(() => {
+    // Initialize performance monitoring
+    initPerformanceMonitoring();
+    observePerformance();
+    
+    // Optimize existing images after component mount
+    const timer = setTimeout(() => {
+      optimizeExistingImages();
+    }, 1000);
+    
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <QueryProvider>
       <BrowserRouter>

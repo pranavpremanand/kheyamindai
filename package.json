@@ -36,7 +36,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "serve": "node server.js",
-    "generate-sitemap": "node scripts/generateSitemap.js"
+    "generate-sitemap": "node scripts/generateSitemap.js",
+    "analyze": "npm run build && npx serve -s build",
+    "lighthouse": "lighthouse http://localhost:3000 --output html --output-path ./lighthouse-report.html",
+    "perf-audit": "npm run build && npm run lighthouse",
+    "bundle-analyzer": "npx webpack-bundle-analyzer build/static/js/*.js"
   },
   "eslintConfig": {
     "extends": [
