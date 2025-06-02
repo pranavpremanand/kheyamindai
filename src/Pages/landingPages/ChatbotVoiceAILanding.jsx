@@ -92,11 +92,7 @@ const ChatbotVoiceAILanding = () => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center">
         <div className="absolute inset-0 bg-black/40 z-[1] w-full h-full" />
-        {/* <img
-          src={aiChatbotBanner}
-          alt="Banner"
-          className="w-full h-full object-cover absolute inset-0"
-        /> */}
+
         <ReactPlayer
           url={bannerVid}
           playing
@@ -112,7 +108,6 @@ const ChatbotVoiceAILanding = () => {
             position: "absolute",
             top: 0,
             left: 0,
-            zIndex: -1,
           }}
           config={{
             file: {
@@ -127,7 +122,7 @@ const ChatbotVoiceAILanding = () => {
           }}
         />
         <div className="wrapper pt-[4rem] md:pt-[8rem] pb-[4rem] text-center text-white relative z-[2]">
-          <div data-aos="fade-up" className="">
+          <div data-aos="fade-up" className="relative z-[1]">
             <p className="section-heading-2">Conversational AI Solutions</p>
             <h1 className="heading">
               Transform Customer Experiences with AI-Powered Chatbots & Voice

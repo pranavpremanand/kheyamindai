@@ -1,32 +1,61 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from "react";
 
 /**
- * LazyImage Component with Intersection Observer
- * Implements lazy loading with placeholder and error handling
+ * Enhanced LazyImage Component with WebP support and performance optimizations
  */
 const LazyImage = ({
   src,
+  webpSrc,
   alt,
-  className = '',
+  className = "",
   placeholder = null,
   errorFallback = null,
   threshold = 0.1,
-  rootMargin = '50px',
+  rootMargin = "50px",
+  priority = false,
+  sizes = "100vw",
+  quality = "auto",
   onLoad = () => {},
   onError = () => {},
   ...props
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(priority); // Load immediately if priority
   const [hasError, setHasError] = useState(false);
+  const [currentSrc, setCurrentSrc] = useState("");
   const imgRef = useRef(null);
+  const observerRef = useRef(null);
+
+  // Detect WebP support
+  const supportsWebP = useCallback(() => {
+    if (typeof window === "undefined") return false;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = 1;
+    canvas.height = 1;
+    return canvas.toDataURL("image/webp").indexOf("data:image/webp") === 0;
+  }, []);
+
+  // Get optimal image source
+  const getOptimalSrc = useCallback(() => {
+    if (webpSrc && supportsWebP()) {
+      return webpSrc;
+    }
+    return src;
+  }, [src, webpSrc, supportsWebP]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    if (priority) {
+      setCurrentSrc(getOptimalSrc());
+      return;
+    }
+
+    observerRef.current = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsInView(true);
-          observer.disconnect();
+          setCurrentSrc(getOptimalSrc());
+          observerRef.current?.disconnect();
         }
       },
       {
@@ -35,26 +64,39 @@ const LazyImage = ({
       }
     );
 
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
+    if (imgRef.current && observerRef.current) {
+      observerRef.current.observe(imgRef.current);
     }
 
-    return () => observer.disconnect();
-  }, [threshold, rootMargin]);
+    return () => observerRef.current?.disconnect();
+  }, [threshold, rootMargin, priority, getOptimalSrc]);
 
-  const handleLoad = () => {
+  const handleLoad = useCallback(() => {
     setIsLoaded(true);
     onLoad();
-  };
 
-  const handleError = () => {
+    // Track image load performance
+    if (process.env.NODE_ENV === "development") {
+      console.log(`Image loaded: ${currentSrc}`);
+    }
+  }, [onLoad, currentSrc]);
+
+  const handleError = useCallback(() => {
     setHasError(true);
     onError();
-  };
+
+    // Fallback to original src if WebP fails
+    if (currentSrc === webpSrc && src !== webpSrc) {
+      setCurrentSrc(src);
+      setHasError(false);
+    }
+  }, [onError, currentSrc, webpSrc, src]);
 
   // Default placeholder
   const defaultPlaceholder = (
-    <div className={`bg-gray-200 animate-pulse flex items-center justify-center ${className}`}>
+    <div
+      className={`bg-gray-200 animate-pulse flex items-center justify-center ${className}`}
+    >
       <svg
         className="w-8 h-8 text-gray-400"
         fill="currentColor"
@@ -71,7 +113,9 @@ const LazyImage = ({
 
   // Default error fallback
   const defaultErrorFallback = (
-    <div className={`bg-gray-100 flex items-center justify-center ${className}`}>
+    <div
+      className={`bg-gray-100 flex items-center justify-center ${className}`}
+    >
       <svg
         className="w-8 h-8 text-gray-400"
         fill="currentColor"
@@ -93,17 +137,21 @@ const LazyImage = ({
   return (
     <div ref={imgRef} className="relative">
       {!isInView && (placeholder || defaultPlaceholder)}
-      
-      {isInView && (
+
+      {(isInView || priority) && currentSrc && (
         <>
           {!isLoaded && (placeholder || defaultPlaceholder)}
           <img
-            src={src}
+            src={currentSrc}
             alt={alt}
-            className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+            className={`${className} ${
+              isLoaded ? "opacity-100" : "opacity-0"
+            } transition-opacity duration-300`}
             onLoad={handleLoad}
             onError={handleError}
-            loading="lazy"
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+            sizes={sizes}
             {...props}
           />
         </>
@@ -119,15 +167,15 @@ export const OptimizedImage = ({
   src,
   webpSrc,
   alt,
-  className = '',
-  sizes = '100vw',
+  className = "",
+  sizes = "100vw",
   priority = false,
   ...props
 }) => {
   if (priority) {
     // For above-the-fold images, load immediately
     return (
-      <picture>
+      <picture className={className}>
         {webpSrc && <source srcSet={webpSrc} type="image/webp" />}
         <img
           src={src}
@@ -140,14 +188,7 @@ export const OptimizedImage = ({
     );
   }
 
-  return (
-    <LazyImage
-      src={src}
-      alt={alt}
-      className={className}
-      {...props}
-    />
-  );
+  return <LazyImage src={src} alt={alt} className={className} {...props} />;
 };
 
 export default LazyImage;

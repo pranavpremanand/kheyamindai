@@ -9,57 +9,86 @@ import ScrollToTop from "./Components/ScrollToTop";
 import QueryProvider from "./utils/QueryProvider";
 import { initPerformanceMonitoring, observePerformance } from "./utils/performanceMonitoring";
 import { optimizeExistingImages } from "./utils/imageOptimization";
+import { createLazyComponent, initBundleOptimizations } from "./utils/bundleOptimization";
+import { initCriticalCSS } from "./utils/criticalCSS";
+import { initThirdPartyOptimizations } from "./utils/thirdPartyOptimization";
+import { initIconOptimizations } from "./utils/iconOptimization";
 
-import AOS from "aos";
-import "aos/dist/aos.css";
-import { Toaster } from "react-hot-toast";
+// Lazy load Toaster to reduce initial bundle
+const Toaster = lazy(() => import("react-hot-toast").then(module => ({ default: module.Toaster })));
 
-const Home = lazy(() => import("./Pages/Home"));
-const AboutUs = lazy(() => import("./Pages/AboutUs"));
-const OurServices = lazy(() => import("./Pages/OurServices"));
-const ServiceDetails = lazy(() => import("./Pages/ServiceDetails"));
-const Blogs = lazy(() => import("./Pages/Blogs"));
-const BlogDetails = lazy(() => import("./Pages/BlogDetails"));
-const ContactUs = lazy(() => import("./Pages/ContactUs"));
-const ThankYou = lazy(() => import("./Pages/ThankYou"));
-const ChatbotVoiceAILanding = lazy(() =>
+// Optimized lazy loading with error boundaries
+const Home = createLazyComponent(() => import("./Pages/Home"));
+const AboutUs = createLazyComponent(() => import("./Pages/AboutUs"));
+const OurServices = createLazyComponent(() => import("./Pages/OurServices"));
+const ServiceDetails = createLazyComponent(() => import("./Pages/ServiceDetails"));
+const Blogs = createLazyComponent(() => import("./Pages/Blogs"));
+const BlogDetails = createLazyComponent(() => import("./Pages/BlogDetails"));
+const ContactUs = createLazyComponent(() => import("./Pages/ContactUs"));
+const ThankYou = createLazyComponent(() => import("./Pages/ThankYou"));
+const ChatbotVoiceAILanding = createLazyComponent(() =>
   import("./Pages/landingPages/ChatbotVoiceAILanding")
 );
-const EnterpriseAILanding = lazy(() =>
+const EnterpriseAILanding = createLazyComponent(() =>
   import("./Pages/landingPages/EnterpriseAILanding")
 );
-const RealEstateAILanding = lazy(() =>
+const RealEstateAILanding = createLazyComponent(() =>
   import("./Pages/landingPages/RealEstateAILanding")
 );
 
-// Initialize AOS with performance optimizations
-AOS.init({
-  once: true,
-  duration: 500,
-  easing: "ease-in-out-quart",
-  offset: -70,
-  disable: window.innerWidth < 768 ? 'mobile' : false, // Disable on mobile for better performance
-});
+// Defer AOS initialization to reduce main thread blocking
+let aosInitialized = false;
+const initAOS = async () => {
+  if (!aosInitialized && window.innerWidth > 768) {
+    const AOS = await import("aos");
+    await import("aos/dist/aos.css");
+    AOS.init({
+      once: true,
+      duration: 500,
+      easing: "ease-in-out-quart",
+      offset: -70,
+    });
+    aosInitialized = true;
+  }
+};
 
 function App() {
   useEffect(() => {
+    // Initialize critical CSS immediately
+    initCriticalCSS();
+    
     // Initialize performance monitoring
     initPerformanceMonitoring();
     observePerformance();
     
-    // Optimize existing images after component mount
-    const timer = setTimeout(() => {
-      optimizeExistingImages();
-    }, 1000);
+    // Initialize bundle optimizations
+    initBundleOptimizations();
     
-    return () => clearTimeout(timer);
+    // Initialize icon optimizations
+    initIconOptimizations();
+    
+    // Initialize third-party optimizations
+    initThirdPartyOptimizations();
+    
+    // Defer heavy operations to reduce main thread blocking
+    const deferredOperations = setTimeout(() => {
+      // Initialize AOS after initial render
+      initAOS();
+      
+      // Optimize existing images
+      optimizeExistingImages();
+    }, 3000); // Further increased delay to reduce initial load impact
+    
+    return () => clearTimeout(deferredOperations);
   }, []);
   return (
     <QueryProvider>
       <BrowserRouter>
         <ScrollToTopButton />
         <ScrollToTop />
-        <Toaster position="top-center" />
+        <Suspense fallback={null}>
+          <Toaster position="top-center" />
+        </Suspense>
         <SpinnerContextProvider>
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>

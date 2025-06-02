@@ -12,6 +12,10 @@
   <link rel="dns-prefetch" href="https://www.google-analytics.com">
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   
+  <!-- Preload critical fonts to eliminate render blocking -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+  
   <!-- Critical CSS will be inlined here by build process -->
   <style>
     /* Critical CSS for above-the-fold content */
@@ -47,12 +51,19 @@
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/fav.png" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   <title>AI Chatbots, Voice Assistants & Automation Solutions | KheyaMind AI Technologies</title>
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-TN86VLCT');</script>
+  <!-- Defer Google Tag Manager to reduce main thread blocking -->
+  <script>
+    // Load GTM after page load to reduce blocking
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-TN86VLCT');
+      }, 1000); // Delay GTM load by 1 second
+    });
+  </script>
   <!-- End Google Tag Manager -->
 </head>
 <body>

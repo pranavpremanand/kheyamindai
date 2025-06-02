@@ -110,7 +110,6 @@ const EnterpriseAILanding = () => {
             position: "absolute",
             top: 0,
             left: 0,
-            zIndex: -1,
           }}
           config={{
             file: {
@@ -125,7 +124,7 @@ const EnterpriseAILanding = () => {
           }}
         />
         <div className="wrapper pt-[4rem] md:pt-[8rem] pb-[4rem] text-center text-white relative z-[2]">
-          <div data-aos="fade-up" className="">
+          <div data-aos="fade-up" className="relative z-[1]">
             <p className="section-heading-2">Enterprise AI Solutions</p>
             <h1 className="heading">
               Custom AI & Automation for Complex Business Challenges

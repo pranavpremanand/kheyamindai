@@ -24,12 +24,12 @@ import { ImPhone } from "react-icons/im";
 import aiEnterpriseBanner from "../assets/images/ai-enterprise-banner.webp";
 import SEO from "../Components/SEO/SEO";
 import LazyImage, { OptimizedImage } from "../Components/LazyImage";
-import { 
-  LazyTestimonials, 
-  LazyContactForm, 
-  LazyBlogsSection, 
-  LazyPortfolioList, 
-  LazyFaq 
+import {
+  LazyTestimonials,
+  LazyContactForm,
+  LazyBlogsSection,
+  LazyPortfolioList,
+  LazyFaq,
 } from "../utils/codeSplitting";
 import { preloadImages } from "../utils/imageOptimization";
 import DesignRushIcon from "../assets/images/DesignRushIcon.png";
@@ -37,16 +37,12 @@ import DesignRushIcon from "../assets/images/DesignRushIcon.png";
 const Home = () => {
   // Preload critical images
   React.useEffect(() => {
-    const criticalImages = [
-      aboutImg,
-      whyChooseImg,
-      aiEnterpriseBanner
-    ];
+    const criticalImages = [aboutImg, whyChooseImg, aiEnterpriseBanner];
     preloadImages(criticalImages);
   }, []);
   return (
     <div className="pt-[5rem]">
-      <SEO 
+      <SEO
         type="home"
         title="AI Chatbots, Voice Assistants & Automation Solutions | KheyaMind AI Technologies"
         description="KheyaMind AI crafts intelligent solutions including AI Chatbots, Voice Assistants, ERP Automations, and NLP tools. Empower your enterprise with next-gen AI solutions."
@@ -54,33 +50,42 @@ const Home = () => {
         pageData={{
           faqs: [
             {
-              question: "What types of businesses can benefit from AI chatbots and automation?",
-              answer: "Enterprises across industries including retail, finance, healthcare, and logistics can benefit from AI chatbots and automation solutions."
+              question:
+                "What types of businesses can benefit from AI chatbots and automation?",
+              answer:
+                "Enterprises across industries including retail, finance, healthcare, and logistics can benefit from AI chatbots and automation solutions.",
             },
             {
-              question: "Can KheyaMind solutions be customized to fit our unique business processes?",
-              answer: "Yes, all solutions are fully tailored to your workflows and goals. We provide custom AI development that integrates seamlessly with your existing business processes."
+              question:
+                "Can KheyaMind solutions be customized to fit our unique business processes?",
+              answer:
+                "Yes, all solutions are fully tailored to your workflows and goals. We provide custom AI development that integrates seamlessly with your existing business processes.",
             },
             {
-              question: "What's the typical turnaround time for project delivery?",
-              answer: "Timelines vary based on project scope, but we ensure fast, reliable deployment. Most projects are completed within 4-12 weeks depending on complexity."
+              question:
+                "What's the typical turnaround time for project delivery?",
+              answer:
+                "Timelines vary based on project scope, but we ensure fast, reliable deployment. Most projects are completed within 4-12 weeks depending on complexity.",
             },
             {
               question: "Do you offer post-deployment support?",
-              answer: "Yes, all solutions come with dedicated support and maintenance plans. We provide ongoing technical support, updates, and optimization services."
+              answer:
+                "Yes, all solutions come with dedicated support and maintenance plans. We provide ongoing technical support, updates, and optimization services.",
             },
             {
               question: "Is AI integration scalable as our business grows?",
-              answer: "Absolutely — scalability is built into every solution we deliver. Our AI systems are designed to grow with your business and handle increased workloads."
-            }
-          ]
+              answer:
+                "Absolutely — scalability is built into every solution we deliver. Our AI systems are designed to grow with your business and handle increased workloads.",
+            },
+          ],
         }}
       />
-      <section className="relative min-h-screen flex items-center justify-center bg-black/30">
+      <section className="relative min-h-screen flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/40 z-[1] w-full h-full" />
         <div className="pt-[4rem] md:pt-[8rem] pb-[4rem]">
           <div
             data-aos="fade-up"
-            className="wrapper flex flex-col text-center text-white gap-5 justify-center h-full"
+            className="wrapper relative z-[1] flex flex-col text-center text-white gap-5 justify-center h-full"
           >
             <h1 className="heading">
               Vision Beyond AI: Intelligent Solutions for the Next Era
@@ -115,7 +120,6 @@ const Home = () => {
               position: "absolute",
               top: 0,
               left: 0,
-              zIndex: -1,
             }}
             config={{
               file: {
@@ -131,7 +135,7 @@ const Home = () => {
           />
         </div>
       </section>
-      <div className="wrapper pt-[3rem] sm:pt-0 sm:-translate-y-1/3 lg:-translate-y-1/2">
+      <div className="wrapper relative z-[1] pt-[3rem] sm:pt-0 sm:-translate-y-1/3 lg:-translate-y-1/2">
         <div className="grid lg:grid-cols-4">
           <div
             data-aos="fade-up"
@@ -273,7 +277,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div data-aos="fade-up" className="hidden md:flex flex-col">
+          <div data-aos="fade-up" className="hidden md:flex h-full flex-col">
             <OptimizedImage
               src={aboutImg}
               alt="About Us - KheyaMind AI Technologies"
@@ -355,7 +359,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-[5rem] bg-secondary/5 relative">
+      <section className="py-[5rem] bg-secondary relative">
         <LazyImage
           src={aiEnterpriseBanner}
           className="absolute inset-0 z-[-2] h-full w-full object-cover"
@@ -380,7 +384,10 @@ const Home = () => {
               Let’s start building smarter solutions, together.
             </p>
             <div className="flex sm:flex-row flex-col justify-center gap-5 mt-8">
-              <Link to="/contact-us" className="primary-btn">
+              <Link
+                to="/contact-us"
+                className="primary-btn hover:!border border-white"
+              >
                 Get Started
               </Link>
               <Link

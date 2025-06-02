@@ -307,7 +307,6 @@ const RealEstateAILanding = () => {
             position: "absolute",
             top: 0,
             left: 0,
-            zIndex: -1,
           }}
           config={{
             file: {
@@ -322,7 +321,7 @@ const RealEstateAILanding = () => {
           }}
         />
         <div className="wrapper pt-[4rem] md:pt-[8rem] pb-[4rem] text-center text-white relative z-[2]">
-          <div data-aos="fade-up" className="space-y-3">
+          <div data-aos="fade-up" className="space-y-3 relative z-[1]">
             <p className="section-heading-2">Real Estate AI Solutions</p>
             <h1 className="heading">
               Transform Real Estate Operations with AI-Powered Analytics &
