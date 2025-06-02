@@ -9,6 +9,8 @@ import Breadcrumb from "../Components/Breadcrumb";
 import ServiceCTA from "../Components/ServiceCTA";
 import InternalLinkHelper from "../Components/InternalLinkHelper";
 import { getServiceBreadcrumb } from "../utils/internalLinking";
+// Temporary import for schema validation
+import { validateServiceSchema } from "../utils/serviceSchemaValidation";
 
 const ServiceDetails = () => {
   const { slug } = useParams();
@@ -19,6 +21,14 @@ const ServiceDetails = () => {
   }
 
   const breadcrumbItems = getServiceBreadcrumb(data.title, data.slug);
+  
+  // Ensure canonical URL is properly constructed
+  const canonicalUrl = data.seo?.canonicalUrl || `https://www.kheyamind.ai/services/${slug}`;
+  
+  // Validate service schema (development only)
+  if (process.env.NODE_ENV === 'development') {
+    validateServiceSchema(data, canonicalUrl);
+  }
 
   return (
     <>
@@ -28,7 +38,7 @@ const ServiceDetails = () => {
         description={data.seo?.description || data.desc}
         keywords={data.seo?.keywords || `${data.title}, AI Solutions, KheyaMind AI, ${data.title.toLowerCase()} services`}
         image={data.detailsPage.banner}
-        url={data.seo?.canonicalUrl}
+        url={canonicalUrl}
         pageData={{
           title: data.title,
           description: data.seo?.description || data.desc,

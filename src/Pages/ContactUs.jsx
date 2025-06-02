@@ -7,10 +7,30 @@ import { companyDetails } from "../data/constant";
 import { IoMail } from "react-icons/io5";
 import MapComponent from "../Components/Website/MapComponent";
 import ContactForm2 from "../Components/ContactForm2";
+import SEO from "../Components/SEO/SEO";
 
 const ContactUs = () => {
   return (
     <>
+      <SEO 
+        type="contact"
+        title="Contact Us | Get in Touch with KheyaMind AI Technologies"
+        description="Contact KheyaMind AI for AI chatbots, voice assistants, and automation solutions. Get expert consultation and transform your business with AI technology."
+        keywords="contact KheyaMind AI, AI consultation, chatbot development contact, voice AI contact, business automation inquiry"
+        url="https://www.kheyamind.ai/contact-us"
+        image={banner}
+        pageData={{
+          email: companyDetails.email,
+          phone: companyDetails.phone,
+          address: {
+            streetAddress: companyDetails.address,
+            addressLocality: "Dhanbad",
+            addressRegion: "Jharkhand",
+            postalCode: "826001",
+            addressCountry: "India"
+          }
+        }}
+      />
       <div className="pt-[5rem] md:pt-[7rem]">
         <div className="aspect-[6/4] md:aspect-[19/6] relative">
           <img

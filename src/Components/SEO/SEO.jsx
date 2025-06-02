@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { MultipleJsonLd } from './JsonLd';
 import { 
   getOrganizationSchema, 
@@ -77,16 +77,26 @@ const SEO = ({
   type = "website",
   pageData = {}
 }) => {
-  // Get the current URL if not provided
-  const rawUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
-  
   // Use a hardcoded base URL for SSR to ensure absolute paths always work
   const baseUrl = typeof window !== 'undefined' 
     ? `${window.location.protocol}//${window.location.host}`
     : 'https://www.kheyamind.ai';
   
-  // Get normalized canonical URL
-  const canonicalUrl = getNormalizedCanonicalUrl(rawUrl);
+  // Get the current URL if not provided
+  const rawUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
+  
+  // Get normalized canonical URL - prioritize provided URL over current location
+  let canonicalUrl = '';
+  if (url) {
+    canonicalUrl = getNormalizedCanonicalUrl(url);
+  } else if (rawUrl) {
+    canonicalUrl = getNormalizedCanonicalUrl(rawUrl);
+  }
+  
+  // Fallback to base URL if no canonical URL could be determined
+  if (!canonicalUrl && typeof window !== 'undefined') {
+    canonicalUrl = window.location.href.split('?')[0].split('#')[0];
+  }
   
   // Ensure absolute image URL with proper format
   const absoluteImageUrl = image.startsWith('http') 
@@ -181,15 +191,57 @@ const SEO = ({
 
   const schemas = generateSchemas();
 
+  // Debug logging for development
+  if (process.env.NODE_ENV === 'development') {
+    console.log('SEO Component Debug:', {
+      type,
+      providedUrl: url,
+      rawUrl,
+      canonicalUrl,
+      title,
+      hasCanonicalUrl: !!canonicalUrl,
+      canonicalUrlLength: canonicalUrl?.length || 0
+    });
+  }
+
   return (
     <>
       <Helmet>
+        {/* Basic Meta Tags */}
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
         
         {/* Canonical URL - Using normalized URL */}
-        <link rel="canonical" href={canonicalUrl} />
+        {canonicalUrl && canonicalUrl.trim() && <link rel="canonical" href={canonicalUrl} />}
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content={type === 'blog' ? 'article' : 'website'} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={absoluteImageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="KheyaMind AI Technologies" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={canonicalUrl} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={absoluteImageUrl} />
+        
+        {/* Additional meta tags for articles/blogs */}
+        {type === 'blog' && pageData.datePublished && (
+          <meta property="article:published_time" content={pageData.datePublished} />
+        )}
+        {type === 'blog' && pageData.dateModified && (
+          <meta property="article:modified_time" content={pageData.dateModified} />
+        )}
+        {type === 'blog' && pageData.author && (
+          <meta property="article:author" content={pageData.author} />
+        )}
       </Helmet>
       
       {/* JSON-LD Structured Data */}

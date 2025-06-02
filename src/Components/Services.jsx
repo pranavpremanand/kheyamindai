@@ -20,7 +20,7 @@ const Services = ({ title, heading, data }) => {
       >
         {data.map((item) => (
           <Link
-            to={item.detailsPage && `/services/${item.slug}}`}
+            to={item.detailsPage && `/services/${item.slug}`}
             key={item.id}
             className="relative sm:w-[calc(100%/2-1.25rem)] lg:w-[calc(100%/3-1.75rem)] overflow-hidden group bg-primary/10 px-5 py-10 flex flex-col items-center gap-2 rounded-lg hover:bg-primary/30 transition-all duration-200"
           >

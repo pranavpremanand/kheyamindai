@@ -13,6 +13,7 @@ import { createLazyComponent, initBundleOptimizations } from "./utils/bundleOpti
 import { initCriticalCSS } from "./utils/criticalCSS";
 import { initThirdPartyOptimizations } from "./utils/thirdPartyOptimization";
 import { initIconOptimizations } from "./utils/iconOptimization";
+import { HelmetProvider } from 'react-helmet-async';
 
 // Lazy load Toaster to reduce initial bundle
 const Toaster = lazy(() => import("react-hot-toast").then(module => ({ default: module.Toaster })));
@@ -82,56 +83,58 @@ function App() {
     return () => clearTimeout(deferredOperations);
   }, []);
   return (
-    <QueryProvider>
-      <BrowserRouter>
-        <ScrollToTopButton />
-        <ScrollToTop />
-        <Suspense fallback={null}>
-          <Toaster position="top-center" />
-        </Suspense>
-        <SpinnerContextProvider>
-          <Suspense fallback={<LoadingSpinner />}>
-            <Routes>
-              <Route path="/" element={<MainLayout />}>
-              <Route index element={<Home />} />
-              <Route path="*" element={<Navigate to="/" />} />
-              <Route path="about-us" element={<AboutUs />} />
-              <Route path="services" element={<OurServices />} />
-              <Route path="services/:slug" element={<ServiceDetails />} />
-              <Route path="blogs" element={<Blogs />} />
-              <Route path="blogs/:slug" element={<BlogDetails />} />
-              <Route path="contact-us" element={<ContactUs />} />
-              <Route path="thank-you" element={<ThankYou />} />
-            </Route>
+    <HelmetProvider>
+      <QueryProvider>
+        <BrowserRouter>
+          <ScrollToTopButton />
+          <ScrollToTop />
+          <Suspense fallback={null}>
+            <Toaster position="top-center" />
+          </Suspense>
+          <SpinnerContextProvider>
+            <Suspense fallback={<LoadingSpinner />}>
+              <Routes>
+                <Route path="/" element={<MainLayout />}>
+                <Route index element={<Home />} />
+                <Route path="*" element={<Navigate to="/" />} />
+                <Route path="about-us" element={<AboutUs />} />
+                <Route path="services" element={<OurServices />} />
+                <Route path="services/:slug" element={<ServiceDetails />} />
+                <Route path="blogs" element={<Blogs />} />
+                <Route path="blogs/:slug" element={<BlogDetails />} />
+                <Route path="contact-us" element={<ContactUs />} />
+                <Route path="thank-you" element={<ThankYou />} />
+              </Route>
 
-            <Route path="/" element={<LandingPageLayout />}>
-              {/* Landing Page */}
-              {/* <Route
-                path="web-development"
-                element={<LandingPage page="web" />}
-              />
-              <Route
-                path="app-development"
-                element={<LandingPage page="app" />}
-              /> */}
-              <Route
-                path="/chatbots-voice-ai"
-                element={<ChatbotVoiceAILanding />}
-              />
-              <Route
-                path="/ai-enterprise-solutions"
-                element={<EnterpriseAILanding />}
-              />
-              <Route
-                path="/real-estate-ai-solutions"
-                element={<RealEstateAILanding />}
-              />
-            </Route>
-          </Routes>
-        </Suspense>
-      </SpinnerContextProvider>
-    </BrowserRouter>
-    </QueryProvider>
+              <Route path="/" element={<LandingPageLayout />}>
+                {/* Landing Page */}
+                {/* <Route
+                  path="web-development"
+                  element={<LandingPage page="web" />}
+                />
+                <Route
+                  path="app-development"
+                  element={<LandingPage page="app" />}
+                /> */}
+                <Route
+                  path="/chatbots-voice-ai"
+                  element={<ChatbotVoiceAILanding />}
+                />
+                <Route
+                  path="/ai-enterprise-solutions"
+                  element={<EnterpriseAILanding />}
+                />
+                <Route
+                  path="/real-estate-ai-solutions"
+                  element={<RealEstateAILanding />}
+                />
+              </Route>
+            </Routes>
+          </Suspense>
+        </SpinnerContextProvider>
+      </BrowserRouter>
+      </QueryProvider>
+    </HelmetProvider>
   );
 }
 

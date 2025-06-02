@@ -6,6 +6,7 @@ import HrLine from "../Components/HrLine";
 import ContactForm from "../Components/ContactForm";
 import FancyLoader from "../Components/FancyLoader";
 import { useBlogs } from "../hooks/useBlogs";
+import SEO from "../Components/SEO/SEO";
 
 const Blogs = () => {
   // Use the custom hook to fetch blogs with caching
@@ -21,6 +22,14 @@ const Blogs = () => {
 
   return (
     <>
+      <SEO 
+        type="website"
+        title="AI & Technology Blogs | Latest Insights from KheyaMind AI"
+        description="Explore the latest insights on AI chatbots, voice assistants, automation, and emerging technologies. Stay updated with KheyaMind AI's expert blog content."
+        keywords="AI blogs, technology insights, chatbot articles, voice AI content, automation guides, AI trends, KheyaMind AI blog"
+        url="https://www.kheyamind.ai/blogs"
+        image={banner}
+      />
       <PageBanner banner={banner} title="Blogs" />
       <div className="wrapper pt-[5rem] space-y-6">
         <div

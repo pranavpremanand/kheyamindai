@@ -118,41 +118,22 @@ export const getServicePageSchema = (url, title, description, image) => {
     "name": title,
     "description": description,
     "serviceType": "AI Solutions",
-    "category": "Artificial Intelligence",
     "provider": {
       "@type": "Organization",
       "@id": `${baseUrl}#organization`,
       "name": "KheyaMind AI Technologies",
-      "url": baseUrl
+      "url": "https://www.kheyamind.ai"
     },
+    "areaServed": [
+      "India",
+      "UAE", 
+      "USA",
+      "UK",
+      "Singapore",
+      "Australia"
+    ],
     "url": url,
     "image": image,
-    "areaServed": [
-      {
-        "@type": "Country",
-        "name": "India"
-      },
-      {
-        "@type": "Country", 
-        "name": "United Arab Emirates"
-      },
-      {
-        "@type": "Country",
-        "name": "United States"
-      },
-      {
-        "@type": "Country",
-        "name": "United Kingdom"
-      },
-      {
-        "@type": "Country",
-        "name": "Singapore"
-      },
-      {
-        "@type": "Country",
-        "name": "Australia"
-      }
-    ],
     "availableChannel": {
       "@type": "ServiceChannel",
       "serviceUrl": url,
@@ -304,110 +285,42 @@ export const getEnhancedServiceSchema = (serviceData, url) => {
     "@type": "Service",
     "@id": `${url}#service`,
     "name": serviceData.title,
-    "alternateName": serviceData.title.replace(/&/g, 'and'),
     "description": serviceData.seo?.description || serviceData.desc,
     "serviceType": "AI Solutions",
-    "category": serviceInfo.category,
-    "keywords": serviceInfo.keywords.join(", "),
-    "serviceOutput": serviceInfo.serviceOutput,
     "provider": {
       "@type": "Organization",
       "@id": `${baseUrl}#organization`,
       "name": "KheyaMind AI Technologies",
-      "alternateName": "KheyaMind AI",
-      "url": baseUrl,
-      "logo": `${baseUrl}/logo.png`,
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+91-9242049993",
-        "contactType": "Customer Service",
-        "availableLanguage": "English"
-      }
-    },
-    "url": url,
-    "image": {
-      "@type": "ImageObject",
-      "url": serviceData.detailsPage?.banner || `${baseUrl}/og-image.png`,
-      "caption": `${serviceData.title} by KheyaMind AI Technologies`
+      "url": "https://www.kheyamind.ai"
     },
     "areaServed": [
-      {
-        "@type": "Country",
-        "name": "India",
-        "sameAs": "https://en.wikipedia.org/wiki/India"
-      },
-      {
-        "@type": "Country", 
-        "name": "United Arab Emirates",
-        "sameAs": "https://en.wikipedia.org/wiki/United_Arab_Emirates"
-      },
-      {
-        "@type": "Country",
-        "name": "United States",
-        "sameAs": "https://en.wikipedia.org/wiki/United_States"
-      },
-      {
-        "@type": "Country",
-        "name": "United Kingdom",
-        "sameAs": "https://en.wikipedia.org/wiki/United_Kingdom"
-      },
-      {
-        "@type": "Country",
-        "name": "Singapore",
-        "sameAs": "https://en.wikipedia.org/wiki/Singapore"
-      },
-      {
-        "@type": "Country",
-        "name": "Australia",
-        "sameAs": "https://en.wikipedia.org/wiki/Australia"
-      }
+      "India",
+      "UAE", 
+      "USA",
+      "UK",
+      "Singapore",
+      "Australia"
     ],
+    "url": url,
+    "image": serviceData.detailsPage?.banner || `${baseUrl}/og-image.png`,
+    "category": serviceInfo.category,
+    "keywords": serviceInfo.keywords.join(", "),
+    "serviceOutput": serviceInfo.serviceOutput,
     "availableChannel": {
       "@type": "ServiceChannel",
       "serviceUrl": url,
       "servicePhone": "+91-9242049993",
-      "availableLanguage": "English",
-      "serviceLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressCountry": "India",
-          "addressRegion": "Karnataka",
-          "addressLocality": "Bangalore"
-        }
-      }
+      "availableLanguage": "English"
     },
     "brand": {
       "@type": "Brand",
-      "name": "KheyaMind AI Technologies",
-      "logo": `${baseUrl}/logo.png`
+      "name": "KheyaMind AI Technologies"
     },
     "offers": {
       "@type": "Offer",
       "availability": "https://schema.org/InStock",
       "priceCurrency": "USD",
-      "description": "Custom AI solution pricing available on consultation",
-      "seller": {
-        "@id": `${baseUrl}#organization`
-      }
-    },
-    "audience": {
-      "@type": "BusinessAudience",
-      "audienceType": "Enterprise, SME, Startups"
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": `${serviceData.title} Solutions`,
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": `Custom ${serviceData.title}`,
-            "description": `Tailored ${serviceData.title.toLowerCase()} solutions for your business needs`
-          }
-        }
-      ]
+      "description": "Custom AI solution pricing available on consultation"
     }
   };
 };

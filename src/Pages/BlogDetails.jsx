@@ -5,7 +5,7 @@ import BlogItem from "../Components/Website/BlogItem";
 import HrLine from "../Components/HrLine";
 import { Link, useParams } from "react-router-dom";
 import FancyLoader from "../Components/FancyLoader";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { FaCalendarAlt, FaUser, FaTag, FaFolder } from "react-icons/fa";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { useBlogBySlug, useBlogs } from "../hooks/useBlogs";
