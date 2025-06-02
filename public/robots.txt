@@ -7,4 +7,4 @@ Allow: /
 # Disallow: /private/
 
 # Sitemaps
-Sitemap: https://sitemap.kheyamind.ai/sitemap.xml
+Sitemap: https://www.kheyamind.ai/sitemap.xml

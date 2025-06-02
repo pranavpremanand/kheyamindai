@@ -196,6 +196,16 @@ export const services = [
     title: "AI Chatbots",
     icon: icon1,
     desc: "Automate customer support and sales with intelligent text-based chatbots that deliver 24/7 instant responses across digital channels.",
+    slug: "ai-chatbots",
+    seo: {
+      title:
+        "AI Chatbots for Business | 24/7 Customer Support Automation | KheyaMind AI",
+      description:
+        "Automate customer support with intelligent AI chatbots. Handle queries, generate leads, and enhance customer experience 24/7. Get your AI chatbot today.",
+      keywords:
+        "AI chatbots, customer support automation, chatbot development, business chatbots, conversational AI",
+      canonicalUrl: "https://www.kheyamind.ai/services/ai-chatbots",
+    },
     detailsPage: {
       banner: require("../assets/images/banners/ai-chatbot.webp"),
       img1: require("../assets/images/service-details/chatbot1.webp"),
@@ -284,6 +294,16 @@ export const services = [
     title: "Voice AI Agents",
     icon: icon2,
     desc: "Transform call center operations with human-like voice assistants that handle customer calls, appointments, and telemarketing 24/7.",
+    slug: "voice-ai-agents",
+    seo: {
+      title:
+        "Voice AI Agents | AI-Powered Sales & Call Center Solutions | KheyaMind AI",
+      description:
+        "Transform call center operations with human-like voice AI agents. Automate sales calls, customer support, and lead qualification with advanced voice AI.",
+      keywords:
+        "voice AI agents, AI voice assistants, call center automation, sales automation, voice AI technology",
+      canonicalUrl: "https://www.kheyamind.ai/services/voice-ai-agents",
+    },
     detailsPage: {
       banner: require("../assets/images/banners/ai-voice-call.webp"),
       img1: require("../assets/images/service-details/ai-voice-call1.webp"),
@@ -372,6 +392,17 @@ export const services = [
     title: "NLP & Custom GPT Solutions",
     icon: icon3,
     desc: "Build domain-specific language AI for semantic search, knowledge management, and intelligent document processing.",
+    slug: "nlp-custom-gpt-solutions",
+    seo: {
+      title:
+        "Custom GPT Development | NLP Solutions | Enterprise AI | KheyaMind AI",
+      description:
+        "Build domain-specific AI with custom GPT solutions. Advanced NLP for document processing, content generation, and intelligent business automation.",
+      keywords:
+        "custom GPT development, NLP solutions, natural language processing, enterprise AI, document AI, content AI",
+      canonicalUrl:
+        "https://www.kheyamind.ai/services/nlp-custom-gpt-solutions",
+    },
     detailsPage: {
       banner: require("../assets/images/banners/nlp.webp"),
       img1: require("../assets/images/service-details/nlp1.webp"),
@@ -458,6 +489,16 @@ export const services = [
     title: "AI-Powered ERP Tools",
     icon: icon4,
     desc: "Enhance enterprise systems with custom AI modules for demand forecasting, automated procurement, and process optimization.",
+    slug: "ai-powered-erp-tools",
+    seo: {
+      title:
+        "AI-Powered ERP Systems | Smart Enterprise Resource Planning | KheyaMind AI",
+      description:
+        "Enhance enterprise systems with AI-powered ERP tools. Automate procurement, demand forecasting, and process optimization for maximum efficiency.",
+      keywords:
+        "AI ERP systems, enterprise resource planning, ERP automation, intelligent ERP, business process automation",
+      canonicalUrl: "https://www.kheyamind.ai/services/ai-powered-erp-tools",
+    },
     detailsPage: {
       banner: require("../assets/images/banners/ai-powered-erp.webp"),
       img1: require("../assets/images/service-details/ai-powered-erp1.webp"),
@@ -545,6 +586,16 @@ export const services = [
     title: "Cloud & DevOps AI",
     icon: icon5,
     desc: "AI-optimized cloud infrastructure and intelligent deployment pipelines for automated scaling and cost efficiency.",
+    slug: "cloud-devops-ai",
+    seo: {
+      title:
+        "AI-Optimized Cloud Infrastructure | DevOps Automation | KheyaMind AI",
+      description:
+        "Deploy AI-optimized cloud infrastructure with intelligent DevOps automation. Streamline deployment pipelines and reduce operational costs efficiently.",
+      keywords:
+        "cloud DevOps AI, infrastructure automation, cloud optimization, DevOps consulting, AI deployment, cloud migration",
+      canonicalUrl: "https://www.kheyamind.ai/services/cloud-devops-ai",
+    },
     detailsPage: {
       banner: require("../assets/images/banners/cloud-and-devops.webp"),
       img1: require("../assets/images/service-details/cloud-and-devops1.webp"),
@@ -631,6 +682,16 @@ export const services = [
     title: "AI Interface Design",
     icon: icon6,
     desc: "Specialized UI/UX for AI applications that makes complex systems intuitive and actionable for end-users.",
+    slug: "ai-interface-design",
+    seo: {
+      title:
+        "AI Interface Design | Intelligent UI/UX for AI Applications | KheyaMind AI",
+      description:
+        "Create intuitive AI interfaces with specialized UI/UX design. Build user-friendly AI applications that deliver exceptional user experiences.",
+      keywords:
+        "AI interface design, AI UX design, intelligent UI, AI application design, user experience AI, conversational UI",
+      canonicalUrl: "https://www.kheyamind.ai/services/ai-interface-design",
+    },
     detailsPage: {
       banner: require("../assets/images/banners/uiux.webp"),
       img1: require("../assets/images/service-details/uiux1.webp"),
@@ -717,6 +778,16 @@ export const services = [
     title: "Mobile App Development",
     icon: icon7,
     desc: "Build cross-platform mobile applications with embedded AI for real estate, HR, and productivity solutions.",
+    slug: "mobile-app-development",
+    seo: {
+      title:
+        "AI-Powered Mobile App Development | iOS & Android Apps | KheyaMind AI",
+      description:
+        "Build intelligent mobile applications with embedded AI. Custom iOS and Android apps for real estate, HR, and productivity solutions with AI features.",
+      keywords:
+        "AI mobile app development, intelligent mobile apps, iOS app development, Android app development, AI-powered apps",
+      canonicalUrl: "https://www.kheyamind.ai/services/mobile-app-development",
+    },
     detailsPage: {
       banner: require("../assets/images/banners/app-development.webp"),
       img1: require("../assets/images/service-details/app-dev-1.webp"),

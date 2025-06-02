@@ -2,7 +2,6 @@ import React from "react";
 import HrLine from "./HrLine";
 import { Link } from "react-router-dom";
 import { LuCircleArrowOutUpRight } from "react-icons/lu";
-import { createUrlParam } from "../utils/helper";
 
 const Services = ({ title, heading, data }) => {
   return (
@@ -21,7 +20,7 @@ const Services = ({ title, heading, data }) => {
       >
         {data.map((item) => (
           <Link
-            to={item.detailsPage && `/services/${createUrlParam(item.title)}}`}
+            to={item.detailsPage && `/services/${item.slug}}`}
             key={item.id}
             className="relative sm:w-[calc(100%/2-1.25rem)] lg:w-[calc(100%/3-1.75rem)] overflow-hidden group bg-primary/10 px-5 py-10 flex flex-col items-center gap-2 rounded-lg hover:bg-primary/30 transition-all duration-200"
           >
@@ -33,7 +32,7 @@ const Services = ({ title, heading, data }) => {
             {item.detailsPage && (
               <Link
                 className="absolute z-30 w-0 inset-0 group-hover:w-full group-hover:h-full bg-secondary/40 flex items-center justify-center transition-all duration-200"
-                to={`/services/${createUrlParam(item.title)}`}
+                to={`/services/${item.slug}`}
               >
                 <LuCircleArrowOutUpRight className="text-3xl text-white" />
               </Link>

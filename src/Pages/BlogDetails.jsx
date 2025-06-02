@@ -9,6 +9,9 @@ import { Helmet } from "react-helmet";
 import { FaCalendarAlt, FaUser, FaTag, FaFolder } from "react-icons/fa";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { useBlogBySlug, useBlogs } from "../hooks/useBlogs";
+import Breadcrumb from "../Components/Breadcrumb";
+import InternalLinkHelper, { ServiceReference } from "../Components/InternalLinkHelper";
+import { getBlogBreadcrumb } from "../utils/internalLinking";
 
 const BlogDetails = () => {
   const { slug } = useParams();
@@ -111,20 +114,11 @@ const BlogDetails = () => {
         />
       </div>
       <div className="wrapper pt-[6rem] sm:pt-[10rem] lg:pt-[2rem]">
-        {/* breadcrumbs on mobile */}
-        <div className="lg:hidden mb-4 text-gray-800 text-sm">
-          <Link to="/" className="hover:text-primary inline-block">
-            Home
-          </Link>
-          <MdOutlineArrowForwardIos size={12} className="inline-block mx-2" />
-          <Link to="/blogs" className="hover:text-primary">
-            Blogs
-          </Link>
-          <MdOutlineArrowForwardIos size={12} className="inline-block mx-2" />
-          <p className="inline-block">{blog.categoryId?.name}</p>
-          <MdOutlineArrowForwardIos size={12} className="inline-block mx-2" />
-          <p className="inline-block">{blog.title}</p>
-        </div>
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb 
+          items={getBlogBreadcrumb(blog.title, blog.slug)} 
+          className="lg:hidden mb-4"
+        />
         <img
           src={blog.imageUrl}
           alt={blog.imageAlt || blog.title}
@@ -189,12 +183,44 @@ const BlogDetails = () => {
             </div>
           )}
 
-          {/* Blog content */}
+          {/* Blog content with internal linking */}
           <div className="prose prose-lg max-w-none">
-            <div
+            <InternalLinkHelper 
+              content={blog.content}
               className="reset-html-content"
-              dangerouslySetInnerHTML={{ __html: blog.content }}
             />
+          </div>
+
+          {/* Related Services Call-out */}
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6 my-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Interested in AI Solutions?
+            </h3>
+            <p className="text-gray-700 mb-4">
+              Discover how our AI services can transform your business operations and drive growth.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <ServiceReference 
+                serviceSlug="ai-chatbots"
+                anchorText="AI Chatbots"
+                description="Automate customer support with intelligent chatbots"
+                inline={true}
+              />
+              <span className="text-gray-400">•</span>
+              <ServiceReference 
+                serviceSlug="voice-ai-agents"
+                anchorText="Voice AI Agents"
+                description="Transform call center operations with voice AI"
+                inline={true}
+              />
+              <span className="text-gray-400">•</span>
+              <ServiceReference 
+                serviceSlug="nlp-custom-gpt-solutions"
+                anchorText="Custom AI Development"
+                description="Build domain-specific AI solutions"
+                inline={true}
+              />
+            </div>
           </div>
         </div>
         <hr className="border-primary/30 my-[3rem]" />

@@ -38,6 +38,30 @@ const Home = () => {
         title="AI Chatbots, Voice Assistants & Automation Solutions | KheyaMind AI Technologies"
         description="KheyaMind AI crafts intelligent solutions including AI Chatbots, Voice Assistants, ERP Automations, and NLP tools. Empower your enterprise with next-gen AI solutions."
         keywords="AI Solutions, Chatbots, Voice AI, ERP Automation, NLP, AI Company India, AI Development, Business Automation"
+        pageData={{
+          faqs: [
+            {
+              question: "What types of businesses can benefit from AI chatbots and automation?",
+              answer: "Enterprises across industries including retail, finance, healthcare, and logistics can benefit from AI chatbots and automation solutions."
+            },
+            {
+              question: "Can KheyaMind solutions be customized to fit our unique business processes?",
+              answer: "Yes, all solutions are fully tailored to your workflows and goals. We provide custom AI development that integrates seamlessly with your existing business processes."
+            },
+            {
+              question: "What's the typical turnaround time for project delivery?",
+              answer: "Timelines vary based on project scope, but we ensure fast, reliable deployment. Most projects are completed within 4-12 weeks depending on complexity."
+            },
+            {
+              question: "Do you offer post-deployment support?",
+              answer: "Yes, all solutions come with dedicated support and maintenance plans. We provide ongoing technical support, updates, and optimization services."
+            },
+            {
+              question: "Is AI integration scalable as our business grows?",
+              answer: "Absolutely — scalability is built into every solution we deliver. Our AI systems are designed to grow with your business and handle increased workloads."
+            }
+          ]
+        }}
       />
       <section className="relative min-h-screen flex items-center justify-center bg-black/30">
         <div className="pt-[4rem] md:pt-[8rem] pb-[4rem]">

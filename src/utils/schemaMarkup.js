@@ -10,19 +10,67 @@ export const getOrganizationSchema = (url) => {
     "@type": "Organization",
     "@id": `${url}#organization`,
     "name": "KheyaMind AI Technologies",
+    "alternateName": "KheyaMind AI",
     "url": url,
     "logo": `${url}/logo.png`,
+    "description": "Empowering Intelligence. Elevating Enterprises. AI solutions including chatbots, voice AI, ERP automation, and custom AI development.",
+    "foundingDate": "2023",
+    "industry": "Artificial Intelligence",
+    "serviceType": "AI Solutions",
+    "areaServed": [
+      {
+        "@type": "Country",
+        "name": "India"
+      },
+      {
+        "@type": "Country", 
+        "name": "United Arab Emirates"
+      },
+      {
+        "@type": "Country",
+        "name": "United States"
+      },
+      {
+        "@type": "Country",
+        "name": "United Kingdom"
+      },
+      {
+        "@type": "Country",
+        "name": "Singapore"
+      },
+      {
+        "@type": "Country",
+        "name": "Australia"
+      }
+    ],
     "sameAs": [
+      "https://www.linkedin.com/company/kheyamindai/",
       "https://www.facebook.com/kheyamindai",
-      "https://www.linkedin.com/company/kheyamind-ai",
-      "https://twitter.com/kheyamindai"
+      "https://www.instagram.com/KheyaMindai"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+91-9999999999", // Replace with actual phone number
-      "contactType": "customer service",
-      "availableLanguage": ["English", "Hindi"]
-    }
+      "telephone": "+91-9242049993",
+      "contactType": "Customer Service",
+      "availableLanguage": "English",
+      "areaServed": ["IN", "AE", "US", "GB", "SG", "AU"]
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "India",
+      "addressRegion": "Karnataka",
+      "addressLocality": "Bangalore"
+    },
+    "knowsAbout": [
+      "Artificial Intelligence",
+      "Machine Learning",
+      "Chatbot Development",
+      "Voice AI",
+      "Natural Language Processing",
+      "Enterprise Resource Planning",
+      "Business Automation",
+      "Custom AI Development"
+    ]
   };
 };
 
@@ -61,17 +109,66 @@ export const getHomePageSchema = (url) => {
 
 // Service page schema
 export const getServicePageSchema = (url, title, description, image) => {
+  const baseUrl = url.split('/').slice(0, 3).join('/');
+  
   return {
     "@context": "https://schema.org",
     "@type": "Service",
     "@id": `${url}#service`,
     "name": title,
     "description": description,
+    "serviceType": "AI Solutions",
+    "category": "Artificial Intelligence",
     "provider": {
-      "@id": `${url.split('/').slice(0, 3).join('/')}#organization`
+      "@type": "Organization",
+      "@id": `${baseUrl}#organization`,
+      "name": "KheyaMind AI Technologies",
+      "url": baseUrl
     },
     "url": url,
-    "image": image
+    "image": image,
+    "areaServed": [
+      {
+        "@type": "Country",
+        "name": "India"
+      },
+      {
+        "@type": "Country", 
+        "name": "United Arab Emirates"
+      },
+      {
+        "@type": "Country",
+        "name": "United States"
+      },
+      {
+        "@type": "Country",
+        "name": "United Kingdom"
+      },
+      {
+        "@type": "Country",
+        "name": "Singapore"
+      },
+      {
+        "@type": "Country",
+        "name": "Australia"
+      }
+    ],
+    "availableChannel": {
+      "@type": "ServiceChannel",
+      "serviceUrl": url,
+      "servicePhone": "+91-9242049993",
+      "availableLanguage": "English"
+    },
+    "brand": {
+      "@type": "Brand",
+      "name": "KheyaMind AI Technologies"
+    },
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/InStock",
+      "priceCurrency": "USD",
+      "description": "Custom AI solution pricing available on consultation"
+    }
   };
 };
 
@@ -150,5 +247,197 @@ export const getAboutPageSchema = (url) => {
     "about": {
       "@id": `${url.split('/').slice(0, 3).join('/')}#organization`
     }
+  };
+};
+
+// Enhanced service schema with specific service details
+export const getEnhancedServiceSchema = (serviceData, url) => {
+  const baseUrl = url.split('/').slice(0, 3).join('/');
+  
+  // Service-specific keywords and categories
+  const serviceCategories = {
+    "AI Chatbots": {
+      category: "Chatbot Development",
+      keywords: ["AI Chatbots", "Customer Support Automation", "Conversational AI", "Business Chatbots"],
+      serviceOutput: "Intelligent chatbot systems for customer engagement"
+    },
+    "Voice AI Agents": {
+      category: "Voice AI Technology", 
+      keywords: ["Voice AI", "Call Center Automation", "Voice Assistants", "Speech Recognition"],
+      serviceOutput: "Human-like voice AI agents for call center operations"
+    },
+    "NLP & Custom GPT Solutions": {
+      category: "Natural Language Processing",
+      keywords: ["NLP", "Custom GPT", "Document Processing", "Language AI"],
+      serviceOutput: "Custom language AI models and NLP solutions"
+    },
+    "AI-Powered ERP Tools": {
+      category: "Enterprise Resource Planning",
+      keywords: ["AI ERP", "Business Automation", "Process Optimization", "Enterprise AI"],
+      serviceOutput: "AI-enhanced ERP systems and business process automation"
+    },
+    "Cloud & DevOps AI": {
+      category: "Cloud Infrastructure",
+      keywords: ["Cloud AI", "DevOps Automation", "Infrastructure Optimization", "AI Deployment"],
+      serviceOutput: "AI-optimized cloud infrastructure and deployment solutions"
+    },
+    "AI Interface Design": {
+      category: "User Experience Design",
+      keywords: ["AI UX", "Interface Design", "User Experience", "AI Applications"],
+      serviceOutput: "Intuitive user interfaces for AI applications"
+    },
+    "Mobile App Development": {
+      category: "Mobile Application Development",
+      keywords: ["AI Mobile Apps", "iOS Development", "Android Development", "Mobile AI"],
+      serviceOutput: "AI-powered mobile applications for various industries"
+    }
+  };
+
+  const serviceInfo = serviceCategories[serviceData.title] || {
+    category: "AI Solutions",
+    keywords: ["Artificial Intelligence", "AI Solutions"],
+    serviceOutput: "Custom AI solutions"
+  };
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${url}#service`,
+    "name": serviceData.title,
+    "alternateName": serviceData.title.replace(/&/g, 'and'),
+    "description": serviceData.seo?.description || serviceData.desc,
+    "serviceType": "AI Solutions",
+    "category": serviceInfo.category,
+    "keywords": serviceInfo.keywords.join(", "),
+    "serviceOutput": serviceInfo.serviceOutput,
+    "provider": {
+      "@type": "Organization",
+      "@id": `${baseUrl}#organization`,
+      "name": "KheyaMind AI Technologies",
+      "alternateName": "KheyaMind AI",
+      "url": baseUrl,
+      "logo": `${baseUrl}/logo.png`,
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-9242049993",
+        "contactType": "Customer Service",
+        "availableLanguage": "English"
+      }
+    },
+    "url": url,
+    "image": {
+      "@type": "ImageObject",
+      "url": serviceData.detailsPage?.banner || `${baseUrl}/og-image.png`,
+      "caption": `${serviceData.title} by KheyaMind AI Technologies`
+    },
+    "areaServed": [
+      {
+        "@type": "Country",
+        "name": "India",
+        "sameAs": "https://en.wikipedia.org/wiki/India"
+      },
+      {
+        "@type": "Country", 
+        "name": "United Arab Emirates",
+        "sameAs": "https://en.wikipedia.org/wiki/United_Arab_Emirates"
+      },
+      {
+        "@type": "Country",
+        "name": "United States",
+        "sameAs": "https://en.wikipedia.org/wiki/United_States"
+      },
+      {
+        "@type": "Country",
+        "name": "United Kingdom",
+        "sameAs": "https://en.wikipedia.org/wiki/United_Kingdom"
+      },
+      {
+        "@type": "Country",
+        "name": "Singapore",
+        "sameAs": "https://en.wikipedia.org/wiki/Singapore"
+      },
+      {
+        "@type": "Country",
+        "name": "Australia",
+        "sameAs": "https://en.wikipedia.org/wiki/Australia"
+      }
+    ],
+    "availableChannel": {
+      "@type": "ServiceChannel",
+      "serviceUrl": url,
+      "servicePhone": "+91-9242049993",
+      "availableLanguage": "English",
+      "serviceLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "India",
+          "addressRegion": "Karnataka",
+          "addressLocality": "Bangalore"
+        }
+      }
+    },
+    "brand": {
+      "@type": "Brand",
+      "name": "KheyaMind AI Technologies",
+      "logo": `${baseUrl}/logo.png`
+    },
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/InStock",
+      "priceCurrency": "USD",
+      "description": "Custom AI solution pricing available on consultation",
+      "seller": {
+        "@id": `${baseUrl}#organization`
+      }
+    },
+    "audience": {
+      "@type": "BusinessAudience",
+      "audienceType": "Enterprise, SME, Startups"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": `${serviceData.title} Solutions`,
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": `Custom ${serviceData.title}`,
+            "description": `Tailored ${serviceData.title.toLowerCase()} solutions for your business needs`
+          }
+        }
+      ]
+    }
+  };
+};
+
+// Breadcrumb schema for service pages
+export const getBreadcrumbSchema = (serviceData, url) => {
+  const baseUrl = url.split('/').slice(0, 3).join('/');
+  
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": baseUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Services",
+        "item": `${baseUrl}/services`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": serviceData.title,
+        "item": url
+      }
+    ]
   };
 };

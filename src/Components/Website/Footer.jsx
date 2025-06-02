@@ -1,14 +1,11 @@
-import React from "react";
 import {
   companyDetails,
-  logo,
   LogoSvgFooter,
   services,
 } from "../../data/constant";
 import { websiteLinks } from "./Header";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import { createUrlParam } from "../../utils/helper";
 
 const Footer = () => {
   return (
@@ -43,7 +40,7 @@ const Footer = () => {
               {services.map((item) => (
                 <li>
                   <Link
-                    to={`/services/${createUrlParam(item.title)}`}
+                    to={`/services/${item.slug}`}
                     className="hover:text-secondary transition-all duration-200"
                   >
                     {item.title}

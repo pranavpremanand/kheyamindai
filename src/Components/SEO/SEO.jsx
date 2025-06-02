@@ -6,6 +6,8 @@ import {
   getWebsiteSchema,
   getHomePageSchema,
   getServicePageSchema,
+  getEnhancedServiceSchema,
+  getBreadcrumbSchema,
   getBlogPostSchema,
   getFAQSchema,
   getContactPageSchema,
@@ -102,9 +104,23 @@ const SEO = ({
     // Add page-specific schema based on type
     switch (type) {
       case 'home':
-        return [...baseSchemas, getHomePageSchema(canonicalUrl)];
+        const homeSchemas = [...baseSchemas, getHomePageSchema(canonicalUrl)];
+        // Add FAQ schema if FAQs are provided
+        if (pageData.faqs && pageData.faqs.length > 0) {
+          homeSchemas.push(getFAQSchema(pageData.faqs));
+        }
+        return homeSchemas;
       
       case 'service':
+        // Use enhanced service schema if service data is available
+        if (pageData.serviceData) {
+          return [
+            ...baseSchemas, 
+            getEnhancedServiceSchema(pageData.serviceData, canonicalUrl),
+            getBreadcrumbSchema(pageData.serviceData, canonicalUrl)
+          ];
+        }
+        // Fallback to basic service schema
         return [
           ...baseSchemas, 
           getServicePageSchema(

@@ -53,7 +53,7 @@ function App() {
               <Route path="*" element={<Navigate to="/" />} />
               <Route path="about-us" element={<AboutUs />} />
               <Route path="services" element={<OurServices />} />
-              <Route path="services/:title" element={<ServiceDetails />} />
+              <Route path="services/:slug" element={<ServiceDetails />} />
               <Route path="blogs" element={<Blogs />} />
               <Route path="blogs/:slug" element={<BlogDetails />} />
               <Route path="contact-us" element={<ContactUs />} />

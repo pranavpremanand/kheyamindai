@@ -4,50 +4,69 @@ import { services } from "../data/constant";
 import ServiceDetailsBanner from "../Components/Website/ServiceDetailsBanner";
 import Testimonials from "../Components/Testimonials";
 import ContactForm from "../Components/ContactForm";
-import { createUrlParam } from "../utils/helper";
 import SEO from "../Components/SEO/SEO";
+import Breadcrumb from "../Components/Breadcrumb";
+import ServiceCTA from "../Components/ServiceCTA";
+import InternalLinkHelper from "../Components/InternalLinkHelper";
+import { getServiceBreadcrumb } from "../utils/internalLinking";
 
 const ServiceDetails = () => {
-  const { title } = useParams();
-  const data = services.find((item) => createUrlParam(item.title) === title);
+  const { slug } = useParams();
+  const data = services.find((item) => item.slug === slug);
+
+  if (!data) {
+    return <div>Service not found</div>;
+  }
+
+  const breadcrumbItems = getServiceBreadcrumb(data.title, data.slug);
 
   return (
     <>
       <SEO 
         type="service"
-        title={`${data.title} | KheyaMind AI Technologies`}
-        description={data.description}
-        keywords={`${data.title}, AI Solutions, KheyaMind AI, ${data.title.toLowerCase()} services`}
+        title={data.seo?.title || `${data.title} | KheyaMind AI Technologies`}
+        description={data.seo?.description || data.desc}
+        keywords={data.seo?.keywords || `${data.title}, AI Solutions, KheyaMind AI, ${data.title.toLowerCase()} services`}
         image={data.detailsPage.banner}
+        url={data.seo?.canonicalUrl}
         pageData={{
           title: data.title,
-          description: data.description,
-          image: data.detailsPage.banner
+          description: data.seo?.description || data.desc,
+          image: data.detailsPage.banner,
+          serviceData: data
         }}
       />
+      
       <ServiceDetailsBanner
         banner={data.detailsPage.banner}
         title={data.title}
       />
+      
       <div className="wrapper pt-[5rem] space-y-5">
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb items={breadcrumbItems} />
+        
         <h1 data-aos="fade-up" className="section-heading">
           {data.title}
         </h1>
+        
         <img
           data-aos="fade-up"
           src={data.detailsPage.img1}
           className="aspect-[6/4] md:aspect-[13/6] object-cover rounded-lg"
           alt={data.title}
         />
-        <div
-          data-aos="fade-up"
+        
+        <InternalLinkHelper
+          content={data.detailsPage.firstSection}
           className="pt-[1.5rem]"
-          dangerouslySetInnerHTML={{ __html: data.detailsPage.firstSection }}
+          data-aos="fade-up"
         />
+        
         <div className="pt-[2rem] md:pt-[2.5rem] flex flex-col-reverse md:grid grid-cols-2 gap-4 md:gap-6">
-          <div
+          <InternalLinkHelper
+            content={data.detailsPage.secondSection}
             data-aos="fade-up"
-            dangerouslySetInnerHTML={{ __html: data.detailsPage.secondSection }}
           />
           <div className="flex rounded-lg aspect-[4/3] overflow-hidden h-full">
             <img
@@ -58,6 +77,7 @@ const ServiceDetails = () => {
             />
           </div>
         </div>
+        
         <div className="pt-[2rem] md:pt-[2.5rem] grid md:grid-cols-2 gap-4 md:gap-6">
           <div
             data-aos="fade-up"
@@ -69,12 +89,22 @@ const ServiceDetails = () => {
               className="h-full w-full object-cover"
             />
           </div>
-          <div
+          <InternalLinkHelper
+            content={data.detailsPage.thirdSection}
             data-aos="fade-up"
-            dangerouslySetInnerHTML={{ __html: data.detailsPage.thirdSection }}
           />
         </div>
       </div>
+
+      {/* Service-specific Call to Action */}
+      <ServiceCTA 
+        serviceSlug={data.slug}
+        serviceName={data.title}
+        className="mt-16"
+      />
+
+     
+
       <Testimonials />
       <ContactForm />
     </>
