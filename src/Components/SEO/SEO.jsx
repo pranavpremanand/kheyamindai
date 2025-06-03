@@ -199,8 +199,21 @@ const SEO = ({
       rawUrl,
       canonicalUrl,
       title,
+      description: description?.substring(0, 100),
+      absoluteImageUrl,
       hasCanonicalUrl: !!canonicalUrl,
-      canonicalUrlLength: canonicalUrl?.length || 0
+      canonicalUrlLength: canonicalUrl?.length || 0,
+      serviceData: pageData.serviceData?.title || 'No service data'
+    });
+    
+    console.log('Meta Tags to render:', {
+      'og:title': title,
+      'og:description': description,
+      'og:image': absoluteImageUrl,
+      'og:url': canonicalUrl,
+      'twitter:title': title,
+      'twitter:description': description,
+      'twitter:image': absoluteImageUrl
     });
   }
 

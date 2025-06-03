@@ -11,6 +11,7 @@ import InternalLinkHelper from "../Components/InternalLinkHelper";
 import { getServiceBreadcrumb } from "../utils/internalLinking";
 // Temporary import for schema validation
 import { validateServiceSchema } from "../utils/serviceSchemaValidation";
+import HelmetDebug from "../Components/SEO/HelmetDebug";
 
 const ServiceDetails = () => {
   const { slug } = useParams();
@@ -46,6 +47,16 @@ const ServiceDetails = () => {
           serviceData: data
         }}
       />
+      
+      {/* Temporary debug component */}
+      {process.env.NODE_ENV === 'development' && (
+        <HelmetDebug 
+          title={`DEBUG: ${data.title} | KheyaMind AI`}
+          description={`DEBUG: ${data.desc}`}
+          image={data.detailsPage.banner}
+          url={canonicalUrl}
+        />
+      )}
       
       <ServiceDetailsBanner
         banner={data.detailsPage.banner}
