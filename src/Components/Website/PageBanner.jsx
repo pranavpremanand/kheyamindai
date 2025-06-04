@@ -6,20 +6,20 @@ const PageBanner = ({ banner, title, breadcrumbs }) => {
   return (
     <div className="relative w-full h-[450px] md:h-[500px]">
       <OptimizedImage
-        src={banner}
-        alt={title}
+          src={banner}
+          alt={title}
         className="w-full h-full object-cover"
         priority={true}
-      />
+        />
       <div className="absolute inset-0 bg-black/50" />
-      {breadcrumbs ? (
-        <nav
-          aria-label="breadcrumb"
+        {breadcrumbs ? (
+          <nav
+            aria-label="breadcrumb"
           className="absolute inset-0 w-full h-full flex items-center justify-center"
-        >
-          {breadcrumbs}
-        </nav>
-      ) : (
+          >
+            {breadcrumbs}
+          </nav>
+        ) : (
         <div className="absolute inset-0 w-full h-full flex items-center justify-center">
           <div
             data-aos="fade-up"
@@ -40,8 +40,8 @@ const PageBanner = ({ banner, title, breadcrumbs }) => {
             </nav>
             <h1 className="text-4xl md:text-5xl font-bold text-white">{title}</h1>
           </div>
-        </div>
-      )}
+          </div>
+        )}
     </div>
   );
 };

@@ -57,8 +57,8 @@ const SEO = ({
   const schemas = [];
 
   // Always include organization and website schema
-  schemas.push(getOrganizationSchema());
-  schemas.push(getWebsiteSchema());
+  schemas.push(getOrganizationSchema(canonicalUrl));
+  schemas.push(getWebsiteSchema(canonicalUrl));
 
   // Add page-specific schema
   switch (type) {
@@ -66,16 +66,16 @@ const SEO = ({
       schemas.push(getHomePageSchema(canonicalUrl));
       break;
     case 'service':
-      schemas.push(getServicePageSchema(pageData.serviceData, canonicalUrl));
-      if (pageData.serviceData?.enhancedData) {
-        schemas.push(getEnhancedServiceSchema(pageData.serviceData));
+      schemas.push(getServicePageSchema(canonicalUrl, title, description, absoluteImageUrl));
+      if (pageData.serviceData) {
+        schemas.push(getEnhancedServiceSchema(pageData.serviceData, canonicalUrl));
       }
       break;
     case 'blog':
-      schemas.push(getBlogPostSchema(pageData, canonicalUrl));
+      schemas.push(getBlogPostSchema(canonicalUrl, title, description, absoluteImageUrl, pageData.datePublished, pageData.dateModified, pageData.author));
       break;
     case 'contact':
-      schemas.push(getContactPageSchema(canonicalUrl));
+      schemas.push(getContactPageSchema(canonicalUrl, pageData.email, pageData.phone, pageData.address));
       break;
     case 'about':
       schemas.push(getAboutPageSchema(canonicalUrl));
@@ -86,7 +86,7 @@ const SEO = ({
 
   // Add breadcrumb schema if available
   if (pageData.breadcrumb) {
-    schemas.push(getBreadcrumbSchema(pageData.breadcrumb));
+    schemas.push(getBreadcrumbSchema(pageData.breadcrumb, canonicalUrl));
   }
 
   // Add FAQ schema if available
