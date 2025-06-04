@@ -56,7 +56,7 @@ const SEO = ({
   // Generate schema based on page type
   const schemas = [];
 
-  // Always include organization and website schema
+  // Always include organization and website schema with base URL
   const baseUrl = canonicalUrl.split('/').slice(0, 3).join('/');
   schemas.push(getOrganizationSchema(baseUrl));
   schemas.push(getWebsiteSchema(baseUrl));
@@ -70,27 +70,23 @@ const SEO = ({
       if (pageData.serviceData) {
         schemas.push(getServicePageSchema(
           canonicalUrl,
-          pageData.serviceData.title,
-          pageData.serviceData.description || pageData.serviceData.desc,
+          pageData.serviceData.title || title,
+          pageData.serviceData.description || pageData.serviceData.desc || description,
           pageData.serviceData.image || absoluteImageUrl
         ));
-        if (pageData.serviceData?.enhancedData) {
-          schemas.push(getEnhancedServiceSchema(pageData.serviceData, canonicalUrl));
-        }
+        schemas.push(getEnhancedServiceSchema(pageData.serviceData, canonicalUrl));
       }
       break;
     case 'blog':
-      if (pageData) {
-        schemas.push(getBlogPostSchema(
-          canonicalUrl,
-          pageData.title || title,
-          pageData.description || description,
-          pageData.image || absoluteImageUrl,
-          pageData.datePublished,
-          pageData.dateModified,
-          pageData.author
-        ));
-      }
+      schemas.push(getBlogPostSchema(
+        canonicalUrl,
+        pageData.title || title,
+        pageData.description || description,
+        pageData.image || absoluteImageUrl,
+        pageData.datePublished,
+        pageData.dateModified,
+        pageData.author
+      ));
       break;
     case 'contact':
       schemas.push(getContactPageSchema(

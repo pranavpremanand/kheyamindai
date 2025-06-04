@@ -42,28 +42,28 @@ function App() {
   useEffect(() => {
     // Initialize critical CSS immediately
     initCriticalCSS();
-
+    
     // Initialize performance monitoring
     initPerformanceMonitoring();
     observePerformance();
-
+    
     // Initialize bundle optimizations
     initBundleOptimizations();
-
+    
     // Initialize icon optimizations
     initIconOptimizations();
-
+    
     // Initialize third-party optimizations
     initThirdPartyOptimizations();
-
+    
     // Initialize animations with custom config for desktop
     const cleanup = initializeAnimations({
       disable: window.innerWidth <= 768
     });
-
-    // Optimize existing images
-    optimizeExistingImages();
-
+      
+      // Optimize existing images
+      optimizeExistingImages();
+    
     return () => {
       cleanup();
     };
@@ -83,29 +83,29 @@ function App() {
               <Routes>
                 {/* Main Layout Routes */}
                 <Route element={<MainLayout />}>
-                  <Route index element={<Home />} />
-                  <Route path="about-us" element={<AboutUs />} />
-                  <Route path="services" element={<OurServices />} />
-                  <Route path="services/:slug" element={<ServiceDetails />} />
-                  <Route path="blogs" element={<Blogs />} />
-                  <Route path="blogs/:slug" element={<BlogDetails />} />
-                  <Route path="contact-us" element={<ContactUs />} />
-                  <Route path="thank-you" element={<ThankYou />} />
-                </Route>
+                <Route index element={<Home />} />
+                <Route path="about-us" element={<AboutUs />} />
+                <Route path="services" element={<OurServices />} />
+                <Route path="services/:slug" element={<ServiceDetails />} />
+                <Route path="blogs" element={<Blogs />} />
+                <Route path="blogs/:slug" element={<BlogDetails />} />
+                <Route path="contact-us" element={<ContactUs />} />
+                <Route path="thank-you" element={<ThankYou />} />
+              </Route>
 
                 {/* Landing Page Layout Routes */}
                 <Route element={<LandingPageLayout />}>
                   <Route path="chatbots-voice-ai" element={<ChatbotVoiceAILanding />} />
                   <Route path="ai-enterprise-solutions" element={<EnterpriseAILanding />} />
                   <Route path="real-estate-ai-solutions" element={<RealEstateAILanding />} />
-                </Route>
+              </Route>
 
                 {/* Catch all route */}
                 <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-            </Suspense>
-          </SpinnerContextProvider>
-        </BrowserRouter>
+            </Routes>
+          </Suspense>
+        </SpinnerContextProvider>
+      </BrowserRouter>
       </QueryProvider>
     </HelmetProvider>
   );
