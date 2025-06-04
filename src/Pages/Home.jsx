@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy } from "react";
 import ReactPlayer from "react-player";
 import bannerVid from "../assets/vid/banner.mp4";
 import { Link } from "react-router-dom";
@@ -7,7 +7,7 @@ import HrLine from "../Components/HrLine";
 import { companyDetails, services } from "../data/constant";
 import aboutImg from "../assets/images/about.webp";
 import whyChooseImg from "../assets/images/whychooseus.webp";
-import Services from "../Components/Services";
+
 import {
   FaBrain,
   FaCheckDouble,
@@ -33,6 +33,7 @@ import {
 } from "../utils/codeSplitting";
 import { preloadImages } from "../utils/imageOptimization";
 import DesignRushIcon from "../assets/images/DesignRushIcon.png";
+const Services = lazy(() => import("../Components/Services"));
 
 const Home = () => {
   // Preload critical images
@@ -231,9 +232,9 @@ const Home = () => {
               <OptimizedImage
                 src={aboutImg}
                 alt="About Us - KheyaMind AI Technologies"
-                priority={true}
+                priority={false}
                 className="h-full w-full aspect-video object-cover rounded-xl"
-              />
+              /> 
             </div>
             <h3 className="section-heading">Welcome to KheyaMind.ai</h3>
             <HrLine />
@@ -282,7 +283,7 @@ const Home = () => {
             <OptimizedImage
               src={aboutImg}
               alt="About Us - KheyaMind AI Technologies"
-              priority={true}
+              priority={false}
               className="h-full w-full object-cover rounded-xl"
             />
           </div>
