@@ -4,6 +4,7 @@ import CountUp from "react-countup";
 import HrLine from "../../Components/HrLine";
 import ContactForm from "../../Components/ContactForm";
 import Testimonials from "../../Components/Testimonials";
+import SEO from "../../Components/SEO/SEO";
 import {
   FaBrain,
   FaNetworkWired,
@@ -86,7 +87,36 @@ const EnterpriseAILanding = () => {
   ];
 
   return (
-    <div className="pt-[5rem]">
+    <>
+      <SEO
+        type="website"
+        title="Enterprise AI Solutions | Custom AI Development | ERP Integration | KheyaMind AI"
+        description="Transform your enterprise with custom AI solutions. AI-powered ERP systems, NLP solutions, cloud infrastructure, and intelligent automation for large-scale businesses."
+        keywords="enterprise AI, custom AI development, AI ERP systems, NLP solutions, enterprise automation, AI cloud infrastructure, business intelligence, AI transformation"
+        url="https://www.kheyamind.ai/ai-enterprise-solutions"
+        image={aiEnterpriseBanner}
+        pageData={{
+          faqs: [
+            {
+              question: "How do you ensure AI solutions scale with our enterprise growth?",
+              answer: "Our AI solutions are built on cloud-native architecture with auto-scaling capabilities, ensuring they grow seamlessly with your business needs."
+            },
+            {
+              question: "What's the typical ROI timeline for enterprise AI implementation?",
+              answer: "Most enterprises see initial ROI within 6-12 months, with full benefits realized within 18-24 months depending on implementation scope."
+            },
+            {
+              question: "Do you provide ongoing support and maintenance?",
+              answer: "Yes, we offer comprehensive 24/7 support, regular updates, performance monitoring, and continuous optimization services."
+            },
+            {
+              question: "Can you integrate with our existing enterprise systems?",
+              answer: "Absolutely! We specialize in seamless integration with existing ERP, CRM, and other enterprise systems without disrupting operations."
+            }
+          ]
+        }}
+      />
+      <div className="pt-[5rem]">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center">
         <div className="absolute inset-0 bg-black/40 z-[1] w-full h-full" />
@@ -593,7 +623,8 @@ const EnterpriseAILanding = () => {
       <Testimonials />
       <ContactForm />
       <Faq />
-    </div>
+      </div>
+    </>
   );
 };
 

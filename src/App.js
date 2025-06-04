@@ -14,6 +14,7 @@ import { initCriticalCSS } from "./utils/criticalCSS";
 import { initThirdPartyOptimizations } from "./utils/thirdPartyOptimization";
 import { initIconOptimizations } from "./utils/iconOptimization";
 import { HelmetProvider } from 'react-helmet-async';
+import { initializeAnimations } from './utils/animationConfig';
 
 // Lazy load Toaster to reduce initial bundle
 const Toaster = lazy(() => import("react-hot-toast").then(module => ({ default: module.Toaster })));
@@ -37,22 +38,6 @@ const RealEstateAILanding = createLazyComponent(() =>
   import("./Pages/landingPages/RealEstateAILanding")
 );
 
-// Defer AOS initialization to reduce main thread blocking
-let aosInitialized = false;
-const initAOS = async () => {
-  if (!aosInitialized && window.innerWidth > 768) {
-    const AOS = await import("aos");
-    await import("aos/dist/aos.css");
-    AOS.init({
-      once: true,
-      duration: 500,
-      easing: "ease-in-out-quart",
-      offset: -70,
-    });
-    aosInitialized = true;
-  }
-};
-
 function App() {
   useEffect(() => {
     // Initialize critical CSS immediately
@@ -71,17 +56,19 @@ function App() {
     // Initialize third-party optimizations
     initThirdPartyOptimizations();
     
-    // Defer heavy operations to reduce main thread blocking
-    const deferredOperations = setTimeout(() => {
-      // Initialize AOS after initial render
-      initAOS();
+    // Initialize animations with custom config for desktop
+    const cleanup = initializeAnimations({
+      disable: window.innerWidth <= 768
+    });
       
       // Optimize existing images
       optimizeExistingImages();
-    }, 3000); // Further increased delay to reduce initial load impact
     
-    return () => clearTimeout(deferredOperations);
+    return () => {
+      cleanup();
+    };
   }, []);
+
   return (
     <HelmetProvider>
       <QueryProvider>
@@ -94,9 +81,9 @@ function App() {
           <SpinnerContextProvider>
             <Suspense fallback={<LoadingSpinner />}>
               <Routes>
-                <Route path="/" element={<MainLayout />}>
+                {/* Main Layout Routes */}
+                <Route element={<MainLayout />}>
                 <Route index element={<Home />} />
-                <Route path="*" element={<Navigate to="/" />} />
                 <Route path="about-us" element={<AboutUs />} />
                 <Route path="services" element={<OurServices />} />
                 <Route path="services/:slug" element={<ServiceDetails />} />
@@ -106,29 +93,15 @@ function App() {
                 <Route path="thank-you" element={<ThankYou />} />
               </Route>
 
-              <Route path="/" element={<LandingPageLayout />}>
-                {/* Landing Page */}
-                {/* <Route
-                  path="web-development"
-                  element={<LandingPage page="web" />}
-                />
-                <Route
-                  path="app-development"
-                  element={<LandingPage page="app" />}
-                /> */}
-                <Route
-                  path="/chatbots-voice-ai"
-                  element={<ChatbotVoiceAILanding />}
-                />
-                <Route
-                  path="/ai-enterprise-solutions"
-                  element={<EnterpriseAILanding />}
-                />
-                <Route
-                  path="/real-estate-ai-solutions"
-                  element={<RealEstateAILanding />}
-                />
+                {/* Landing Page Layout Routes */}
+                <Route element={<LandingPageLayout />}>
+                  <Route path="chatbots-voice-ai" element={<ChatbotVoiceAILanding />} />
+                  <Route path="ai-enterprise-solutions" element={<EnterpriseAILanding />} />
+                  <Route path="real-estate-ai-solutions" element={<RealEstateAILanding />} />
               </Route>
+
+                {/* Catch all route */}
+                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
         </SpinnerContextProvider>

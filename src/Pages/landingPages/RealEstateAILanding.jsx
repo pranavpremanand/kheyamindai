@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import CountUp from "react-countup";
 import HrLine from "../../Components/HrLine";
 import ContactForm from "../../Components/ContactForm";
+import SEO from "../../Components/SEO/SEO";
 import {
   FaRegThumbsUp,
   FaAward,
@@ -288,7 +289,19 @@ const RealEstateAILanding = () => {
   ];
 
   return (
-    <div className="pt-[5rem]">
+    <>
+      <SEO
+        type="website"
+        title="Real Estate AI Solutions | Property Management Automation | KheyaMind AI"
+        description="Revolutionize your real estate business with AI-powered lead qualification, property management automation, and intelligent customer support. Boost sales and efficiency."
+        keywords="real estate AI, property management automation, real estate chatbot, lead qualification AI, property search AI, real estate CRM, automated property management"
+        url="https://www.kheyamind.ai/real-estate-ai-solutions"
+        image={realEstate}
+        pageData={{
+          faqs: faqs
+        }}
+      />
+      <div className="pt-[5rem]">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center">
         <div className="absolute inset-0 bg-black/40 z-[1] w-full h-full" />
@@ -808,7 +821,8 @@ const RealEstateAILanding = () => {
           ))}
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 };
 
