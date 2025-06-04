@@ -63,7 +63,6 @@ export const LazyServiceDetails = createLazyRoute(() => import('../Pages/Service
 export const LazyBlogs = createLazyRoute(() => import('../Pages/Blogs'));
 export const LazyBlogDetails = createLazyRoute(() => import('../Pages/BlogDetails'));
 export const LazyContactUs = createLazyRoute(() => import('../Pages/ContactUs'));
-export const LazyLandingPage = createLazyRoute(() => import('../Pages/LandingPage'));
 
 // Landing pages
 export const LazyChatbotVoiceAILanding = createLazyRoute(
