@@ -7,14 +7,14 @@ import { lazy } from 'react';
 
 // Lazy load heavy components with better error boundaries
 export const createLazyComponent = (importFunc, fallback = null) => {
-  const LazyComponent = lazy(() => 
+  const LazyComponent = lazy(() =>
     importFunc().catch(err => {
       console.error('Failed to load component:', err);
       // Return a minimal fallback component
       return { default: () => fallback || <div>Failed to load component</div> };
     })
   );
-  
+
   return LazyComponent;
 };
 
@@ -24,13 +24,25 @@ export const preloadComponent = (importFunc) => {
   return componentImport;
 };
 
-// Preload critical route components
+// Preload critical routes
 export const preloadCriticalRoutes = () => {
-  // Preload home page components after initial load
-  setTimeout(() => {
-    import('../Pages/Home');
-    import('../Pages/OurServices');
-  }, 2000);
+  const criticalRoutes = [
+    () => import('../Pages/Home'),
+    () => import('../Pages/AboutUs'),
+    () => import('../Pages/OurServices')
+  ];
+
+  criticalRoutes.forEach(route => {
+    const prefetchRoute = () => {
+      route().catch(err => {
+        console.error('Failed to preload route:', err);
+      });
+    };
+
+    requestIdleCallback ?
+      requestIdleCallback(prefetchRoute) :
+      setTimeout(prefetchRoute, 1000);
+  });
 };
 
 // Dynamic import with retry logic
@@ -46,40 +58,37 @@ export const dynamicImport = async (importFunc, retries = 3) => {
   }
 };
 
-// Chunk loading optimization
+// Optimize chunk loading
 export const optimizeChunkLoading = () => {
-  // Prefetch chunks on hover/focus
-  const prefetchOnInteraction = (selector, importFunc) => {
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.matches(selector)) {
-        importFunc();
-      }
-    }, { once: true });
-    
-    document.addEventListener('focus', (e) => {
-      if (e.target.matches(selector)) {
-        importFunc();
-      }
-    }, { once: true });
-  };
+  if ('connection' in navigator) {
+    if (navigator.connection.saveData) {
+      // Disable preloading if data-saver is enabled
+      return;
+    }
 
-  // Prefetch service pages when hovering over service links
-  prefetchOnInteraction('a[href*="/services"]', () => import('../Pages/OurServices'));
-  prefetchOnInteraction('a[href*="/about"]', () => import('../Pages/AboutUs'));
-  prefetchOnInteraction('a[href*="/contact"]', () => import('../Pages/ContactUs'));
-  prefetchOnInteraction('a[href*="/blogs"]', () => import('../Pages/Blogs'));
+    if (['slow-2g', '2g'].includes(navigator.connection.effectiveType)) {
+      // Reduce chunk size for slow connections
+      return;
+    }
+  }
+
+  // Enable preloading for fast connections
+  const link = document.createElement('link');
+  link.rel = 'preload';
+  link.as = 'script';
+  document.head.appendChild(link);
 };
 
 // Remove unused dependencies
 export const removeUnusedDependencies = () => {
   // Tree shake unused icons
   const usedIcons = new Set();
-  
+
   // Track which icons are actually used
   const trackIconUsage = (iconName) => {
     usedIcons.add(iconName);
   };
-  
+
   return { trackIconUsage, usedIcons };
 };
 
@@ -108,32 +117,38 @@ export const optimizeThirdPartyLibs = () => {
   return { loadAOS, loadFramerMotion };
 };
 
-// Bundle size monitoring
+// Monitor bundle size
 export const monitorBundleSize = () => {
   if (process.env.NODE_ENV === 'development') {
-    // Log bundle sizes in development
-    const logBundleInfo = () => {
-      if (window.performance && window.performance.getEntriesByType) {
-        const resources = window.performance.getEntriesByType('resource');
-        const jsResources = resources.filter(r => r.name.includes('.js'));
-        
-        console.group('Bundle Size Analysis');
-        jsResources.forEach(resource => {
-          const sizeKB = (resource.transferSize / 1024).toFixed(2);
-          console.log(`${resource.name.split('/').pop()}: ${sizeKB} KB`);
-        });
-        console.groupEnd();
-      }
-    };
+    window.addEventListener('load', () => {
+      const resources = performance.getEntriesByType('resource');
+      const jsFiles = resources.filter(resource =>
+        resource.name.endsWith('.js') ||
+        resource.name.endsWith('.jsx')
+      );
 
-    window.addEventListener('load', logBundleInfo);
+      const totalSize = jsFiles.reduce((acc, file) =>
+        acc + file.encodedBodySize, 0
+      );
+
+      console.log(`Total JS bundle size: ${(totalSize / 1024 / 1024).toFixed(2)}MB`);
+
+      // Log large chunks
+      jsFiles
+        .filter(file => file.encodedBodySize > 100 * 1024) // Larger than 100KB
+        .forEach(file => {
+          console.warn(
+            `Large chunk detected: ${file.name} - ${(file.encodedBodySize / 1024).toFixed(2)}KB`
+          );
+        });
+    });
   }
 };
 
 // Critical resource hints
 export const addCriticalResourceHints = () => {
   const head = document.head;
-  
+
   // Preload critical CSS
   const preloadCSS = (href) => {
     const link = document.createElement('link');
@@ -163,10 +178,10 @@ export const initBundleOptimizations = () => {
   preloadCriticalRoutes();
   optimizeChunkLoading();
   monitorBundleSize();
-  
+
   // Initialize third-party optimizations
   const { loadAOS } = optimizeThirdPartyLibs();
-  
+
   // Load AOS after initial render
   setTimeout(loadAOS, 1000);
 };

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import { refreshAnimations } from "../utils/animationConfig";
 
 /**
  * Enhanced LazyImage Component with WebP support and performance optimizations
@@ -15,8 +16,8 @@ const LazyImage = ({
   priority = false,
   sizes = "100vw",
   quality = "auto",
-  onLoad = () => {},
-  onError = () => {},
+  onLoad = () => { },
+  onError = () => { },
   ...props
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -74,6 +75,9 @@ const LazyImage = ({
   const handleLoad = useCallback(() => {
     setIsLoaded(true);
     onLoad();
+
+    // Refresh animations after image loads
+    refreshAnimations();
 
     // Track image load performance
     if (process.env.NODE_ENV === "development") {
@@ -144,9 +148,8 @@ const LazyImage = ({
           <img
             src={currentSrc}
             alt={alt}
-            className={`${className} ${
-              isLoaded ? "opacity-100" : "opacity-0"
-            } transition-opacity duration-300`}
+            className={`${className} ${isLoaded ? "opacity-100" : "opacity-0"
+              } transition-opacity duration-300`}
             onLoad={handleLoad}
             onError={handleError}
             loading={priority ? "eager" : "lazy"}
@@ -182,6 +185,7 @@ export const OptimizedImage = ({
           alt={alt}
           className={className}
           loading="eager"
+          onLoad={() => refreshAnimations()}
           {...props}
         />
       </picture>
