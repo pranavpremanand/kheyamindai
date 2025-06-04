@@ -1,4 +1,3 @@
-import React from "react";
 import banner from "../assets/images/banners/blogs.webp";
 import PageBanner from "../Components/Website/PageBanner";
 import BlogItem from "../Components/Website/BlogItem";
@@ -10,11 +9,7 @@ import SEO from "../Components/SEO/SEO";
 
 const Blogs = () => {
   // Use the custom hook to fetch blogs with caching
-  const {
-    data,
-    isLoading: loading,
-    error: fetchError
-  } = useBlogs();
+  const { data, isLoading: loading, error: fetchError } = useBlogs();
 
   // Derived state
   const blogs = data?.blogs || [];
@@ -31,11 +26,9 @@ const Blogs = () => {
         image={banner}
       />
       <div className="min-h-screen">
-        <div className="fixed top-0 left-0 w-full z-[-1]">
-          <PageBanner banner={banner} title="Blogs" />
-        </div>
+        <PageBanner banner={banner} title="Blogs" />
 
-        <div className="pt-[400px] md:pt-[450px]">
+        <div className="pt-[3rem]">
           <div className="wrapper space-y-10">
             <div
               data-aos="fade-up"
@@ -54,7 +47,13 @@ const Blogs = () => {
                 <FancyLoader />
               </div>
             ) : error ? (
-              <div data-aos="fade-up" data-aos-delay="200" className="text-center py-10 text-red-500">{error}</div>
+              <div
+                data-aos="fade-up"
+                data-aos-delay="200"
+                className="text-center py-10 text-red-500"
+              >
+                {error}
+              </div>
             ) : (
               <div
                 data-aos="fade-up"
@@ -64,7 +63,9 @@ const Blogs = () => {
                 {blogs.length > 0 ? (
                   blogs.map((blog) => <BlogItem key={blog._id} item={blog} />)
                 ) : (
-                  <div className="col-span-3 text-center py-10">No blogs found</div>
+                  <div className="col-span-3 text-center py-10">
+                    No blogs found
+                  </div>
                 )}
               </div>
             )}

@@ -57,8 +57,9 @@ const SEO = ({
   const schemas = [];
 
   // Always include organization and website schema
-  schemas.push(getOrganizationSchema());
-  schemas.push(getWebsiteSchema());
+  const baseUrl = canonicalUrl.split('/').slice(0, 3).join('/');
+  schemas.push(getOrganizationSchema(baseUrl));
+  schemas.push(getWebsiteSchema(baseUrl));
 
   // Add page-specific schema
   switch (type) {
@@ -66,16 +67,42 @@ const SEO = ({
       schemas.push(getHomePageSchema(canonicalUrl));
       break;
     case 'service':
-      schemas.push(getServicePageSchema(pageData.serviceData, canonicalUrl));
-      if (pageData.serviceData?.enhancedData) {
-        schemas.push(getEnhancedServiceSchema(pageData.serviceData));
+      if (pageData.serviceData) {
+        schemas.push(getServicePageSchema(
+          canonicalUrl,
+          pageData.serviceData.title,
+          pageData.serviceData.description || pageData.serviceData.desc,
+          pageData.serviceData.image || absoluteImageUrl
+        ));
+        if (pageData.serviceData?.enhancedData) {
+          schemas.push(getEnhancedServiceSchema(pageData.serviceData, canonicalUrl));
+        }
       }
       break;
     case 'blog':
-      schemas.push(getBlogPostSchema(pageData, canonicalUrl));
+      if (pageData) {
+        schemas.push(getBlogPostSchema(
+          canonicalUrl,
+          pageData.title || title,
+          pageData.description || description,
+          pageData.image || absoluteImageUrl,
+          pageData.datePublished,
+          pageData.dateModified,
+          pageData.author
+        ));
+      }
       break;
     case 'contact':
-      schemas.push(getContactPageSchema(canonicalUrl));
+      schemas.push(getContactPageSchema(
+        canonicalUrl,
+        pageData.email || 'info@kheyamind.ai',
+        pageData.phone || '+91-9242049993',
+        pageData.address || {
+          addressCountry: 'India',
+          addressRegion: 'Karnataka',
+          addressLocality: 'Bangalore'
+        }
+      ));
       break;
     case 'about':
       schemas.push(getAboutPageSchema(canonicalUrl));
@@ -86,7 +113,7 @@ const SEO = ({
 
   // Add breadcrumb schema if available
   if (pageData.breadcrumb) {
-    schemas.push(getBreadcrumbSchema(pageData.breadcrumb));
+    schemas.push(getBreadcrumbSchema(pageData.breadcrumb, canonicalUrl));
   }
 
   // Add FAQ schema if available
