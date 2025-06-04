@@ -1,8 +1,4 @@
-import {
-  companyDetails,
-  LogoSvgFooter,
-  services,
-} from "../../data/constant";
+import { companyDetails, LogoSvgFooter, services } from "../../data/constant";
 import { websiteLinks } from "./Header";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
@@ -23,7 +19,7 @@ const Footer = () => {
             <h5 className="text-lg font-semibold">Quick Links</h5>
             <ul className="space-y-2">
               {websiteLinks.map((item) => (
-                <li>
+                <li key={item.path}>
                   <Link
                     to={item.path}
                     className="hover:text-secondary transition-all duration-200"
@@ -38,7 +34,7 @@ const Footer = () => {
             <h5 className="text-lg font-semibold">Services</h5>
             <ul className="space-y-2">
               {services.map((item) => (
-                <li>
+                <li key={item.slug}>
                   <Link
                     to={`/services/${item.slug}`}
                     className="hover:text-secondary transition-all duration-200"

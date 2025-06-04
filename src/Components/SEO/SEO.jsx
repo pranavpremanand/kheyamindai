@@ -56,9 +56,10 @@ const SEO = ({
   // Generate schema based on page type
   const schemas = [];
 
-  // Always include organization and website schema
-  schemas.push(getOrganizationSchema(canonicalUrl));
-  schemas.push(getWebsiteSchema(canonicalUrl));
+  // Always include organization and website schema with base URL
+  const baseUrl = canonicalUrl.split('/').slice(0, 3).join('/');
+  schemas.push(getOrganizationSchema(baseUrl));
+  schemas.push(getWebsiteSchema(baseUrl));
 
   // Add page-specific schema
   switch (type) {
@@ -66,16 +67,38 @@ const SEO = ({
       schemas.push(getHomePageSchema(canonicalUrl));
       break;
     case 'service':
-      schemas.push(getServicePageSchema(canonicalUrl, title, description, absoluteImageUrl));
       if (pageData.serviceData) {
+        schemas.push(getServicePageSchema(
+          canonicalUrl,
+          pageData.serviceData.title || title,
+          pageData.serviceData.description || pageData.serviceData.desc || description,
+          pageData.serviceData.image || absoluteImageUrl
+        ));
         schemas.push(getEnhancedServiceSchema(pageData.serviceData, canonicalUrl));
       }
       break;
     case 'blog':
-      schemas.push(getBlogPostSchema(canonicalUrl, title, description, absoluteImageUrl, pageData.datePublished, pageData.dateModified, pageData.author));
+      schemas.push(getBlogPostSchema(
+        canonicalUrl,
+        pageData.title || title,
+        pageData.description || description,
+        pageData.image || absoluteImageUrl,
+        pageData.datePublished,
+        pageData.dateModified,
+        pageData.author
+      ));
       break;
     case 'contact':
-      schemas.push(getContactPageSchema(canonicalUrl, pageData.email, pageData.phone, pageData.address));
+      schemas.push(getContactPageSchema(
+        canonicalUrl,
+        pageData.email || 'info@kheyamind.ai',
+        pageData.phone || '+91-9242049993',
+        pageData.address || {
+          addressCountry: 'India',
+          addressRegion: 'Karnataka',
+          addressLocality: 'Bangalore'
+        }
+      ));
       break;
     case 'about':
       schemas.push(getAboutPageSchema(canonicalUrl));

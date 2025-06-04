@@ -5,7 +5,7 @@ import BlogItem from "../Components/Website/BlogItem";
 import HrLine from "../Components/HrLine";
 import { Link, useParams } from "react-router-dom";
 import FancyLoader from "../Components/FancyLoader";
-import { Helmet } from "react-helmet-async";
+import SEO from "../Components/SEO/SEO";
 import { FaCalendarAlt, FaUser, FaTag, FaFolder } from "react-icons/fa";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { useBlogBySlug, useBlogs } from "../hooks/useBlogs";
@@ -66,35 +66,31 @@ const BlogDetails = () => {
   };
   return (
     <>
-      <Helmet>
-        <title>{blog.title} | Kheya Mindai</title>
-        <meta
-          name="description"
-          content={
-            blog.metaDescription || blog.excerpt || `Read about ${blog.title}`
-          }
-        />
-        {blog.metaKeywords && blog.metaKeywords.length > 0 ? (
-          <meta name="keywords" content={blog.metaKeywords.join(",")} />
-        ) : (
-          blog.tags &&
-          blog.tags.length > 0 && (
-            <meta name="keywords" content={blog.tags.join(",")} />
-          )
-        )}
-        {blog.categoryId && (
-          <meta name="category" content={blog.categoryId.name} />
-        )}
-        <meta property="og:title" content={blog.title} />
-        <meta
-          property="og:description"
-          content={
-            blog.metaDescription || blog.excerpt || `Read about ${blog.title}`
-          }
-        />
-        <meta property="og:image" content={blog.imageUrl} />
-        <meta property="og:type" content="article" />
-      </Helmet>
+      <SEO
+        type="blog"
+        title={`${blog.title} | KheyaMind AI`}
+        description={
+          blog.metaDescription || blog.excerpt || `Read about ${blog.title}`
+        }
+        keywords={
+          blog.metaKeywords && blog.metaKeywords.length > 0
+            ? blog.metaKeywords.join(",")
+            : blog.tags && blog.tags.length > 0
+            ? blog.tags.join(",")
+            : `${blog.title}, AI blog, technology insights, KheyaMind AI`
+        }
+        url={`https://www.kheyamind.ai/blogs/${blog.slug}`}
+        image={blog.imageUrl}
+        pageData={{
+          title: blog.title,
+          description: blog.metaDescription || blog.excerpt || `Read about ${blog.title}`,
+          image: blog.imageUrl,
+          datePublished: blog.publishDate,
+          dateModified: blog.updatedAt || blog.publishDate,
+          author: blog.authorId?.name || "KheyaMind AI Team",
+          breadcrumb: getBlogBreadcrumb(blog.title, blog.slug)
+        }}
+      />
       <div className="lg:block hidden">
         <PageBanner
           banner={banner}

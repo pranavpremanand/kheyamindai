@@ -4,6 +4,7 @@ import CountUp from "react-countup";
 import HrLine from "../../Components/HrLine";
 import ContactForm from "../../Components/ContactForm";
 import Testimonials from "../../Components/Testimonials";
+import SEO from "../../Components/SEO/SEO";
 import {
   FaRegThumbsUp,
   FaAward,
@@ -88,7 +89,36 @@ const ChatbotVoiceAILanding = () => {
   ];
 
   return (
-    <div className="pt-[5rem]">
+    <>
+      <SEO
+        type="website"
+        title="AI Chatbot & Voice AI Solutions | Automate Customer Support | KheyaMind AI"
+        description="Transform your customer experience with intelligent AI chatbots and voice AI solutions. 24/7 automated support, lead qualification, and seamless CRM integration. Get started today!"
+        keywords="AI chatbot, voice AI, customer support automation, chatbot development, voice assistant, AI customer service, automated support, conversational AI, NLP solutions"
+        url="https://www.kheyamind.ai/chatbots-voice-ai"
+        image={aiChatbotBanner}
+        pageData={{
+          faqs: [
+            {
+              question: "How quickly can you deploy an AI chatbot?",
+              answer: "We can deploy a basic chatbot within 2-4 weeks, with full customization and integration typically taking 6-8 weeks depending on complexity."
+            },
+            {
+              question: "Do your chatbots support multiple languages?",
+              answer: "Yes, our AI chatbots support over 50 languages and can automatically detect and respond in the customer's preferred language."
+            },
+            {
+              question: "Can the chatbot integrate with our existing CRM?",
+              answer: "Absolutely! We provide seamless integration with popular CRM systems like Salesforce, HubSpot, Zoho, and custom solutions."
+            },
+            {
+              question: "What's the difference between chatbots and voice AI?",
+              answer: "Chatbots handle text-based conversations on websites and messaging platforms, while voice AI manages phone calls and voice interactions with natural speech recognition."
+            }
+          ]
+        }}
+      />
+      <div className="pt-[5rem]">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center">
         <div className="absolute inset-0 bg-black/40 z-[1] w-full h-full" />
@@ -554,7 +584,8 @@ const ChatbotVoiceAILanding = () => {
       <Testimonials />
       <ContactForm />
       <Faq />
-    </div>
+      </div>
+    </>
   );
 };
 
