@@ -57,10 +57,10 @@ function App() {
     // Initialize third-party optimizations
     initThirdPartyOptimizations();
     
-    // Initialize animations for all devices
+    // Initialize animations - disable on mobile to prevent content hiding
     const animationCleanup = initializeAnimations({
-      disable: false,
-      duration: window.innerWidth <= 768 ? 400 : 800 // Shorter duration on mobile
+      disable: window.innerWidth <= 768,
+      duration: 800
     });
     
     // Initialize mobile fixes

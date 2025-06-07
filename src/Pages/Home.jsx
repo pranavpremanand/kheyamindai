@@ -106,7 +106,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="">
+        <div className="absolute inset-0 z-0">
           <ReactPlayer
             url={bannerVid}
             playing

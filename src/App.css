@@ -185,40 +185,9 @@ body {
     overflow: visible;
   }
   
-  /* Ensure content is visible */
-  section {
-    position: relative;
-    z-index: 1;
-    overflow: visible;
-  }
-  
-  /* Fix for cards and text elements */
-  div, p, h1, h2, h3, h4, h5, h6 {
-    position: relative;
-    z-index: auto;
-  }
-  
-  /* Prevent content from being hidden behind fixed elements */
-  .fixed {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-  
-  /* Force AOS elements to be visible on mobile */
+  /* Ensure AOS elements are visible when disabled */
   [data-aos] {
     opacity: 1 !important;
     transform: none !important;
-    transition-property: none !important;
-  }
-  
-  /* Ensure all content is visible */
-  * {
-    visibility: visible !important;
-  }
-  
-  /* Fix for React components */
-  .wrapper > * {
-    opacity: 1 !important;
-    visibility: visible !important;
   }
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/fav.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   
   <!-- Performance Optimizations -->
@@ -50,40 +50,11 @@
         min-height: calc(100vh - 200px);
       }
       
-      /* Force visibility of content elements */
-      div, section, p, h1, h2, h3, h4, h5, h6 {
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: none !important;
-      }
-      
-      /* Disable problematic animations on mobile */
+      /* Ensure AOS elements are visible when animations are disabled */
       [data-aos] {
         opacity: 1 !important;
         transform: none !important;
         transition: none !important;
-        animation: none !important;
-      }
-      
-      /* Force all content to be visible */
-      * {
-        opacity: 1 !important;
-        visibility: visible !important;
-      }
-      
-      /* Specific fixes for common hidden elements */
-      .wrapper, .wrapper > *, section, section > * {
-        opacity: 1 !important;
-        visibility: visible !important;
-        display: block !important;
-      }
-      
-      /* Fix for grid and flex containers */
-      .grid, .flex {
-        display: grid !important;
-      }
-      .flex {
-        display: flex !important;
       }
     }
   </style>
