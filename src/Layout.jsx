@@ -9,7 +9,7 @@ export const MainLayout = () => {
   return (
     <>
       <Header />
-      <main>
+      <main className="relative z-[1] min-h-screen">
         <Outlet />
       </main>
       <Footer />
@@ -21,7 +21,7 @@ export const LandingPageLayout = () => {
   return (
     <>
       <LandingHeader />
-      <main>
+      <main className="relative z-[1] min-h-screen">
         <Outlet />
       </main>
       <LandingFooter />

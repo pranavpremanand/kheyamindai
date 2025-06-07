@@ -31,7 +31,7 @@ const ContactUs = () => {
           }
         }}
       />
-      <div className="pt-[5rem] md:pt-[7rem]">
+      <div className="pt-[4rem] sm:pt-[5rem] md:pt-[7rem] relative z-[1]">
         <div className="aspect-[6/4] md:aspect-[19/6] relative">
           <img
             src={banner}

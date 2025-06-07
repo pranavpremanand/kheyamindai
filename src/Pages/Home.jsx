@@ -42,7 +42,7 @@ const Home = () => {
     preloadImages(criticalImages);
   }, []);
   return (
-    <div className="pt-[5rem]">
+    <div className="pt-[4rem] sm:pt-[5rem] relative z-[1]">
       <SEO
         type="home"
         title="AI Chatbots, Voice Assistants & Automation Solutions | KheyaMind AI Technologies"

@@ -20,7 +20,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
   return (
-    <div className="fixed top-0 left-0 w-full max-w-[100vw] z-[999]">
+    <div className="fixed top-0 left-0 w-full max-w-[100vw] z-[999] bg-white shadow-sm">
       <div className="py-3 hidden sm:flex bg-secondary text-white">
         <div className="wrapper w-full flex items-center justify-between gap-4 md:gap-10">
           <div className="flex flex-row items-center gap-7">

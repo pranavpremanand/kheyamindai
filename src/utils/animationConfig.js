@@ -13,7 +13,7 @@ const DEFAULT_AOS_CONFIG = {
     easing: 'ease-in-out-quart',
     offset: -50,
     delay: 100,
-    disable: 'mobile' // Disable on mobile devices
+    disable: false // Enable animations on all devices
 };
 
 /**

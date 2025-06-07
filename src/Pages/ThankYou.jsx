@@ -11,7 +11,7 @@ const ThankYou = () => {
   }, []);
 
   return (
-    <div className="pt-[12rem] min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="pt-[6rem] sm:pt-[8rem] md:pt-[12rem] min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative z-[1]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
