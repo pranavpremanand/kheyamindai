@@ -126,6 +126,18 @@ app.get('/sitemap.xml', async (req, res) => {
   }
 });
 
+// Test endpoint for social media crawler detection
+app.get('/api/test-crawler', (req, res) => {
+  const userAgent = req.headers['user-agent'];
+  const isCrawler = isSocialMediaCrawler(userAgent);
+  
+  res.json({
+    userAgent,
+    isCrawler,
+    timestamp: new Date().toISOString()
+  });
+});
+
 // API proxy endpoints with caching
 app.get('/api/blogs/published', async (req, res) => {
   try {
@@ -206,23 +218,45 @@ app.get('/api/blogs/slug/:slug', async (req, res) => {
 
 // Social media crawler detection and handling
 const isSocialMediaCrawler = (userAgent) => {
+  if (!userAgent) return false;
+  
+  const userAgentLower = userAgent.toLowerCase();
   const crawlers = [
     'facebookexternalhit',
-    'Facebot',
-    'Twitterbot',
-    'LinkedInBot',
-    'WhatsApp',
-    'Slackbot',
-    'TelegramBot',
-    'Discordbot',
-    'Pinterest',
-    'Googlebot',
-    'bingbot'
+    'facebot',
+    'twitterbot',
+    'linkedinbot',
+    'whatsapp',
+    'slackbot',
+    'telegrambot',
+    'discordbot',
+    'pinterest',
+    'googlebot',
+    'bingbot',
+    'yandexbot',
+    'baiduspider',
+    'tumblr',
+    'vkshare',
+    'snapchat',
+    'skype',
+    'line',
+    'viber',
+    'wechat',
+    'instagram',
+    'telegram',
+    'reddit',
+    'ia_archiver', // Internet Archive
+    'developers.google.com/+/web/snippet',
+    'embedly',
+    'outbrain',
+    'quora link preview',
+    'nuzzel',
+    'bitlybot',
+    'applebot'
   ];
 
-  return crawlers.some(crawler =>
-    userAgent && userAgent.toLowerCase().includes(crawler.toLowerCase())
-  );
+  // Check if the user agent contains any of the crawler identifiers
+  return crawlers.some(crawler => userAgentLower.includes(crawler));
 };
 
 // Page metadata mapping
@@ -276,11 +310,18 @@ const pageMetadata = {
 // Middleware to handle social media crawlers
 app.get('*', async (req, res, next) => {
   const userAgent = req.headers['user-agent'];
+  
+  // Log all requests from potential crawlers for debugging
+  if (userAgent && userAgent.toLowerCase().includes('bot')) {
+    console.log(`Crawler detected: ${userAgent} - Path: ${req.path}`);
+  }
 
   // If it's not a social media crawler, proceed to the next middleware
   if (!isSocialMediaCrawler(userAgent)) {
     return next();
   }
+
+  console.log(`Social media crawler detected: ${userAgent} - Path: ${req.path}`);
 
   try {
     // Read the index.html file
@@ -324,30 +365,59 @@ app.get('*', async (req, res, next) => {
 
     // If we have metadata for this path, update the HTML
     if (metadata) {
+      console.log(`Applying metadata for ${urlPath}:`, metadata);
+      
       // Update the title
       html = html.replace(/<title>.*?<\/title>/, `<title>${metadata.title}</title>`);
+      
+      // Add meta description if not present or replace existing one
+      if (html.includes('<meta name="description"')) {
+        html = html.replace(
+          /<meta name="description".*?>/,
+          `<meta name="description" content="${metadata.description}">`
+        );
+      } else {
+        const headPos = html.indexOf('</head>');
+        html = html.slice(0, headPos) + `<meta name="description" content="${metadata.description}">` + html.slice(headPos);
+      }
 
-      // Update OG and Twitter meta tags
-      html = html.replace(
-        /<meta property="og:image" content=".*?">/,
-        `<meta property="og:image" content="${metadata.image || 'https://www.kheyamind.ai/og-image.png'}">`
-      );
-
-      // Add OG title and description
+      // Update or add OG and Twitter meta tags
       const headEndPos = html.indexOf('</head>');
+      
+      // Remove existing OG and Twitter tags to avoid duplicates
+      const ogTagsRegex = /<meta property="og:.*?>/g;
+      const twitterTagsRegex = /<meta name="twitter:.*?>/g;
+      
+      html = html.replace(ogTagsRegex, '');
+      html = html.replace(twitterTagsRegex, '');
+      
+      // Add comprehensive meta tags
       const metaTags = `
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="${urlPath.startsWith('/blogs/') ? 'article' : 'website'}">
+        <meta property="og:url" content="https://www.kheyamind.ai${urlPath}">
         <meta property="og:title" content="${metadata.title}">
         <meta property="og:description" content="${metadata.description}">
-        <meta property="og:url" content="https://www.kheyamind.ai${urlPath}">
-        <meta property="og:type" content="${urlPath.startsWith('/blogs/') ? 'article' : 'website'}">
+        <meta property="og:image" content="${metadata.image || 'https://www.kheyamind.ai/og-image.png'}">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:site_name" content="KheyaMind AI Technologies">
+        
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:url" content="https://www.kheyamind.ai${urlPath}">
         <meta name="twitter:title" content="${metadata.title}">
         <meta name="twitter:description" content="${metadata.description}">
+        <meta name="twitter:image" content="${metadata.image || 'https://www.kheyamind.ai/og-image.png'}">
       `;
 
       html = html.slice(0, headEndPos) + metaTags + html.slice(headEndPos);
+    } else {
+      console.log(`No metadata found for path: ${urlPath}`);
     }
 
     // Send the modified HTML
+    console.log(`Sending modified HTML for crawler at path: ${urlPath}`);
     res.send(html);
   } catch (error) {
     console.error('Error handling social media crawler:', error);
