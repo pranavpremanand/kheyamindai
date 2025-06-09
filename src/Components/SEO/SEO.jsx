@@ -20,9 +20,10 @@ import {
  * SEO Component
  * 
  * A comprehensive SEO component that handles canonical URLs and structured data.
- * Note: Basic OG tags are also provided in the static index.html file for social media crawlers
- * that don't execute JavaScript. The dynamic OG tags below will override those for browsers
- * that do execute JavaScript.
+ * 
+ * Note: This component works in tandem with server-side rendering for social media crawlers.
+ * - For regular users: These meta tags are applied client-side via react-helmet-async
+ * - For social crawlers: The server intercepts requests and injects appropriate meta tags
  * 
  * @param {Object} props - Component props
  * @param {string} props.title - Page title
@@ -160,7 +161,7 @@ const SEO = ({
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={absoluteImageUrl || "https://www.kheyamind.ai/og-image.png"} />
+        <meta property="og:image" content={absoluteImageUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="KheyaMind AI Technologies" />
@@ -170,7 +171,7 @@ const SEO = ({
         <meta name="twitter:url" content={canonicalUrl} />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={absoluteImageUrl || "https://www.kheyamind.ai/og-image.png"} />
+        <meta name="twitter:image" content={absoluteImageUrl} />
 
         {/* Additional meta tags for articles/blogs */}
         {type === 'blog' && pageData.datePublished && (
