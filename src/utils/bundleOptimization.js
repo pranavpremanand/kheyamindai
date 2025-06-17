@@ -146,26 +146,64 @@ export const monitorBundleSize = () => {
 // Critical resource hints
 export const addCriticalResourceHints = () => {
   const head = document.head;
+  // Track which resources we've already preloaded to avoid duplicates
+  const preloadedResources = new Set();
 
   // Preload critical CSS
   const preloadCSS = (href) => {
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'style';
-    link.href = href;
-    link.onload = () => {
-      link.rel = 'stylesheet';
-    };
-    head.appendChild(link);
+    // Skip if no href or already preloaded
+    if (!href || preloadedResources.has(href)) {
+      return;
+    }
+    
+    // Check if this resource is already being loaded
+    const existingLinks = document.querySelectorAll(`link[href="${href}"]`);
+    if (existingLinks.length > 0) {
+      // Resource is already being loaded, no need to preload
+      return;
+    }
+    
+    try {
+      preloadedResources.add(href);
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'style';
+      link.href = href;
+      link.crossOrigin = 'anonymous'; // Add for cross-origin resources
+      head.appendChild(link);
+      
+      // No need to change rel to stylesheet as these are already loaded
+      // This was causing duplicate stylesheet loading
+    } catch (error) {
+      console.warn('Failed to preload CSS:', href, error);
+    }
   };
 
   // Preload critical JS
   const preloadJS = (href) => {
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'script';
-    link.href = href;
-    head.appendChild(link);
+    // Skip if no href or already preloaded
+    if (!href || preloadedResources.has(href)) {
+      return;
+    }
+    
+    // Check if this resource is already being loaded
+    const existingScripts = document.querySelectorAll(`script[src="${href}"]`);
+    if (existingScripts.length > 0) {
+      // Resource is already being loaded, no need to preload
+      return;
+    }
+    
+    try {
+      preloadedResources.add(href);
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'script';
+      link.href = href;
+      link.crossOrigin = 'anonymous'; // Add for cross-origin resources
+      head.appendChild(link);
+    } catch (error) {
+      console.warn('Failed to preload JS:', href, error);
+    }
   };
 
   return { preloadCSS, preloadJS };
@@ -173,22 +211,39 @@ export const addCriticalResourceHints = () => {
 
 // Initialize all optimizations
 export const initBundleOptimizations = () => {
+  // Only run in browser environment
+  if (typeof window === 'undefined') return;
+  
+  // Preload critical routes for navigation
   preloadCriticalRoutes();
   
-  // Use connection-aware preloading
-  if ('connection' in navigator && 
-      !navigator.connection.saveData && 
-      !['slow-2g', '2g'].includes(navigator.connection.effectiveType)) {
-    
-    // Initialize resource hints for critical assets
-    const { preloadJS, preloadCSS } = addCriticalResourceHints();
-    
-    // Preload main bundle and critical CSS
-    // Use actual paths to your main JS and CSS files
-    preloadJS('/static/js/main.chunk.js');
-    preloadCSS('/static/css/main.chunk.css');
+  // Skip resource preloading if document is already loaded
+  // or if we're on a slow connection
+  const shouldPreload = 
+    document.readyState !== 'complete' && 
+    !('connection' in navigator && 
+      (navigator.connection.saveData || 
+       ['slow-2g', '2g'].includes(navigator.connection.effectiveType)));
+  
+  if (shouldPreload) {
+    try {
+      // Initialize resource hints for critical assets
+      const { preloadJS, preloadCSS } = addCriticalResourceHints();
+      
+      // Wait for DOM to be ready to find resources
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          preloadExistingResources(preloadCSS, preloadJS);
+        });
+      } else {
+        preloadExistingResources(preloadCSS, preloadJS);
+      }
+    } catch (error) {
+      console.warn('Failed to initialize resource preloading:', error);
+    }
   }
   
+  // Monitor bundle size in development
   monitorBundleSize();
 
   // Initialize third-party optimizations
@@ -197,3 +252,36 @@ export const initBundleOptimizations = () => {
   // Load AOS after initial render
   setTimeout(loadAOS, 1000);
 };
+
+// Helper function to find and preload existing resources
+function preloadExistingResources(preloadCSS, preloadJS) {
+  // Don't preload if page is already loaded
+  if (document.readyState === 'complete') return;
+  
+  // Find main CSS files (but not already preloaded ones)
+  const cssLinks = document.querySelectorAll('link[rel="stylesheet"]:not([rel="preload"])');
+  cssLinks.forEach(link => {
+    if (link.href && 
+        !link.href.includes('fonts.googleapis.com') && 
+        !link.href.includes('preload')) {
+      // Only preload our own CSS, not Google Fonts or already preloaded resources
+      preloadCSS(link.href);
+    }
+  });
+  
+  // Find main JS files (but not already preloaded ones)
+  const scriptTags = document.querySelectorAll('script[src]');
+  scriptTags.forEach(script => {
+    // Only preload main chunks, not third-party scripts
+    const isMainChunk = script.src.includes('main') || 
+                        script.src.includes('chunk') || 
+                        script.src.includes('bundle');
+    const isThirdParty = script.src.includes('googleapis.com') || 
+                         script.src.includes('gtm') || 
+                         script.src.includes('analytics');
+    
+    if (script.src && isMainChunk && !isThirdParty) {
+      preloadJS(script.src);
+    }
+  });
+}
