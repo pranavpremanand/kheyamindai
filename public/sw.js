@@ -11,10 +11,9 @@ const IMAGE_CACHE = 'kheyamind-images-v1';
 // Resources to cache immediately
 const STATIC_ASSETS = [
   '/',
-  '/static/css/main.css',
-  '/static/js/main.js',
+  '/index.html',
   '/manifest.json',
-  '/favicon.ico'
+  '/logo.png'
 ];
 
 // Install event - cache static assets
@@ -63,6 +62,11 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Skip cross-origin requests like Google Tag Manager
+  if (url.origin !== self.location.origin) {
+    return; // Let the browser handle these requests normally
+  }
+
   // Handle different types of requests
   if (request.destination === 'image') {
     event.respondWith(handleImageRequest(request));
@@ -95,7 +99,7 @@ async function handleImageRequest(request) {
   } catch (error) {
     console.log('Service Worker: Image request failed', error);
     // Return a fallback image if available
-    return caches.match('/assets/images/placeholder.webp');
+    return caches.match('/logo.png');
   }
 }
 
@@ -157,27 +161,28 @@ async function handleDocumentRequest(request) {
 
 // Stale While Revalidate strategy for static assets
 async function handleStaticRequest(request) {
-  const cache = await caches.open(STATIC_CACHE);
-  const cachedResponse = await cache.match(request);
-  
-  // Return cached version immediately
-  if (cachedResponse) {
-    // Update cache in background
-    fetch(request)
-      .then((networkResponse) => {
-        if (networkResponse.ok) {
-          cache.put(request, networkResponse.clone());
-        }
-      })
-      .catch(() => {
-        // Network failed, but we have cache
-      });
-    
-    return cachedResponse;
-  }
-  
-  // No cache, fetch from network
   try {
+    const cache = await caches.open(STATIC_CACHE);
+    const cachedResponse = await cache.match(request);
+    
+    // Return cached version immediately if available
+    if (cachedResponse) {
+      // Update cache in background
+      fetch(request)
+        .then((networkResponse) => {
+          if (networkResponse.ok) {
+            cache.put(request, networkResponse.clone());
+          }
+        })
+        .catch(() => {
+          // Network failed, but we have cache, so it's fine
+          console.log('Background fetch failed for:', request.url);
+        });
+      
+      return cachedResponse;
+    }
+    
+    // No cache, fetch from network
     const networkResponse = await fetch(request);
     
     if (networkResponse.ok) {
@@ -186,7 +191,18 @@ async function handleStaticRequest(request) {
     
     return networkResponse;
   } catch (error) {
-    console.log('Service Worker: Static request failed', error);
+    console.log('Service Worker: Static request failed for:', request.url, error);
+    
+    // Try to return the index page as fallback for navigation requests
+    if (request.mode === 'navigate') {
+      const cache = await caches.open(STATIC_CACHE);
+      const cachedIndex = await cache.match('/');
+      if (cachedIndex) {
+        return cachedIndex;
+      }
+    }
+    
+    // If we can't provide a fallback, let the error propagate
     throw error;
   }
 }
@@ -210,8 +226,8 @@ self.addEventListener('push', (event) => {
     
     const options = {
       body: data.body,
-      icon: '/assets/images/icon-192x192.png',
-      badge: '/assets/images/badge-72x72.png',
+      icon: '/logo.png',
+      badge: '/logo.png',
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),
@@ -220,13 +236,11 @@ self.addEventListener('push', (event) => {
       actions: [
         {
           action: 'explore',
-          title: 'Explore',
-          icon: '/assets/images/checkmark.png'
+          title: 'Explore'
         },
         {
           action: 'close',
-          title: 'Close',
-          icon: '/assets/images/xmark.png'
+          title: 'Close'
         }
       ]
     };

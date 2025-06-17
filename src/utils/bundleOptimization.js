@@ -73,10 +73,8 @@ export const optimizeChunkLoading = () => {
   }
 
   // Enable preloading for fast connections
-  const link = document.createElement('link');
-  link.rel = 'preload';
-  link.as = 'script';
-  document.head.appendChild(link);
+  // Note: This function now requires an href parameter to be useful
+  // It will be called by other functions that need to preload specific scripts
 };
 
 // Remove unused dependencies
@@ -176,7 +174,21 @@ export const addCriticalResourceHints = () => {
 // Initialize all optimizations
 export const initBundleOptimizations = () => {
   preloadCriticalRoutes();
-  optimizeChunkLoading();
+  
+  // Use connection-aware preloading
+  if ('connection' in navigator && 
+      !navigator.connection.saveData && 
+      !['slow-2g', '2g'].includes(navigator.connection.effectiveType)) {
+    
+    // Initialize resource hints for critical assets
+    const { preloadJS, preloadCSS } = addCriticalResourceHints();
+    
+    // Preload main bundle and critical CSS
+    // Use actual paths to your main JS and CSS files
+    preloadJS('/static/js/main.chunk.js');
+    preloadCSS('/static/css/main.chunk.css');
+  }
+  
   monitorBundleSize();
 
   // Initialize third-party optimizations
