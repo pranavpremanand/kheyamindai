@@ -42,7 +42,7 @@ const Home = () => {
     preloadImages(criticalImages);
   }, []);
   return (
-    <div className="pt-[5rem]">
+    <div className="pt-[4rem] sm:pt-[5rem] relative z-[1]">
       <SEO
         type="home"
         title="AI Chatbots, Voice Assistants & Automation Solutions | KheyaMind AI Technologies"
@@ -106,7 +106,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="">
+        <div className="absolute inset-0 z-0">
           <ReactPlayer
             url={bannerVid}
             playing

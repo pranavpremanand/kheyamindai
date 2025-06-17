@@ -13,7 +13,7 @@ const DEFAULT_AOS_CONFIG = {
     easing: 'ease-in-out-quart',
     offset: -50,
     delay: 100,
-    disable: 'mobile' // Disable on mobile devices
+    disable: window.innerWidth <= 768 ? true : false // Disable on mobile to prevent content hiding
 };
 
 /**

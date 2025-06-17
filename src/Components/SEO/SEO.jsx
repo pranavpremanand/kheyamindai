@@ -20,7 +20,10 @@ import {
  * SEO Component
  * 
  * A comprehensive SEO component that handles canonical URLs and structured data.
- * Note: OG tags are now handled directly in the static index.html file.
+ * 
+ * Note: This component works in tandem with server-side rendering for social media crawlers.
+ * - For regular users: These meta tags are applied client-side via react-helmet-async
+ * - For social crawlers: The server intercepts requests and injects appropriate meta tags
  * 
  * @param {Object} props - Component props
  * @param {string} props.title - Page title
@@ -48,10 +51,10 @@ const SEO = ({
     ? url
     : generateCanonicalUrl(location.pathname);
 
-  // Ensure image URL is absolute
-  const absoluteImageUrl = image?.startsWith('http')
-    ? image
-    : `https://www.kheyamind.ai${image || ''}`;
+  // Ensure image URL is absolute and has a fallback
+  const absoluteImageUrl = image
+    ? (image.startsWith('http') ? image : `https://www.kheyamind.ai${image}`)
+    : 'https://www.kheyamind.ai/og-image.png';
 
   // Generate schema based on page type
   const schemas = [];

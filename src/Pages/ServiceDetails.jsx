@@ -64,7 +64,7 @@ const ServiceDetails = () => {
         title={data.title}
       />
       
-      <div className="wrapper pt-[5rem] space-y-5">
+      <div className="wrapper pt-[4rem] sm:pt-[5rem] space-y-5 relative z-[1]">
         {/* Breadcrumb Navigation */}
         <Breadcrumb items={breadcrumbItems} />
         

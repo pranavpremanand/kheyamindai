@@ -15,6 +15,7 @@ import { initThirdPartyOptimizations } from "./utils/thirdPartyOptimization";
 import { initIconOptimizations } from "./utils/iconOptimization";
 import { HelmetProvider } from 'react-helmet-async';
 import { initializeAnimations } from './utils/animationConfig';
+import { initMobileFixes } from './utils/mobileFix';
 
 // Lazy load Toaster to reduce initial bundle
 const Toaster = lazy(() => import("react-hot-toast").then(module => ({ default: module.Toaster })));
@@ -56,16 +57,21 @@ function App() {
     // Initialize third-party optimizations
     initThirdPartyOptimizations();
     
-    // Initialize animations with custom config for desktop
-    const cleanup = initializeAnimations({
-      disable: window.innerWidth <= 768
+    // Initialize animations - disable on mobile to prevent content hiding
+    const animationCleanup = initializeAnimations({
+      disable: window.innerWidth <= 768,
+      duration: 800
     });
+    
+    // Initialize mobile fixes
+    const mobileFixCleanup = initMobileFixes();
       
       // Optimize existing images
       optimizeExistingImages();
     
     return () => {
-      cleanup();
+      animationCleanup();
+      mobileFixCleanup();
     };
   }, []);
 
