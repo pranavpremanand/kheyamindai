@@ -27,7 +27,7 @@ export const preloadCriticalChunks = () => {
     setTimeout(() => {
       criticalChunks.forEach(chunk => {
         chunk().catch(err => {
-          console.warn('Failed to preload chunk:', err);
+          //console.warn('Failed to preload chunk:', err);
         });
       });
     }, 2000);
@@ -53,7 +53,7 @@ export const optimizeRouteChunks = () => {
     if (chunkLoader) {
       setTimeout(() => {
         chunkLoader().catch(err => {
-          console.warn(`Failed to preload route chunk ${route}:`, err);
+          //console.warn(`Failed to preload route chunk ${route}:`, err);
         });
       }, 3000);
     }
@@ -164,7 +164,7 @@ export const optimizeTreeShaking = () => {
     window.addEventListener('beforeunload', () => {
       const unusedExports = Array.from(allExports).filter(exp => !usedExports.has(exp));
       if (unusedExports.length > 0) {
-        console.warn('Potentially unused exports:', unusedExports);
+        //console.warn('Potentially unused exports:', unusedExports);
       }
     });
   }
@@ -202,7 +202,7 @@ export const analyzeBundleSize = () => {
 
       // Warn if bundle is too large
       if (totalSize > 500 * 1024) { // 500KB threshold
-        console.warn(`Large bundle detected: ${(totalSize / 1024).toFixed(2)} KB`);
+        //console.warn(`Large bundle detected: ${(totalSize / 1024).toFixed(2)} KB`);
       }
     }, 3000);
   });

@@ -111,7 +111,7 @@ export const observePerformance = () => {
     const resourceObserver = new PerformanceObserver((list) => {
       list.getEntries().forEach((entry) => {
         if (entry.initiatorType === 'img' && entry.duration > 1000) {
-          console.warn(`Slow image loading: ${entry.name} took ${Math.round(entry.duration)}ms`);
+          //console.warn(`Slow image loading: ${entry.name} took ${Math.round(entry.duration)}ms`);
         }
       });
     });
@@ -122,7 +122,7 @@ export const observePerformance = () => {
     const longTaskObserver = new PerformanceObserver((list) => {
       list.getEntries().forEach((entry) => {
         if (entry.duration > 50) {
-          console.warn(`Long task detected: ${Math.round(entry.duration)}ms`);
+          //console.warn(`Long task detected: ${Math.round(entry.duration)}ms`);
         }
       });
     });

@@ -61,7 +61,7 @@ export const generateSitemap = async () => {
         priority: '0.7'
       }));
     } catch (error) {
-      console.warn('Failed to fetch blogs for sitemap:', error);
+      //console.warn('Failed to fetch blogs for sitemap:', error);
       // Continue without blog pages if API fails
     }
 

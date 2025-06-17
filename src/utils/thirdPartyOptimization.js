@@ -285,7 +285,7 @@ export const monitorThirdPartyPerformance = () => {
       }, 0);
 
       if (totalBlockingTime > 1000) {
-        console.warn(`Third-party scripts blocking main thread for ${totalBlockingTime.toFixed(2)}ms`);
+        //console.warn(`Third-party scripts blocking main thread for ${totalBlockingTime.toFixed(2)}ms`);
       }
     }, 2000);
   });

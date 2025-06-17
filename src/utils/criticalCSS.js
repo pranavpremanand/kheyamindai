@@ -278,7 +278,7 @@ export const extractCriticalCSS = async () => {
         }
       } catch (e) {
         // Cross-origin stylesheet, skip
-        console.warn('Cannot access stylesheet:', stylesheet.href);
+        //console.warn('Cannot access stylesheet:', stylesheet.href);
       }
     }
   } catch (error) {
@@ -312,7 +312,7 @@ export const monitorCSSPerformance = () => {
     );
 
     if (renderBlockingCSS.length > 0) {
-      console.warn('Render-blocking CSS detected:', renderBlockingCSS);
+      //console.warn('Render-blocking CSS detected:', renderBlockingCSS);
     }
   });
 };

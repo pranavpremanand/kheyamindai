@@ -18,7 +18,7 @@ try {
     services = Array.from(serviceMatches, match => ({ slug: match[1] }));
   }
 } catch (error) {
-  console.warn('Could not read services from constants.js:', error.message);
+  //console.warn('Could not read services from constants.js:', error.message);
 }
 
 const SITE_URL = 'https://www.kheyamind.ai';
@@ -34,7 +34,7 @@ const fetchBlogs = async () => {
     });
     return response.data.blogs || [];
   } catch (error) {
-    console.warn('Failed to fetch blogs for sitemap:', error.message);
+    //console.warn('Failed to fetch blogs for sitemap:', error.message);
     return [];
   }
 };

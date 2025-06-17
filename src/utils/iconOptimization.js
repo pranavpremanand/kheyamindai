@@ -71,7 +71,7 @@ export const loadIcon = async (iconName, isEager = false) => {
     const iconLoader = iconSet[iconName] || LazyIcons[iconName] || EagerIcons[iconName];
     
     if (!iconLoader) {
-      console.warn(`Icon ${iconName} not found`);
+      //console.warn(`Icon ${iconName} not found`);
       return null;
     }
 

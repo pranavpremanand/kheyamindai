@@ -135,9 +135,9 @@ export const monitorBundleSize = () => {
       jsFiles
         .filter(file => file.encodedBodySize > 100 * 1024) // Larger than 100KB
         .forEach(file => {
-          console.warn(
-            `Large chunk detected: ${file.name} - ${(file.encodedBodySize / 1024).toFixed(2)}KB`
-          );
+          //console.warn(
+          //   `Large chunk detected: ${file.name} - ${(file.encodedBodySize / 1024).toFixed(2)}KB`
+          // );
         });
     });
   }
@@ -175,7 +175,7 @@ export const addCriticalResourceHints = () => {
       // No need to change rel to stylesheet as these are already loaded
       // This was causing duplicate stylesheet loading
     } catch (error) {
-      console.warn('Failed to preload CSS:', href, error);
+      //console.warn('Failed to preload CSS:', href, error);
     }
   };
 
@@ -202,7 +202,7 @@ export const addCriticalResourceHints = () => {
       link.crossOrigin = 'anonymous'; // Add for cross-origin resources
       head.appendChild(link);
     } catch (error) {
-      console.warn('Failed to preload JS:', href, error);
+      //console.warn('Failed to preload JS:', href, error);
     }
   };
 
@@ -239,7 +239,7 @@ export const initBundleOptimizations = () => {
         preloadExistingResources(preloadCSS, preloadJS);
       }
     } catch (error) {
-      console.warn('Failed to initialize resource preloading:', error);
+      //console.warn('Failed to initialize resource preloading:', error);
     }
   }
   

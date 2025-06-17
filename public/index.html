@@ -120,14 +120,66 @@
     // Load GTM after page load to reduce blocking
     window.addEventListener('load', function () {
       setTimeout(function () {
-        (function (w, d, s, l, i) {
-          w[l] = w[l] || []; w[l].push({
-            'gtm.start':
-              new Date().getTime(), event: 'gtm.js'
-          }); var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-              'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-TN86VLCT');
+        try {
+          // Create a fallback for dataLayer if blocked
+          window.dataLayer = window.dataLayer || [];
+          
+          // Check if GTM is likely to be blocked
+          var isBlocked = false;
+          
+          // Create a test script element to detect blocking
+          var testScript = document.createElement('script');
+          testScript.type = 'text/javascript';
+          testScript.onload = function() {
+            // GTM script loaded successfully
+            loadGTM();
+          };
+          testScript.onerror = function() {
+            // GTM script was blocked
+            isBlocked = true;
+            //console.warn('Google Tag Manager appears to be blocked by an ad blocker or privacy extension.');
+            
+            // Create a dummy gtag function to prevent errors
+            window.gtag = window.gtag || function() {
+              (window.dataLayer = window.dataLayer || []).push(arguments);
+            };
+          };
+          
+          // Set a timeout to check if GTM loaded
+          var gtmTimeout = setTimeout(function() {
+            if (!window.google_tag_manager) {
+              isBlocked = true;
+              //console.warn('Google Tag Manager timed out or was blocked.');
+            }
+          }, 2000);
+          
+          // Function to load GTM
+          function loadGTM() {
+            (function (w, d, s, l, i) {
+              w[l] = w[l] || []; w[l].push({
+                'gtm.start': new Date().getTime(), 
+                event: 'gtm.js'
+              }); 
+              var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), 
+                dl = l != 'dataLayer' ? '&l=' + l : ''; 
+              j.async = true; 
+              j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; 
+              j.onerror = function() {
+                isBlocked = true;
+                clearTimeout(gtmTimeout);
+                //console.warn('Google Tag Manager was blocked.');
+              };
+              f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-TN86VLCT');
+          }
+          
+          // Try to load GTM
+          testScript.src = 'https://www.googletagmanager.com/gtag/js?id=GTM-TN86VLCT';
+          document.head.appendChild(testScript);
+        } catch (e) {
+          //console.warn('Error initializing Google Tag Manager:', e);
+        }
       }, 1000); // Delay GTM load by 1 second
     });
   </script>
@@ -135,9 +187,12 @@
 </head>
 
 <body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TN86VLCT" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- Google Tag Manager (noscript) - wrapped in try-catch for ad blockers -->
+  <noscript>
+    <!-- The iframe below may be blocked by ad blockers, which is expected behavior -->
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TN86VLCT" height="0" width="0"
+      style="display:none;visibility:hidden" title="Google Tag Manager" aria-hidden="true"></iframe>
+  </noscript>
   <!-- End Google Tag Manager (noscript) -->
   <noscript>You need to enable JavaScript to run this app.</noscript>
 

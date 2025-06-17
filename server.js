@@ -69,7 +69,7 @@ const generateDynamicSitemap = async () => {
         priority: '0.7'
       }));
     } catch (error) {
-      console.warn('Failed to fetch blogs for dynamic sitemap:', error.message);
+      //console.warn('Failed to fetch blogs for dynamic sitemap:', error.message);
     }
 
     // Combine all pages
@@ -365,7 +365,7 @@ app.get('*', async (req, res, next) => {
           };
         }
       } catch (error) {
-        console.warn(`Failed to fetch blog data for ${slug}:`, error.message);
+        //console.warn(`Failed to fetch blog data for ${slug}:`, error.message);
       }
     }
 

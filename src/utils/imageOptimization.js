@@ -107,7 +107,7 @@ export const trackImagePerformance = (imageSrc, startTime) => {
   
   // Log slow loading images
   if (loadTime > 1000) {
-    console.warn(`Slow image load: ${imageSrc} took ${Math.round(loadTime)}ms`);
+    //console.warn(`Slow image load: ${imageSrc} took ${Math.round(loadTime)}ms`);
   }
   
   // Send to analytics if available
