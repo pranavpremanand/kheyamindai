@@ -219,9 +219,9 @@ const BlogDetails = () => {
             </div>
           </div>
         </div>
-        {/* <hr className="border-primary/30 my-[3rem]" />
+        <hr className="border-primary/30 my-[3rem]" />
         <div className="space-y-8">
-          <div className="space-y-4">
+          {/* <div className="space-y-4">
             <h3 className="section-heading text-secondary">Recent Blogs</h3>
             <HrLine />
             <p className="text-gray-600">
