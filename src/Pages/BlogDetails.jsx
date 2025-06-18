@@ -22,18 +22,18 @@ const BlogDetails = () => {
     error: blogError,
   } = useBlogBySlug(slug);
 
-  // const { data: blogsData, isLoading: isBlogsLoading } = useBlogs();
+  const { data: blogsData, isLoading: isBlogsLoading } = useBlogs();
 
   // Derived state
   const blog = blogData?.blog;
   const loading = isBlogLoading
-  //  || isBlogsLoading;
+   || isBlogsLoading;
   const error = blogError?.response.data?.message || blogError?.message;
 
   // Filter recent blogs
-  // const recentBlogs = blogsData?.blogs
-  //   ? blogsData.blogs.filter((item) => item.slug !== slug).slice(0, 3)
-  //   : [];
+  const recentBlogs = blogsData?.blogs
+    ? blogsData.blogs.filter((item) => item.slug !== slug).slice(0, 3)
+    : [];
 
   if (loading) {
     return (
@@ -221,15 +221,15 @@ const BlogDetails = () => {
         </div>
         <hr className="border-primary/30 my-[3rem]" />
         <div className="space-y-8">
-          {/* <div className="space-y-4">
+          <div className="space-y-4">
             <h3 className="section-heading text-secondary">Recent Blogs</h3>
             <HrLine />
             <p className="text-gray-600">
               Discover more interesting articles from our blog
             </p>
-          </div> */}
+          </div>
 
-          {/* {recentBlogs.length > 0 ? (
+          {recentBlogs.length > 0 ? (
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
               {recentBlogs.map((item) => (
                 <BlogItem key={item._id} item={item} />
@@ -244,7 +244,7 @@ const BlogDetails = () => {
                 Check back soon for more content!
               </p>
             </div>
-          )} */}
+          )}
 
           <div className="pt-[2rem] flex justify-center">
             <Link to="/blogs" className="primary-btn flex items-center gap-2">
