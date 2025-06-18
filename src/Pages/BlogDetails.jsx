@@ -219,7 +219,7 @@ const BlogDetails = () => {
             </div>
           </div>
         </div>
-        <hr className="border-primary/30 my-[3rem]" />
+        {/* <hr className="border-primary/30 my-[3rem]" />
         <div className="space-y-8">
           <div className="space-y-4">
             <h3 className="section-heading text-secondary">Recent Blogs</h3>
@@ -227,7 +227,7 @@ const BlogDetails = () => {
             <p className="text-gray-600">
               Discover more interesting articles from our blog
             </p>
-          </div>
+          </div> */}
 
           {/* {recentBlogs.length > 0 ? (
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
