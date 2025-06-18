@@ -2,10 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { blogsApi, queryKeys } from "../utils/api";
 
 // Hook for fetching all published blogs
-export const useBlogs = () => {
+export const useBlogs = (options = {}) => {
   return useQuery({
     queryKey: [queryKeys.blogs],
     queryFn: () => blogsApi.getBlogs(),
+    ...options,
   });
 };
 

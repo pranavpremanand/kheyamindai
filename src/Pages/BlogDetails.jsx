@@ -1,16 +1,19 @@
 import PageBanner from "../Components/Website/PageBanner";
 import banner from "../assets/images/banners/blogs.webp";
-import BlogItem from "../Components/Website/BlogItem";
 import HrLine from "../Components/HrLine";
 import { Link, useParams } from "react-router-dom";
 import FancyLoader from "../Components/FancyLoader";
 import SEO from "../Components/SEO/SEO";
-import { FaCalendarAlt, FaUser, FaTag, FaFolder } from "react-icons/fa";
+import { FaCalendarAlt, FaUser, FaFolder } from "react-icons/fa";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { useBlogBySlug, useBlogs } from "../hooks/useBlogs";
+import { useBlogBySlug } from "../hooks/useBlogs";
 import Breadcrumb from "../Components/Breadcrumb";
-import InternalLinkHelper, { ServiceReference } from "../Components/InternalLinkHelper";
+import InternalLinkHelper, {
+  ServiceReference,
+} from "../Components/InternalLinkHelper";
 import { getBlogBreadcrumb } from "../utils/internalLinking";
+import { lazy } from "react";
+const RecentBlogs = lazy(() => import("../Components/Website/RecentBlogs"));
 
 const BlogDetails = () => {
   const { slug } = useParams();
@@ -22,18 +25,10 @@ const BlogDetails = () => {
     error: blogError,
   } = useBlogBySlug(slug);
 
-  const { data: blogsData, isLoading: isBlogsLoading } = useBlogs();
-
   // Derived state
   const blog = blogData?.blog;
-  const loading = isBlogLoading
-   || isBlogsLoading;
+  const loading = isBlogLoading;
   const error = blogError?.response.data?.message || blogError?.message;
-
-  // Filter recent blogs
-  const recentBlogs = blogsData?.blogs
-    ? blogsData.blogs.filter((item) => item.slug !== slug).slice(0, 3)
-    : [];
 
   if (loading) {
     return (
@@ -83,12 +78,13 @@ const BlogDetails = () => {
         image={blog.imageUrl}
         pageData={{
           title: blog.title,
-          description: blog.metaDescription || blog.excerpt || `Read about ${blog.title}`,
+          description:
+            blog.metaDescription || blog.excerpt || `Read about ${blog.title}`,
           image: blog.imageUrl,
           datePublished: blog.publishDate,
           dateModified: blog.updatedAt || blog.publishDate,
           author: blog.authorId?.name || "KheyaMind AI Team",
-          breadcrumb: getBlogBreadcrumb(blog.title, blog.slug)
+          breadcrumb: getBlogBreadcrumb(blog.title, blog.slug),
         }}
       />
       <div className="lg:block hidden">
@@ -111,8 +107,8 @@ const BlogDetails = () => {
       </div>
       <div className="wrapper pt-[6rem] sm:pt-[10rem] lg:pt-[2rem]">
         {/* Breadcrumb Navigation */}
-        <Breadcrumb 
-          items={getBlogBreadcrumb(blog.title, blog.slug)} 
+        <Breadcrumb
+          items={getBlogBreadcrumb(blog.title, blog.slug)}
           className="lg:hidden mb-4"
         />
         <img
@@ -181,7 +177,7 @@ const BlogDetails = () => {
 
           {/* Blog content with internal linking */}
           <div className="prose prose-lg max-w-none">
-            <InternalLinkHelper 
+            <InternalLinkHelper
               content={blog.content}
               className="reset-html-content"
             />
@@ -193,24 +189,25 @@ const BlogDetails = () => {
               Interested in AI Solutions?
             </h3>
             <p className="text-gray-700 mb-4">
-              Discover how our AI services can transform your business operations and drive growth.
+              Discover how our AI services can transform your business
+              operations and drive growth.
             </p>
             <div className="flex flex-wrap gap-3">
-              <ServiceReference 
+              <ServiceReference
                 serviceSlug="ai-chatbots"
                 anchorText="AI Chatbots"
                 description="Automate customer support with intelligent chatbots"
                 inline={true}
               />
               <span className="text-gray-400">•</span>
-              <ServiceReference 
+              <ServiceReference
                 serviceSlug="voice-ai-agents"
                 anchorText="Voice AI Agents"
                 description="Transform call center operations with voice AI"
                 inline={true}
               />
               <span className="text-gray-400">•</span>
-              <ServiceReference 
+              <ServiceReference
                 serviceSlug="nlp-custom-gpt-solutions"
                 anchorText="Custom AI Development"
                 description="Build domain-specific AI solutions"
@@ -220,38 +217,7 @@ const BlogDetails = () => {
           </div>
         </div>
         <hr className="border-primary/30 my-[3rem]" />
-        <div className="space-y-8">
-          <div className="space-y-4">
-            <h3 className="section-heading text-secondary">Recent Blogs</h3>
-            <HrLine />
-            <p className="text-gray-600">
-              Discover more interesting articles from our blog
-            </p>
-          </div>
-
-          {recentBlogs.length > 0 ? (
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {recentBlogs.map((item) => (
-                <BlogItem key={item._id} item={item} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8 bg-gray-50 rounded-lg border border-gray-200">
-              <p className="text-gray-600">
-                No other blogs found at the moment
-              </p>
-              <p className="text-sm text-gray-500 mt-2">
-                Check back soon for more content!
-              </p>
-            </div>
-          )}
-
-          <div className="pt-[2rem] flex justify-center">
-            <Link to="/blogs" className="primary-btn flex items-center gap-2">
-              Explore More Blogs
-            </Link>
-          </div>
-        </div>
+        <RecentBlogs slug={blog.slug} />
       </div>
     </>
   );
