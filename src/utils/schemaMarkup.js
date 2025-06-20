@@ -326,31 +326,22 @@ export const getEnhancedServiceSchema = (serviceData, url) => {
 };
 
 // Breadcrumb schema for service pages
-export const getBreadcrumbSchema = (serviceData, url) => {
+export const getBreadcrumbSchema = (breadcrumbData, url) => {
   const baseUrl = url.split('/').slice(0, 3).join('/');
+  
+  // Create the itemListElement array from the breadcrumb data
+  const itemListElement = breadcrumbData.map((item, index) => {
+    return {
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.title, // Ensure the name property is always present
+      "item": item.url.startsWith('http') ? item.url : `${baseUrl}${item.url}`
+    };
+  });
   
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": baseUrl
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Services",
-        "item": `${baseUrl}/services`
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": serviceData.title,
-        "item": url
-      }
-    ]
+    "itemListElement": itemListElement
   };
 };
