@@ -129,7 +129,7 @@ export const monitorBundleSize = () => {
         acc + file.encodedBodySize, 0
       );
 
-      console.log(`Total JS bundle size: ${(totalSize / 1024 / 1024).toFixed(2)}MB`);
+      // console.log(`Total JS bundle size: ${(totalSize / 1024 / 1024).toFixed(2)}MB`);
 
       // Log large chunks
       jsFiles

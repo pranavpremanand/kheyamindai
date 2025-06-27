@@ -29,12 +29,30 @@ const API_BASE_URL = 'https://kheyamind-blogplatform-backend.vercel.app/api';
  */
 const fetchBlogs = async () => {
   try {
+    console.log('Fetching blogs from API for sitemap generation...');
     const response = await axios.get(`${API_BASE_URL}/blogs/published`, {
-      timeout: 10000 // 10 second timeout
+      timeout: 15000, // 15 second timeout
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      }
     });
+    
+    if (!response.data || !response.data.blogs) {
+      console.warn('API response missing blogs array:', response.data);
+      return [];
+    }
+    
+    console.log(`Successfully fetched ${response.data.blogs.length} blogs from API`);
     return response.data.blogs || [];
   } catch (error) {
-    //console.warn('Failed to fetch blogs for sitemap:', error.message);
+    console.warn('Failed to fetch blogs for sitemap:', error.message);
+    if (error.response) {
+      console.warn('API error details:', {
+        status: error.response.status,
+        data: error.response.data
+      });
+    }
     return [];
   }
 };
@@ -149,6 +167,12 @@ const generateSitemap = async () => {
     
     console.log(`📊 Total pages in sitemap: ${allPages.length}`);
 
+    // Log all blog URLs for debugging
+    console.log('🔍 Blog URLs included in sitemap:');
+    blogPages.forEach(page => {
+      console.log(`   - ${SITE_URL}${page.url}`);
+    });
+
     // Generate XML
     const sitemapXML = generateSitemapXML(allPages);
 
@@ -156,8 +180,17 @@ const generateSitemap = async () => {
     const publicPath = path.join(__dirname, '../public/sitemap.xml');
     fs.writeFileSync(publicPath, sitemapXML, 'utf8');
 
+    // Also save to build folder if it exists (for production)
+    const buildDir = path.join(__dirname, '../build');
+    if (fs.existsSync(buildDir)) {
+      const buildPath = path.join(buildDir, 'sitemap.xml');
+      fs.writeFileSync(buildPath, sitemapXML, 'utf8');
+      console.log('✅ Sitemap also saved to /build/sitemap.xml');
+    }
+
     console.log('✅ Sitemap generated successfully at /public/sitemap.xml');
     console.log(`🔗 Sitemap will be available at: ${SITE_URL}/sitemap.xml`);
+    console.log(`📊 Total URLs in sitemap: ${allPages.length}`);
     
     return true;
   } catch (error) {

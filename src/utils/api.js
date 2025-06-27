@@ -22,8 +22,16 @@ export const queryKeys = {
 export const blogsApi = {
   // Get all published blogs
   getBlogs: async () => {
-    const response = await api.get("/blogs/published");
-    return response.data;
+    try {
+      console.log('Fetching blogs from API...');
+      const response = await api.get("/blogs/published");
+      console.log(`API response status: ${response.status}`);
+      console.log(`Found ${response.data?.blogs?.length || 0} blogs`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching blogs:', error.message);
+      throw error;
+    }
   },
 
   // Get blog by slug

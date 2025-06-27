@@ -269,15 +269,15 @@ export const monitorThirdPartyPerformance = () => {
         entry.name.includes('intercom.io')
       );
 
-      if (process.env.NODE_ENV === 'development') {
-        console.group('Third-Party Script Performance');
-        thirdPartyEntries.forEach(entry => {
-          const duration = entry.duration.toFixed(2);
-          const size = entry.transferSize ? `${(entry.transferSize / 1024).toFixed(2)} KB` : 'Unknown';
-          console.log(`${entry.name}: ${duration}ms, ${size}`);
-        });
-        console.groupEnd();
-      }
+      // if (process.env.NODE_ENV === 'development') {
+      //   console.group('Third-Party Script Performance');
+      //   thirdPartyEntries.forEach(entry => {
+      //     const duration = entry.duration.toFixed(2);
+      //     const size = entry.transferSize ? `${(entry.transferSize / 1024).toFixed(2)} KB` : 'Unknown';
+      //     console.log(`${entry.name}: ${duration}ms, ${size}`);
+      //   });
+      //   console.groupEnd();
+      // }
 
       // Calculate total third-party blocking time
       const totalBlockingTime = thirdPartyEntries.reduce((total, entry) => {

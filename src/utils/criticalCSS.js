@@ -298,13 +298,13 @@ export const monitorCSSPerformance = () => {
       entry.name.includes('.css') || entry.name.includes('fonts')
     );
 
-    if (process.env.NODE_ENV === 'development') {
-      console.group('CSS Performance');
-      cssEntries.forEach(entry => {
-        console.log(`${entry.name}: ${entry.duration.toFixed(2)}ms`);
-      });
-      console.groupEnd();
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    //   console.group('CSS Performance');
+    //   cssEntries.forEach(entry => {
+    //     console.log(`${entry.name}: ${entry.duration.toFixed(2)}ms`);
+    //   });
+    //   console.groupEnd();
+    // }
 
     // Track render-blocking resources
     const renderBlockingCSS = cssEntries.filter(entry => 

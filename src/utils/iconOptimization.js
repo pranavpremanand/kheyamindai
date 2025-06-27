@@ -121,12 +121,12 @@ export const preloadCriticalIcons = () => {
 
 // Bundle size analysis for icons
 export const analyzeIconUsage = () => {
-  if (process.env.NODE_ENV === 'development') {
-    console.group('Icon Usage Analysis');
-    console.log('Cached icons:', Array.from(iconCache.keys()));
-    console.log('Cache size:', iconCache.size);
-    console.groupEnd();
-  }
+  // if (process.env.NODE_ENV === 'development') {
+  //   console.group('Icon Usage Analysis');
+  //   console.log('Cached icons:', Array.from(iconCache.keys()));
+  //   console.log('Cache size:', iconCache.size);
+  //   console.groupEnd();
+  // }
 };
 
 // Initialize icon optimizations

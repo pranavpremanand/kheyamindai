@@ -69,11 +69,18 @@ const generateDynamicSitemap = async () => {
         priority: '0.7'
       }));
     } catch (error) {
-      //console.warn('Failed to fetch blogs for dynamic sitemap:', error.message);
+      console.warn('Failed to fetch blogs for dynamic sitemap:', error.message);
     }
 
     // Combine all pages
     const allPages = [...staticPages, ...servicePages, ...blogPages, ...landingPages];
+
+    // Log blog URLs for debugging
+    console.log(`Dynamic sitemap: Found ${blogPages.length} blog URLs`);
+    blogPages.forEach(page => {
+      console.log(`Blog URL in sitemap: ${SITE_URL}${page.url}`);
+    });
+    console.log(`Total URLs in dynamic sitemap: ${allPages.length}`);
 
     // Generate XML
     const urlElements = allPages.map(page => {
@@ -105,18 +112,47 @@ ${urlElements}
   }
 };
 
-// Dynamic sitemap route (fallback if static sitemap.xml doesn't exist)
+// Dynamic sitemap route (always generates fresh sitemap to ensure latest blogs are included)
 app.get('/sitemap.xml', async (req, res) => {
   try {
-    // First try to serve static sitemap.xml if it exists
+    // Check if the request includes a cache-busting parameter
+    const forceDynamic = req.query.dynamic === 'true';
+    
+    // First try to serve static sitemap.xml if it exists and we're not forcing dynamic
     const staticSitemapPath = path.join(__dirname, 'build', 'sitemap.xml');
-    if (fs.existsSync(staticSitemapPath)) {
+    if (fs.existsSync(staticSitemapPath) && !forceDynamic) {
+      console.log('Serving static sitemap from build directory');
+      // Get the file stats to check when it was last modified
+      const stats = fs.statSync(staticSitemapPath);
+      const fileAge = Date.now() - stats.mtimeMs;
+      
+      // If the file is older than 1 hour, generate a new one for next time
+      if (fileAge > 60 * 60 * 1000) {
+        console.log('Static sitemap is older than 1 hour, generating new one in background');
+        generateDynamicSitemap().then(xml => {
+          fs.writeFileSync(staticSitemapPath, xml, 'utf8');
+          console.log('Updated static sitemap with fresh data');
+        }).catch(err => {
+          console.error('Failed to update static sitemap:', err);
+        });
+      }
+      
       return res.sendFile(staticSitemapPath);
     }
 
-    // If static sitemap doesn't exist, generate dynamic one
-    console.log('Static sitemap not found, generating dynamic sitemap...');
+    // Generate dynamic sitemap
+    console.log('Generating fresh dynamic sitemap...');
     const sitemapXML = await generateDynamicSitemap();
+    
+    // Save the dynamically generated sitemap for future use
+    if (!forceDynamic) {
+      try {
+        fs.writeFileSync(staticSitemapPath, sitemapXML, 'utf8');
+        console.log('Saved dynamic sitemap to static file for future use');
+      } catch (writeError) {
+        console.warn('Could not save dynamic sitemap to file:', writeError.message);
+      }
+    }
 
     res.set('Content-Type', 'application/xml');
     res.send(sitemapXML);

@@ -80,9 +80,9 @@ const LazyImage = ({
     refreshAnimations();
 
     // Track image load performance
-    if (process.env.NODE_ENV === "development") {
-      console.log(`Image loaded: ${currentSrc}`);
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   console.log(`Image loaded: ${currentSrc}`);
+    // }
   }, [onLoad, currentSrc]);
 
   const handleError = useCallback(() => {
