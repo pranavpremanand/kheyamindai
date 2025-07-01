@@ -4,38 +4,30 @@
     {
       "src": "server.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
     }
   ],
   "routes": [
-    {
-      "src": "/dynamic-sitemap.xml",
-      "dest": "/server.js",
-      "headers": {
-        "Cache-Control": "no-cache, no-store, must-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0",
-        "Content-Type": "application/xml"
-      }
-    },
     {
       "src": "/sitemap.xml",
       "dest": "/server.js",
       "headers": {
         "Cache-Control": "no-cache, no-store, must-revalidate",
         "Pragma": "no-cache",
-        "Expires": "0",
-        "Content-Type": "application/xml"
+        "Expires": "0"
       }
     },
     {
-      "handle": "filesystem"
+      "src": "/dynamic-sitemap.xml",
+      "dest": "/server.js",
+      "headers": {
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0"
+      }
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
       "src": "/(.*)",
