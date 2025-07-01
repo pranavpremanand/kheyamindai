@@ -28,13 +28,19 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 // Sitemap auto-regeneration variables
 let lastSitemapUpdate = 0;
-const SITEMAP_UPDATE_INTERVAL = 60 * 60 * 1000; // 1 hour in milliseconds
+const SITEMAP_UPDATE_INTERVAL = 10 * 60 * 1000; // 10 minutes in milliseconds (reduced from 1 hour)
 let sitemapRegenerationInProgress = false;
+let sitemapRegenerationCount = 0;
 
 // Middleware to trigger sitemap regeneration on any page visit
 app.use(async (req, res, next) => {
   // Skip for asset requests to avoid unnecessary processing
   if (req.path.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
+    return next();
+  }
+  
+  // Skip for API requests
+  if (req.path.startsWith('/api/')) {
     return next();
   }
   
@@ -44,11 +50,12 @@ app.use(async (req, res, next) => {
   // If it's been more than the update interval since the last update and no regeneration is in progress
   if (timeSinceLastUpdate > SITEMAP_UPDATE_INTERVAL && !sitemapRegenerationInProgress) {
     sitemapRegenerationInProgress = true;
+    sitemapRegenerationCount++;
     
     // Don't await this - let it run in the background
     (async () => {
       try {
-        console.log('🔄 Auto-regenerating sitemap in background due to page visit...');
+        console.log(`🔄 Auto-regenerating sitemap #${sitemapRegenerationCount} in background due to page visit to ${req.path}...`);
         const staticSitemapPath = path.join(__dirname, 'build', 'sitemap.xml');
         const sitemapXML = await generateDynamicSitemap();
         
@@ -99,21 +106,37 @@ const generateDynamicSitemap = async () => {
       { url: '/real-estate-ai-solutions', lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' }
     ];
 
-    // Fetch blog posts with cache busting to ensure fresh data
+    // Fetch blog posts with EXTREME cache busting to ensure fresh data
     let blogPages = [];
     try {
-      console.log('🔄 Fetching latest blogs from API for sitemap...');
-      // Add timestamp to prevent caching
-      const timestamp = new Date().getTime();
-      const response = await axios.get(`${baseUrl}/blogs/published?_t=${timestamp}`, {
-        timeout: 15000, // 15 second timeout
+      console.log('🔄 Fetching LATEST blogs from API for sitemap with cache busting...');
+      
+      // Generate a unique cache-busting parameter
+      const timestamp = Date.now();
+      const random = Math.random().toString(36).substring(2, 15);
+      const cacheBuster = `_t=${timestamp}&_r=${random}`;
+      
+      // Make the API request with aggressive cache busting
+      const response = await axios({
+        method: 'get',
+        url: `${baseUrl}/blogs/published?${cacheBuster}`,
+        timeout: 20000, // 20 second timeout
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate',
           'Pragma': 'no-cache',
           'Expires': '0',
-          'X-Requested-With': 'XMLHttpRequest'
+          'X-Requested-With': 'XMLHttpRequest',
+          'Accept': 'application/json',
+          'X-Cache-Bust': timestamp
+        },
+        // Prevent axios from caching
+        params: {
+          _nocache: timestamp
         }
       });
+      
+      // Log the raw response for debugging
+      console.log(`🔍 API Response status: ${response.status}`);
       
       if (!response.data || !response.data.blogs || !Array.isArray(response.data.blogs)) {
         console.warn('⚠️ API response missing blogs array:', JSON.stringify(response.data));
@@ -122,14 +145,14 @@ const generateDynamicSitemap = async () => {
         
         blogPages = response.data.blogs.map(blog => ({
           url: `/blogs/${blog.slug}`,
-          lastmod: blog.updatedAt || blog.createdAt || new Date().toISOString(),
-          changefreq: 'weekly',
+          lastmod: new Date().toISOString(), // Always use current time to force updates
+          changefreq: 'daily', // Changed to daily to encourage more frequent crawling
           priority: '0.7'
         }));
         
         console.log('📝 Blog slugs found for sitemap:');
         response.data.blogs.forEach(blog => {
-          console.log(`   - ${blog.slug} (${blog.title})`);
+          console.log(`   - ${blog.slug} (${blog.title || 'No title'})`);
         });
       }
     } catch (error) {
@@ -139,6 +162,10 @@ const generateDynamicSitemap = async () => {
           status: error.response.status,
           data: JSON.stringify(error.response.data)
         });
+      } else if (error.request) {
+        console.warn('❌ No response received from API:', error.request);
+      } else {
+        console.warn('❌ Error setting up request:', error.message);
       }
     }
 
@@ -182,64 +209,35 @@ ${urlElements}
   }
 };
 
-// Dynamic sitemap route - serves the auto-regenerated sitemap or generates a fresh one
+// Dynamic sitemap route - ALWAYS generates a fresh sitemap with latest blogs
 app.get('/sitemap.xml', async (req, res) => {
   try {
-    // Check if the request includes a force-regeneration parameter
-    const forceRegeneration = req.query.dynamic === 'true';
+    console.log('🔄 ALWAYS generating fresh sitemap for every request...');
+    
+    // Always generate a fresh sitemap to ensure latest blogs are included
+    const sitemapXML = await generateDynamicSitemap();
+    
+    // Save the fresh sitemap to the build directory
     const staticSitemapPath = path.join(__dirname, 'build', 'sitemap.xml');
-    
-    // If forcing regeneration or sitemap doesn't exist, generate a new one
-    if (forceRegeneration || !fs.existsSync(staticSitemapPath)) {
-      console.log('🔄 Generating fresh sitemap on demand...');
-      const sitemapXML = await generateDynamicSitemap();
-      
-      // Save the fresh sitemap
-      try {
-        fs.writeFileSync(staticSitemapPath, sitemapXML, 'utf8');
-        lastSitemapUpdate = Date.now(); // Update our timestamp
-        console.log('✅ Saved fresh sitemap to file');
-      } catch (writeError) {
-        console.warn('⚠️ Could not save sitemap to file:', writeError.message);
-      }
-      
-      // Set headers and send response
-      res.set('Content-Type', 'application/xml');
-      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-      res.send(sitemapXML);
-      return;
+    try {
+      fs.writeFileSync(staticSitemapPath, sitemapXML, 'utf8');
+      lastSitemapUpdate = Date.now();
+      console.log('✅ Updated sitemap.xml file with latest blog data');
+    } catch (writeError) {
+      console.warn('⚠️ Could not save sitemap to file:', writeError.message);
     }
-    
-    // Otherwise, serve the existing sitemap file
-    console.log('📤 Serving existing sitemap file');
-    
-    // Check if it's time to regenerate in the background
-    const currentTime = Date.now();
-    const timeSinceLastUpdate = currentTime - lastSitemapUpdate;
-    
-    if (timeSinceLastUpdate > SITEMAP_UPDATE_INTERVAL && !sitemapRegenerationInProgress) {
-      console.log('🔄 Triggering background sitemap update while serving existing file');
-      // Don't await - let it run in background
-      (async () => {
-        sitemapRegenerationInProgress = true;
-        try {
-          const newSitemapXML = await generateDynamicSitemap();
-          fs.writeFileSync(staticSitemapPath, newSitemapXML, 'utf8');
-          lastSitemapUpdate = Date.now();
-          console.log('✅ Background sitemap update complete');
-        } catch (err) {
-          console.error('❌ Background sitemap update failed:', err);
-        } finally {
-          sitemapRegenerationInProgress = false;
-        }
-      })();
-    }
-    
-    // Set appropriate headers
+
+    // Set proper content type and cache control headers
     res.set('Content-Type', 'application/xml');
-    res.sendFile(staticSitemapPath);
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    
+    // Send the fresh sitemap
+    res.send(sitemapXML);
+    console.log('📤 Sent fresh sitemap to client');
   } catch (error) {
-    console.error('❌ Error serving sitemap:', error);
+    console.error('❌ Error generating sitemap:', error);
     res.status(500).send('Error generating sitemap');
   }
 });
@@ -592,11 +590,23 @@ const generateInitialSitemap = async () => {
   try {
     console.log('🚀 Generating initial sitemap on server start...');
     const staticSitemapPath = path.join(__dirname, 'build', 'sitemap.xml');
+    
+    // Clear any existing sitemap to force fresh generation
+    if (fs.existsSync(staticSitemapPath)) {
+      fs.unlinkSync(staticSitemapPath);
+      console.log('🗑️ Removed existing sitemap to ensure fresh generation');
+    }
+    
     const sitemapXML = await generateDynamicSitemap();
     
     fs.writeFileSync(staticSitemapPath, sitemapXML, 'utf8');
     lastSitemapUpdate = Date.now();
     console.log('✅ Initial sitemap generation complete');
+    
+    // Log the sitemap content for verification
+    console.log('📄 Sitemap content preview:');
+    const sitemapContent = fs.readFileSync(staticSitemapPath, 'utf8');
+    console.log(sitemapContent.substring(0, 500) + '...');
   } catch (error) {
     console.error('❌ Error generating initial sitemap:', error);
   }
@@ -608,11 +618,11 @@ app.listen(PORT, () => {
   // Generate initial sitemap
   generateInitialSitemap();
   
-  // Set up periodic sitemap regeneration (every 6 hours)
+  // Set up periodic sitemap regeneration (every hour)
   setInterval(() => {
     if (!sitemapRegenerationInProgress) {
       console.log('⏰ Running scheduled sitemap regeneration...');
       generateInitialSitemap();
     }
-  }, 6 * 60 * 60 * 1000); // Every 6 hours
+  }, 60 * 60 * 1000); // Every hour (reduced from 6 hours)
 });
