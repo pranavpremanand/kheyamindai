@@ -25,16 +25,32 @@ const SITE_URL = 'https://www.kheyamind.ai';
 const API_BASE_URL = 'https://kheyamind-blogplatform-backend.vercel.app/api';
 
 /**
- * Fetch blogs from API
+ * Fetch blogs from API with extreme cache busting
  */
 const fetchBlogs = async () => {
   try {
     console.log('Fetching blogs from API for sitemap generation...');
-    const response = await axios.get(`${API_BASE_URL}/blogs/published`, {
-      timeout: 15000, // 15 second timeout
+    
+    // Generate a unique cache-busting parameter
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substring(2, 15);
+    const cacheBuster = `_t=${timestamp}&_r=${random}`;
+    
+    // Make the API request with aggressive cache busting
+    const response = await axios({
+      method: 'get',
+      url: `${API_BASE_URL}/blogs/published?${cacheBuster}`,
+      timeout: 30000, // 30 second timeout
       headers: {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache'
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json',
+        'X-Cache-Bust': timestamp
+      },
+      params: {
+        _nocache: timestamp
       }
     });
     

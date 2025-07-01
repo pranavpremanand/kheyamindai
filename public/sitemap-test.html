@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitemap Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 10px 5px 10px 0;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sitemap Test Tool</h1>
+    <p>This tool helps you test your sitemap and verify that it's being generated correctly with the latest blog data.</p>
+    
+    <div>
+        <a href="/api/sitemap" class="button" id="testSitemap">Test API Sitemap</a>
+        <a href="/sitemap.xml" class="button" id="viewSitemap">View Current Sitemap</a>
+        <a href="/sitemap.xml?v=1" class="button" id="viewSitemapNocache">View Sitemap (No Cache)</a>
+    </div>
+    
+    <div id="result">
+        <h2>Results will appear here</h2>
+        <p>Click one of the buttons above to test your sitemap.</p>
+    </div>
+
+    <script>
+        document.getElementById('testSitemap').addEventListener('click', async function(e) {
+            e.preventDefault();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Loading API sitemap...</p>';
+            
+            try {
+                const timestamp = Date.now();
+                const response = await fetch(`/api/sitemap?_t=${timestamp}`);
+                const text = await response.text();
+                
+                resultDiv.innerHTML = `
+                    <h2>API Sitemap Result</h2>
+                    <p>Status: ${response.status} ${response.statusText}</p>
+                    <pre>${escapeHtml(text)}</pre>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <h2>Error</h2>
+                    <p>${error.message}</p>
+                `;
+            }
+        });
+
+        document.getElementById('viewSitemap').addEventListener('click', async function(e) {
+            e.preventDefault();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Loading current sitemap...</p>';
+            
+            try {
+                const response = await fetch('/sitemap.xml');
+                const text = await response.text();
+                
+                resultDiv.innerHTML = `
+                    <h2>Current Sitemap</h2>
+                    <p>Status: ${response.status} ${response.statusText}</p>
+                    <pre>${escapeHtml(text)}</pre>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <h2>Error</h2>
+                    <p>${error.message}</p>
+                `;
+            }
+        });
+
+        document.getElementById('viewSitemapNocache').addEventListener('click', async function(e) {
+            e.preventDefault();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Loading sitemap with cache busting...</p>';
+            
+            try {
+                const timestamp = Date.now();
+                const response = await fetch(`/sitemap.xml?v=${timestamp}`);
+                const text = await response.text();
+                
+                resultDiv.innerHTML = `
+                    <h2>No-Cache Sitemap</h2>
+                    <p>Status: ${response.status} ${response.statusText}</p>
+                    <pre>${escapeHtml(text)}</pre>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <h2>Error</h2>
+                    <p>${error.message}</p>
+                `;
+            }
+        });
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
