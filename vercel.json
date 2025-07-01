@@ -6,10 +6,6 @@
       "use": "@vercel/node"
     },
     {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    },
-    {
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
@@ -20,7 +16,7 @@
   "routes": [
     {
       "src": "/dynamic-sitemap.xml",
-      "dest": "/api/sitemap.js",
+      "dest": "/server.js",
       "headers": {
         "Cache-Control": "no-cache, no-store, must-revalidate",
         "Pragma": "no-cache",
@@ -30,27 +26,13 @@
     },
     {
       "src": "/sitemap.xml",
-      "dest": "/api/sitemap.js",
+      "dest": "/server.js",
       "headers": {
         "Cache-Control": "no-cache, no-store, must-revalidate",
         "Pragma": "no-cache",
         "Expires": "0",
         "Content-Type": "application/xml"
       }
-    },
-    {
-      "src": "/sitemap-test.xml",
-      "dest": "/api/sitemap-test.js",
-      "headers": {
-        "Cache-Control": "no-cache, no-store, must-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0",
-        "Content-Type": "application/xml"
-      }
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
     },
     {
       "handle": "filesystem"
