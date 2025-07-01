@@ -210,53 +210,66 @@ ${urlElements}
   }
 });
 
-// Dynamic sitemap route - Alias for the sitemap.xml route
+// Dynamic sitemap route - SUPER AGGRESSIVE CACHE BUSTING
 app.get('/dynamic-sitemap.xml', async (req, res) => {
   try {
-    console.log('🔄 DYNAMIC SITEMAP GENERATION...');
+    // Clear any module cache that might be affecting axios
+    delete require.cache[require.resolve('axios')];
+    
+    console.log('🔄 ULTRA-DYNAMIC SITEMAP GENERATION WITH EXTREME CACHE BUSTING...');
+    console.log('📅 Request time:', new Date().toISOString());
     
     // Define the site URL
     const SITE_URL = 'https://www.kheyamind.ai';
     
-    // Static pages
+    // Static pages with dynamic timestamps
+    const currentTime = new Date().toISOString();
     const staticPages = [
-      { url: '', lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '1.0' },
-      { url: '/about-us', lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
-      { url: '/services', lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
-      { url: '/blogs', lastmod: new Date().toISOString(), changefreq: 'daily', priority: '0.8' },
-      { url: '/contact-us', lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' }
+      { url: '', lastmod: currentTime, changefreq: 'weekly', priority: '1.0' },
+      { url: '/about-us', lastmod: currentTime, changefreq: 'monthly', priority: '0.8' },
+      { url: '/services', lastmod: currentTime, changefreq: 'weekly', priority: '0.9' },
+      { url: '/blogs', lastmod: currentTime, changefreq: 'daily', priority: '0.8' },
+      { url: '/contact-us', lastmod: currentTime, changefreq: 'monthly', priority: '0.7' }
     ];
 
-    // Service pages
+    // Service pages with dynamic timestamps
     const servicePages = [
-      { url: '/services/ai-chatbots', lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
-      { url: '/services/voice-ai-agents', lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
-      { url: '/services/nlp-custom-gpt-solutions', lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
-      { url: '/services/ai-powered-erp-tools', lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
-      { url: '/services/cloud-devops-ai', lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
-      { url: '/services/ai-interface-design', lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
-      { url: '/services/mobile-app-development', lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' }
+      { url: '/services/ai-chatbots', lastmod: currentTime, changefreq: 'monthly', priority: '0.8' },
+      { url: '/services/voice-ai-agents', lastmod: currentTime, changefreq: 'monthly', priority: '0.8' },
+      { url: '/services/nlp-custom-gpt-solutions', lastmod: currentTime, changefreq: 'monthly', priority: '0.8' },
+      { url: '/services/ai-powered-erp-tools', lastmod: currentTime, changefreq: 'monthly', priority: '0.8' },
+      { url: '/services/cloud-devops-ai', lastmod: currentTime, changefreq: 'monthly', priority: '0.8' },
+      { url: '/services/ai-interface-design', lastmod: currentTime, changefreq: 'monthly', priority: '0.8' },
+      { url: '/services/mobile-app-development', lastmod: currentTime, changefreq: 'monthly', priority: '0.8' }
     ];
 
-    // Landing pages
+    // Landing pages with dynamic timestamps
     const landingPages = [
-      { url: '/chatbots-voice-ai', lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
-      { url: '/ai-enterprise-solutions', lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
-      { url: '/real-estate-ai-solutions', lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' }
+      { url: '/chatbots-voice-ai', lastmod: currentTime, changefreq: 'monthly', priority: '0.8' },
+      { url: '/ai-enterprise-solutions', lastmod: currentTime, changefreq: 'monthly', priority: '0.8' },
+      { url: '/real-estate-ai-solutions', lastmod: currentTime, changefreq: 'monthly', priority: '0.8' }
     ];
     
     // Fetch blog posts with EXTREME cache busting
-    console.log('🔄 Directly fetching latest blogs from API for dynamic sitemap...');
+    console.log('🔄 Directly fetching latest blogs from API with EXTREME cache busting...');
     
-    // Generate a unique cache-busting parameter
+    // Generate multiple unique cache-busting parameters
     const timestamp = Date.now();
-    const random = Math.random().toString(36).substring(2, 15);
-    const cacheBuster = `_t=${timestamp}&_r=${random}`;
+    const random1 = Math.random().toString(36).substring(2, 15);
+    const random2 = Math.random().toString(36).substring(2, 15);
+    const uuid = `${timestamp}-${random1}-${random2}`;
+    const cacheBuster = `_t=${timestamp}&_r=${random1}&_u=${uuid}`;
+    
+    // Create a fresh axios instance for this request
+    const freshAxios = require('axios').create();
     
     // Make the API request with aggressive cache busting
-    const response = await axios({
+    const apiUrl = `${baseUrl}/blogs/published?${cacheBuster}`;
+    console.log(`📡 Fetching from: ${apiUrl}`);
+    
+    const response = await freshAxios({
       method: 'get',
-      url: `${baseUrl}/blogs/published?${cacheBuster}`,
+      url: apiUrl,
       timeout: 30000, // 30 second timeout
       headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -264,14 +277,20 @@ app.get('/dynamic-sitemap.xml', async (req, res) => {
         'Expires': '0',
         'X-Requested-With': 'XMLHttpRequest',
         'Accept': 'application/json',
-        'X-Cache-Bust': timestamp
+        'X-Cache-Bust': timestamp,
+        'X-Random-Token': random1,
+        'X-Unique-ID': uuid,
+        'User-Agent': `DynamicSitemapGenerator/${timestamp}`
       },
       params: {
-        _nocache: timestamp
+        _nocache: timestamp,
+        _rand: random1,
+        _uuid: uuid
       }
     });
     
     console.log(`✅ API Response status: ${response.status}`);
+    console.log(`📊 Response headers:`, JSON.stringify(response.headers));
     
     let blogPages = [];
     if (!response.data || !response.data.blogs || !Array.isArray(response.data.blogs)) {
@@ -281,7 +300,7 @@ app.get('/dynamic-sitemap.xml', async (req, res) => {
       
       blogPages = response.data.blogs.map(blog => ({
         url: `/blogs/${blog.slug}`,
-        lastmod: new Date().toISOString(),
+        lastmod: currentTime,
         changefreq: 'daily',
         priority: '0.7'
       }));
@@ -296,7 +315,8 @@ app.get('/dynamic-sitemap.xml', async (req, res) => {
     const allPages = [...staticPages, ...servicePages, ...blogPages, ...landingPages];
     console.log(`📊 Total URLs in dynamic sitemap: ${allPages.length}`);
 
-    // Generate XML
+    // Generate XML with a comment indicating when it was generated
+    const generationComment = `<!-- Dynamic sitemap generated at ${currentTime} with request ID: ${uuid} -->`;
     const urlElements = allPages.map(page => {
       const fullUrl = `${SITE_URL}${page.url}`;
       return `  <url>
@@ -308,15 +328,28 @@ app.get('/dynamic-sitemap.xml', async (req, res) => {
     }).join('\n');
 
     const sitemapXML = `<?xml version="1.0" encoding="UTF-8"?>
+${generationComment}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urlElements}
 </urlset>`;
 
-    // Set proper content type and cache control headers
+    // Set extremely aggressive cache control headers
     res.set('Content-Type', 'application/xml');
-    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
     res.set('Pragma', 'no-cache');
-    res.set('Expires', '0');
+    res.set('Expires', '-1');
+    res.set('Surrogate-Control', 'no-store');
+    res.set('X-Accel-Expires', '0');
+    res.set('X-Generation-Time', currentTime);
+    res.set('X-Request-ID', uuid);
+    
+    // Send the fresh sitemap
+    res.send(sitemapXML);
+    console.log('📤 Sent ultra-dynamic sitemap to client with ID:', uuid);
+  } catch (error) {
+    console.error('❌ Error generating dynamic sitemap:', error);
+    res.status(500).send(`Error generating dynamic sitemap: ${error.message}`);
+  }
     
     // Send the fresh sitemap
     res.send(sitemapXML);
