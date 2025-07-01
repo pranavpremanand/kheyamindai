@@ -25,6 +25,48 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/api/sitemap',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+          {
+            key: 'Pragma',
+            value: 'no-cache',
+          },
+          {
+            key: 'Expires',
+            value: '0',
+          },
+          {
+            key: 'Content-Type',
+            value: 'application/xml',
+          },
+        ],
+      },
+      {
+        source: '/dynamic-sitemap.xml',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+          {
+            key: 'Pragma',
+            value: 'no-cache',
+          },
+          {
+            key: 'Expires',
+            value: '0',
+          },
+          {
+            key: 'Content-Type',
+            value: 'application/xml',
+          },
+        ],
+      },
     ];
   },
   async redirects() {
@@ -38,6 +80,11 @@ const nextConfig = {
         source: '/services/voice.ai-agents',
         destination: '/services/voice-ai-agents',
         permanent: true,
+      },
+      {
+        source: '/dynamic-sitemap.xml',
+        destination: '/api/sitemap',
+        permanent: false,
       }
     ];
   },

@@ -46,6 +46,7 @@
     
     <div>
         <a href="/api/sitemap" class="button" id="testSitemap">Test API Sitemap</a>
+        <a href="/dynamic-sitemap.xml" class="button" id="dynamicSitemap">Dynamic Sitemap</a>
         <a href="/sitemap.xml" class="button" id="viewSitemap">View Current Sitemap</a>
         <a href="/sitemap.xml?v=1" class="button" id="viewSitemapNocache">View Sitemap (No Cache)</a>
     </div>
@@ -113,6 +114,29 @@
                 
                 resultDiv.innerHTML = `
                     <h2>No-Cache Sitemap</h2>
+                    <p>Status: ${response.status} ${response.statusText}</p>
+                    <pre>${escapeHtml(text)}</pre>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <h2>Error</h2>
+                    <p>${error.message}</p>
+                `;
+            }
+        });
+        
+        document.getElementById('dynamicSitemap').addEventListener('click', async function(e) {
+            e.preventDefault();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Loading dynamic sitemap...</p>';
+            
+            try {
+                const timestamp = Date.now();
+                const response = await fetch(`/dynamic-sitemap.xml?_t=${timestamp}`);
+                const text = await response.text();
+                
+                resultDiv.innerHTML = `
+                    <h2>Dynamic Sitemap</h2>
                     <p>Status: ${response.status} ${response.statusText}</p>
                     <pre>${escapeHtml(text)}</pre>
                 `;
