@@ -4,29 +4,24 @@ This guide explains how to use the dynamic sitemap solution with Vercel.
 
 ## What's Changed
 
-We've created a Vercel-compatible solution for generating dynamic sitemaps:
+We've created a solution for generating dynamic sitemaps that works with React apps on Vercel:
 
-1. Added Next.js API routes in the `/pages/api` folder:
-   - `/pages/api/sitemap.js` - Generates a fresh sitemap on demand
-   - `/pages/api/test-sitemap.js` - Provides diagnostic information
+1. Added a new route in `server.js`:
+   - `/dynamic-sitemap.xml` - Generates a fresh sitemap on demand
 
-2. Updated the `next.config.js` file to:
-   - Add a redirect from `/dynamic-sitemap.xml` to `/api/sitemap`
+2. Updated the `vercel.json` file to:
+   - Configure proper builds for both the React app and the server
    - Set cache control headers to prevent caching
 
-3. Enhanced the sitemap generation script to use aggressive cache busting
+3. Updated `robots.txt` to include both sitemaps
 
 ## How to Use After Deployment
 
-After deploying to Vercel, you can access the dynamic sitemap in two ways:
+After deploying to Vercel, you can access the dynamic sitemap at:
 
-1. **Through the API route**:
-   - Visit `https://www.kheyamind.ai/api/sitemap`
+- `https://www.kheyamind.ai/dynamic-sitemap.xml`
 
-2. **Through the friendly URL**:
-   - Visit `https://www.kheyamind.ai/dynamic-sitemap.xml`
-
-Both will generate a fresh sitemap with the latest blog data.
+This will generate a fresh sitemap with the latest blog data every time it's accessed.
 
 ## Testing the Sitemap
 
@@ -34,28 +29,25 @@ You can use the sitemap testing tool:
 
 1. Visit `https://www.kheyamind.ai/sitemap-test.html`
 2. Click on the different buttons to test:
-   - "Test API Sitemap" - Tests the API route directly
-   - "Dynamic Sitemap" - Tests the friendly URL
+   - "Dynamic Sitemap" - Tests the dynamic sitemap
    - "View Current Sitemap" - Shows the static sitemap
    - "View Sitemap (No Cache)" - Shows the static sitemap with cache busting
 
-## Updating Your Robots.txt
-
-Consider updating your robots.txt to point to both sitemaps:
-
-```
-# Sitemaps
-Sitemap: https://www.kheyamind.ai/sitemap.xml
-Sitemap: https://www.kheyamind.ai/dynamic-sitemap.xml
-```
-
 ## How It Works
 
-The Next.js API routes are serverless functions that run on demand when accessed. When you visit `/dynamic-sitemap.xml` or `/api/sitemap`, the serverless function:
+The dynamic sitemap solution works by:
 
-1. Makes a direct API call to fetch the latest blog data
-2. Uses aggressive cache-busting to ensure fresh data
-3. Generates the sitemap XML on the fly
-4. Sets appropriate cache control headers to prevent caching
+1. Using Express.js routes in `server.js` to handle the `/dynamic-sitemap.xml` request
+2. Making a direct API call to fetch the latest blog data with aggressive cache busting
+3. Generating the sitemap XML on the fly
+4. Setting appropriate cache control headers to prevent caching
 
 This ensures that the sitemap always reflects the current state of your blogs, without relying on periodic regeneration or static files.
+
+## Troubleshooting
+
+If you're still having issues:
+
+1. Check the Vercel deployment logs for any errors
+2. Make sure the server.js file is being properly deployed
+3. Try adding a version parameter to bypass caching: `https://www.kheyamind.ai/dynamic-sitemap.xml?v=123`

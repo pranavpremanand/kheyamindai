@@ -8,3 +8,4 @@ Allow: /
 
 # Sitemaps
 Sitemap: https://www.kheyamind.ai/sitemap.xml
+Sitemap: https://www.kheyamind.ai/dynamic-sitemap.xml
