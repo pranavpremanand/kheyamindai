@@ -40,5 +40,13 @@
         { "key": "X-Accel-Expires", "value": "0" }
       ]
     }
-  ]
+  ],
+  "env": {
+    "CI": "false"
+  },
+  "build": {
+    "env": {
+      "CI": "false"
+    }
+  }
 }
