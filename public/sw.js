@@ -3,17 +3,32 @@
  * Implements caching strategies for optimal performance
  */
 
-const CACHE_NAME = 'kheyamind-ai-v1';
-const STATIC_CACHE = 'kheyamind-static-v1';
-const DYNAMIC_CACHE = 'kheyamind-dynamic-v1';
-const IMAGE_CACHE = 'kheyamind-images-v1';
+const CACHE_NAME = 'kheyamind-ai-v2';
+const STATIC_CACHE = 'kheyamind-static-v2';
+const DYNAMIC_CACHE = 'kheyamind-dynamic-v2';
+const IMAGE_CACHE = 'kheyamind-images-v2';
+const VIDEO_CACHE = 'kheyamind-videos-v2';
 
 // Resources to cache immediately
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/logo.png'
+  '/logo.png',
+  '/robots.txt',
+  '/sitemap.xml'
+];
+
+// File types that should be handled by network-only strategy
+const NETWORK_ONLY_EXTENSIONS = [
+  '.mp4',
+  '.webm',
+  '.ogg',
+  '.mov',
+  '.avi',
+  '.wmv',
+  '.flv',
+  '.mkv'
 ];
 
 // Install event - cache static assets
@@ -39,7 +54,8 @@ self.addEventListener('activate', (event) => {
           cacheNames.map((cacheName) => {
             if (cacheName !== STATIC_CACHE && 
                 cacheName !== DYNAMIC_CACHE && 
-                cacheName !== IMAGE_CACHE) {
+                cacheName !== IMAGE_CACHE &&
+                cacheName !== VIDEO_CACHE) {
               console.log('Service Worker: Deleting old cache', cacheName);
               return caches.delete(cacheName);
             }
@@ -67,8 +83,15 @@ self.addEventListener('fetch', (event) => {
     return; // Let the browser handle these requests normally
   }
 
+  // Check if the request is for a file type that should be handled by network-only strategy
+  const isNetworkOnlyFile = NETWORK_ONLY_EXTENSIONS.some(ext => 
+    url.pathname.toLowerCase().endsWith(ext)
+  );
+
   // Handle different types of requests
-  if (request.destination === 'image') {
+  if (request.destination === 'video' || isNetworkOnlyFile) {
+    event.respondWith(handleVideoRequest(request));
+  } else if (request.destination === 'image') {
     event.respondWith(handleImageRequest(request));
   } else if (url.pathname.startsWith('/api/')) {
     event.respondWith(handleApiRequest(request));
@@ -204,6 +227,22 @@ async function handleStaticRequest(request) {
     
     // If we can't provide a fallback, let the error propagate
     throw error;
+  }
+}
+
+// Network-only strategy for video files
+async function handleVideoRequest(request) {
+  try {
+    // For videos, we'll use a network-only approach to avoid caching large files
+    console.log('Service Worker: Handling video request for:', request.url);
+    return fetch(request);
+  } catch (error) {
+    console.log('Service Worker: Video request failed', error);
+    // Return a response indicating the video couldn't be loaded
+    return new Response('Video could not be loaded', {
+      status: 503,
+      headers: { 'Content-Type': 'text/plain' }
+    });
   }
 }
 
