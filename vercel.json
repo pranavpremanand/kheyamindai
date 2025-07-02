@@ -4,38 +4,41 @@
     {
       "src": "server.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
     }
   ],
-  "routes": [
+  "rewrites": [
+    { "source": "/dynamic-sitemap.xml", "destination": "/server.js" },
+    { "source": "/sitemap.xml", "destination": "/server.js" },
+    { "source": "/api/:path*", "destination": "/server.js" },
+    { "source": "/(.*)", "destination": "/server.js" }
+  ],
+  "headers": [
     {
-      "src": "/dynamic-sitemap.xml",
-      "dest": "/server.js",
-      "headers": {
-        "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
-        "Pragma": "no-cache",
-        "Expires": "-1",
-        "Surrogate-Control": "no-store",
-        "X-Accel-Expires": "0"
-      }
+      "source": "/dynamic-sitemap.xml",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate, max-age=0" },
+        { "key": "Pragma", "value": "no-cache" },
+        { "key": "Expires", "value": "-1" },
+        { "key": "Surrogate-Control", "value": "no-store" },
+        { "key": "X-Accel-Expires", "value": "0" }
+      ]
     },
     {
-      "src": "/sitemap.xml",
-      "dest": "/server.js",
-      "headers": {
-        "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
-        "Pragma": "no-cache",
-        "Expires": "-1",
-        "Surrogate-Control": "no-store",
-        "X-Accel-Expires": "0"
-      }
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/server.js"
+      "source": "/sitemap.xml",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate, max-age=0" },
+        { "key": "Pragma", "value": "no-cache" },
+        { "key": "Expires", "value": "-1" },
+        { "key": "Surrogate-Control", "value": "no-store" },
+        { "key": "X-Accel-Expires", "value": "0" }
+      ]
     }
   ]
 }
