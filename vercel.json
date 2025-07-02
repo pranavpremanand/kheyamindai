@@ -37,32 +37,5 @@
       "src": "/(.*)",
       "dest": "/server.js"
     }
-  ],
-  "headers": [
-    {
-      "source": "/dynamic-sitemap.xml",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate, max-age=0"
-        },
-        {
-          "key": "Pragma",
-          "value": "no-cache"
-        },
-        {
-          "key": "Expires",
-          "value": "-1"
-        },
-        {
-          "key": "Surrogate-Control",
-          "value": "no-store"
-        },
-        {
-          "key": "X-Accel-Expires",
-          "value": "0"
-        }
-      ]
-    }
   ]
 }
