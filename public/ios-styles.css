@@ -1,0 +1,99 @@
+/**
+ * iOS-specific CSS fixes
+ * These styles target common rendering issues on iOS devices
+ */
+
+/* Only apply these styles on iOS devices */
+@supports (-webkit-touch-callout: none) {
+  /* Fix for 100vh issue on iOS Safari */
+  .min-h-screen,
+  .h-screen,
+  [style*="height: 100vh"] {
+    height: calc(var(--vh, 1vh) * 100) !important;
+    min-height: calc(var(--vh, 1vh) * 100) !important;
+  }
+  
+  /* Fix for position:fixed elements on iOS */
+  .fixed {
+    position: fixed !important;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  /* Fix for iOS Safari overflow issues */
+  body {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  /* Fix for iOS Safari flexbox issues */
+  .flex {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+  }
+  
+  /* Fix for iOS Safari transform issues */
+  [style*="transform"] {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  /* Fix for iOS Safari animation issues */
+  @keyframes ios-fix-animation {
+    0% { opacity: 0.99; }
+    100% { opacity: 1; }
+  }
+  
+  /* Apply a tiny animation to force hardware acceleration */
+  #root {
+    animation: ios-fix-animation 0.1s forwards;
+    -webkit-animation: ios-fix-animation 0.1s forwards;
+  }
+  
+  /* Fix for iOS Safari sticky elements */
+  .sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+  
+  /* Fix for iOS Safari input zoom issues */
+  input, select, textarea {
+    font-size: 16px !important; /* Prevents iOS from zooming on focus */
+  }
+  
+  /* Fix for iOS Safari button tap delay */
+  button, a {
+    touch-action: manipulation;
+  }
+  
+  /* Fix for iOS Safari image rendering */
+  img {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  /* Fix for iOS Safari scroll issues with fixed elements */
+  .fixed-ios {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+  
+  /* Force visibility for all elements */
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+  
+  /* Fix for iOS Safari backdrop-filter issues */
+  .backdrop-blur {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+}

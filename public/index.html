@@ -4,7 +4,9 @@
 <head>
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/fav.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#000000" />
 
   <!-- Performance Optimizations -->
@@ -92,6 +94,9 @@
   <!-- Essential meta tags that should remain static -->
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/fav.png" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  
+  <!-- iOS-specific styles -->
+  <link rel="stylesheet" href="%PUBLIC_URL%/ios-styles.css" />
 
   <!-- Default meta tags for social media crawlers (will be overridden by server for specific pages) -->
   <!-- <meta name="description" content="KheyaMind AI crafts intelligent solutions including AI Chatbots, Voice Assistants, ERP Automations, and NLP tools. Empower your enterprise with next-gen AI solutions." /> -->
@@ -203,7 +208,10 @@
     </div>
   </div>
 
-  <!-- Service Worker Registration -->
+  <!-- iOS-specific fixes - load this before anything else -->
+  <script src="%PUBLIC_URL%/ios-fix.js"></script>
+
+  <!-- Service Worker Registration - disabled on iOS by ios-fix.js -->
   <script src="%PUBLIC_URL%/sw-register.js"></script>
 
   <!-- Performance monitoring -->
