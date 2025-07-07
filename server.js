@@ -1521,8 +1521,23 @@ app.get("*", async (req, res, next) => {
   }
 });
 
+// Detect iOS devices
+const isIOSDevice = (userAgent) => {
+  return /iPad|iPhone|iPod/.test(userAgent) && !userAgent.includes('MSStream');
+};
+
 // Serve the React app for all other routes
 app.get("*", (req, res) => {
+  const userAgent = req.headers['user-agent'] || '';
+  
+  // Set specific headers for iOS devices
+  if (isIOSDevice(userAgent)) {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    res.set('Surrogate-Control', 'no-store');
+  }
+  
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 

@@ -1,6 +1,5 @@
 /**
  * iOS-specific fixes for rendering issues
- * This script detects iOS devices and applies specific fixes
  */
 
 (function() {
@@ -34,32 +33,19 @@
     });
   }
   
-  // Fix for iOS Safari viewport height issues
-  function fixIOSViewportHeight() {
-    // First we get the viewport height and multiply it by 1% to get a value for a vh unit
-    let vh = window.innerHeight * 0.01;
-    // Then we set the value in the --vh custom property to the root of the document
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }
-  
   // Apply fixes at different stages to ensure they work
   
   // 1. Apply immediately
   ensureIOSVisibility();
-  fixIOSViewportHeight();
   
   // 2. Apply when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      ensureIOSVisibility();
-      fixIOSViewportHeight();
-    });
+    document.addEventListener('DOMContentLoaded', ensureIOSVisibility);
   }
   
   // 3. Apply after window load
   window.addEventListener('load', function() {
     ensureIOSVisibility();
-    fixIOSViewportHeight();
     
     // Also apply after a short delay to catch any late-loading content
     setTimeout(ensureIOSVisibility, 500);
@@ -67,12 +53,9 @@
   
   // 4. Apply on orientation change (common issue trigger on iOS)
   window.addEventListener('orientationchange', function() {
-    setTimeout(function() {
-      ensureIOSVisibility();
-      fixIOSViewportHeight();
-    }, 100);
+    setTimeout(ensureIOSVisibility, 100);
   });
   
   // 5. Apply on resize
-  window.addEventListener('resize', fixIOSViewportHeight);
+  window.addEventListener('resize', ensureIOSVisibility);
 })();

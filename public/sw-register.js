@@ -1,32 +1,52 @@
 // Service Worker Registration Script
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
-        console.log('Service Worker registered with scope:', registration.scope);
-        
-        // Check for updates every 60 minutes
-        setInterval(() => {
-          registration.update();
-          console.log('Service Worker update check initiated');
-        }, 60 * 60 * 1000);
-      })
-      .catch(error => {
-        console.error('Service Worker registration failed:', error);
+(function() {
+  // Detect iOS devices
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  
+  // If on iOS, unregister any existing service workers and don't register new ones
+  if (isIOS) {
+    console.log('iOS device detected - disabling service worker');
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(registrations => {
+        for (let registration of registrations) {
+          registration.unregister();
+          console.log('Service Worker unregistered on iOS device');
+        }
       });
-  });
+    }
+    return; // Exit early for iOS devices
+  }
+  
+  // For non-iOS devices, register the service worker normally
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('Service Worker registered with scope:', registration.scope);
+          
+          // Check for updates every 60 minutes
+          setInterval(() => {
+            registration.update();
+            console.log('Service Worker update check initiated');
+          }, 60 * 60 * 1000);
+        })
+        .catch(error => {
+          console.error('Service Worker registration failed:', error);
+        });
+    });
 
-  // Listen for controller change events
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    console.log('Service Worker controller changed - page will reload');
-    window.location.reload();
-  });
+    // Listen for controller change events
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      console.log('Service Worker controller changed - page will reload');
+      window.location.reload();
+    });
 
-  // Handle service worker messages
-  navigator.serviceWorker.addEventListener('message', event => {
-    console.log('Message from Service Worker:', event.data);
-  });
-}
+    // Handle service worker messages
+    navigator.serviceWorker.addEventListener('message', event => {
+      console.log('Message from Service Worker:', event.data);
+    });
+  }
+})();
 
 // Function to send message to service worker
 function sendMessageToSW(message) {

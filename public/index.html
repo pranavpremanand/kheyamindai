@@ -89,14 +89,37 @@
         transition: none !important;
       }
     }
+    
+    /* iOS-specific fixes */
+    @supports (-webkit-touch-callout: none) {
+      /* CSS specific to iOS devices */
+      html, body {
+        height: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      #root {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        min-height: 100vh;
+        position: relative;
+        z-index: 1;
+      }
+      
+      /* Ensure all content is visible */
+      [data-aos], .aos-animate {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
   </style>
 
   <!-- Essential meta tags that should remain static -->
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/fav.png" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  
-  <!-- iOS-specific styles -->
-  <link rel="stylesheet" href="%PUBLIC_URL%/ios-styles.css" />
 
   <!-- Default meta tags for social media crawlers (will be overridden by server for specific pages) -->
   <!-- <meta name="description" content="KheyaMind AI crafts intelligent solutions including AI Chatbots, Voice Assistants, ERP Automations, and NLP tools. Empower your enterprise with next-gen AI solutions." /> -->
@@ -208,11 +231,11 @@
     </div>
   </div>
 
+  <!-- iOS-specific fixes (must be before service worker) -->
+  <script src="%PUBLIC_URL%/ios-fix.js"></script>
+  
   <!-- Service Worker Registration -->
   <script src="%PUBLIC_URL%/sw-register.js"></script>
-  
-  <!-- iOS-specific fixes -->
-  <script src="%PUBLIC_URL%/ios-fix.js"></script>
 
   <!-- Performance monitoring -->
   <script>
