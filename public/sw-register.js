@@ -3,21 +3,12 @@
   // Detect iOS devices
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
   
-  // If on iOS, unregister any existing service workers and don't register new ones
+  // If on iOS, don't register service worker
   if (isIOS) {
-    console.log('iOS device detected - disabling service worker');
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(registrations => {
-        for (let registration of registrations) {
-          registration.unregister();
-          console.log('Service Worker unregistered on iOS device');
-        }
-      });
-    }
-    return; // Exit early for iOS devices
+    console.log('iOS device detected - skipping service worker registration');
+    return;
   }
   
-  // For non-iOS devices, register the service worker normally
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')

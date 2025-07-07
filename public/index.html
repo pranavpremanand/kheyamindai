@@ -4,9 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/fav.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
 
   <!-- Performance Optimizations -->
@@ -231,8 +229,8 @@
     </div>
   </div>
 
-  <!-- iOS-specific fixes (must be before service worker) -->
-  <script src="%PUBLIC_URL%/ios-fix.js"></script>
+  <!-- Polyfills for browser compatibility -->
+  <script src="%PUBLIC_URL%/polyfills.js"></script>
   
   <!-- Service Worker Registration -->
   <script src="%PUBLIC_URL%/sw-register.js"></script>

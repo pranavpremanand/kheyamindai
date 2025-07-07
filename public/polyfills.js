@@ -1,7 +1,34 @@
 /**
- * iOS-specific fixes for rendering issues
+ * Polyfills for browser compatibility
  */
 
+// requestIdleCallback polyfill for Safari
+(function() {
+  if (!window.requestIdleCallback) {
+    console.log('Adding requestIdleCallback polyfill for Safari');
+    window.requestIdleCallback = function(callback, options) {
+      options = options || {};
+      var timeout = options.timeout || 1;
+      var start = Date.now();
+      return setTimeout(function() {
+        callback({
+          didTimeout: false,
+          timeRemaining: function() {
+            return Math.max(0, 50 - (Date.now() - start));
+          }
+        });
+      }, timeout);
+    };
+  }
+
+  if (!window.cancelIdleCallback) {
+    window.cancelIdleCallback = function(id) {
+      clearTimeout(id);
+    };
+  }
+})();
+
+// iOS detection and fixes
 (function() {
   // Detect iOS devices
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -58,4 +85,14 @@
   
   // 5. Apply on resize
   window.addEventListener('resize', ensureIOSVisibility);
+  
+  // 6. Disable service worker on iOS
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+      for (let registration of registrations) {
+        registration.unregister();
+        console.log('Service Worker unregistered on iOS device');
+      }
+    });
+  }
 })();

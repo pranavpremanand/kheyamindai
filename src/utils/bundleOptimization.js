@@ -39,9 +39,12 @@ export const preloadCriticalRoutes = () => {
       });
     };
 
-    requestIdleCallback ?
-      requestIdleCallback(prefetchRoute) :
+    // Use the polyfill that we added, or setTimeout as a fallback
+    if (typeof window.requestIdleCallback === 'function') {
+      window.requestIdleCallback(prefetchRoute);
+    } else {
       setTimeout(prefetchRoute, 1000);
+    }
   });
 };
 
