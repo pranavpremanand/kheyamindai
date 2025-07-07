@@ -3,104 +3,107 @@
  * These styles are loaded only on iOS devices to fix rendering issues
  */
 
-/* Base fixes for iOS */
-html, body {
-  height: 100%;
-  width: 100%;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  -webkit-text-size-adjust: 100%;
-}
+/* Only apply these styles on iOS devices */
+@supports (-webkit-touch-callout: none) {
+  /* Base fixes for iOS */
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    -webkit-text-size-adjust: 100%;
+  }
 
-/* Fix for root element visibility */
-#root {
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  min-height: 100vh;
-  position: relative;
-  z-index: 1;
-}
+  /* Fix for root element visibility */
+  #root {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
 
-/* Fix for iOS Safari 100vh issue */
-.vh-fix {
-  height: 100vh; /* Fallback */
-  height: calc(var(--vh, 1vh) * 100);
-}
+  /* Fix for iOS Safari 100vh issue */
+  .vh-fix {
+    height: 100vh; /* Fallback */
+    height: calc(var(--vh, 1vh) * 100);
+  }
 
-/* Ensure all content is visible */
-[data-aos], .aos-animate {
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none !important;
-}
+  /* Ensure all content is visible */
+  [data-aos], .aos-animate {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 
-/* Fix for iOS Safari flexbox issues */
-.flex-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-}
+  /* Fix for iOS Safari flexbox issues */
+  .flex-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+  }
 
-/* Fix for iOS Safari position:fixed issues */
-.fixed-element {
-  position: fixed;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-}
+  /* Fix for iOS Safari position:fixed issues */
+  .fixed-element {
+    position: fixed;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
 
-/* Fix for iOS Safari scrolling issues */
-.scrollable-container {
-  -webkit-overflow-scrolling: touch;
-  overflow-y: auto;
-}
+  /* Fix for iOS Safari scrolling issues */
+  .scrollable-container {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+  }
 
-/* Fix for iOS Safari form element issues */
-input, textarea, select, button {
-  -webkit-appearance: none;
-  border-radius: 0;
-}
+  /* Fix for iOS Safari form element issues */
+  input, textarea, select, button {
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
 
-/* Fix for iOS Safari image rendering */
-img {
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-}
+  /* Fix for iOS Safari image rendering */
+  img {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
 
-/* Fix for iOS Safari video rendering */
-video {
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  position: relative;
-  z-index: 1;
-}
+  /* Fix for iOS Safari video rendering */
+  video {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    position: relative;
+    z-index: 1;
+  }
 
-/* Fix for iOS Safari animation issues */
-.animated {
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-  will-change: transform, opacity;
-}
+  /* Fix for iOS Safari animation issues */
+  .animated {
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    will-change: transform, opacity;
+  }
 
-/* Fix for iOS Safari transform issues */
-.transform-fix {
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  perspective: 1000;
-}
+  /* Fix for iOS Safari transform issues */
+  .transform-fix {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+  }
 
-/* Fix for iOS Safari sticky positioning */
-.sticky-element {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+  /* Fix for iOS Safari sticky positioning */
+  .sticky-element {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
 
-/* Fix for iOS Safari background attachment */
-.background-fixed {
-  background-attachment: scroll !important;
+  /* Fix for iOS Safari background attachment */
+  .background-fixed {
+    background-attachment: scroll !important;
+  }
 }

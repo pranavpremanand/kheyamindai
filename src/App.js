@@ -42,9 +42,6 @@ const RealEstateAILanding = createLazyComponent(() =>
 
 function App() {
   useEffect(() => {
-    // Detect iOS devices
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    
     // Initialize critical CSS immediately
     initCriticalCSS();
     
@@ -62,35 +59,16 @@ function App() {
     initThirdPartyOptimizations();
     
     // Initialize animations - disable on mobile to prevent content hiding
-    // Always disable animations on iOS to prevent blank screen issues
     const animationCleanup = initializeAnimations({
-      disable: window.innerWidth <= 768 || isIOS,
-      duration: isIOS ? 0 : 800
+      disable: window.innerWidth <= 768,
+      duration: 800
     });
     
     // Initialize mobile fixes
     const mobileFixCleanup = initMobileFixes();
-    
-    // Optimize existing images
-    optimizeExistingImages();
-    
-    // iOS-specific fixes in React
-    if (isIOS) {
-      // Force visibility of root element after component mounts
-      const root = document.getElementById('root');
-      if (root) {
-        root.style.display = 'block';
-        root.style.opacity = '1';
-        root.style.visibility = 'visible';
-        root.style.minHeight = '100vh';
-      }
       
-      // Force all React components to be visible
-      document.querySelectorAll('[data-reactroot], #root > div').forEach(el => {
-        el.style.opacity = '1';
-        el.style.visibility = 'visible';
-      });
-    }
+      // Optimize existing images
+      optimizeExistingImages();
     
     return () => {
       animationCleanup();
