@@ -11,6 +11,16 @@
   
   console.log('iOS device detected, applying fixes');
   
+  // Load iOS-specific CSS
+  const iosCSSLink = document.createElement('link');
+  iosCSSLink.rel = 'stylesheet';
+  iosCSSLink.href = '/ios-styles.css';
+  iosCSSLink.id = 'ios-specific-styles';
+  document.head.appendChild(iosCSSLink);
+  
+  // Add iOS class to html element for CSS targeting
+  document.documentElement.classList.add('ios-device');
+  
   // Function to ensure content visibility on iOS
   function ensureIOSVisibility() {
     // Force root element to be visible
@@ -117,4 +127,42 @@
   // Rerun on resize and orientation change
   window.addEventListener('resize', fixIOSViewportHeight);
   window.addEventListener('orientationchange', fixIOSViewportHeight);
+  
+  // 9. Emergency fix for blank screens - force redraw after a delay
+  setTimeout(function() {
+    // Force redraw by toggling a class on the body
+    document.body.classList.add('ios-force-redraw');
+    setTimeout(function() {
+      document.body.classList.remove('ios-force-redraw');
+      
+      // Force visibility of root element again
+      const root = document.getElementById('root');
+      if (root) {
+        // Force display with !important via style attribute
+        root.setAttribute('style', 'display: block !important; opacity: 1 !important; visibility: visible !important; min-height: 100vh !important; z-index: 1 !important;');
+        
+        // If root is still empty or has only the loading spinner, try to force React to render
+        if (root.children.length <= 1) {
+          // Create a dummy element to force a DOM update
+          const dummyElement = document.createElement('div');
+          dummyElement.style.display = 'none';
+          dummyElement.className = 'ios-render-trigger';
+          root.appendChild(dummyElement);
+          
+          // Remove it after a short delay
+          setTimeout(function() {
+            if (dummyElement.parentNode === root) {
+              root.removeChild(dummyElement);
+            }
+          }, 100);
+        }
+      }
+      
+      // Force all React root-level components to be visible
+      const reactRoots = document.querySelectorAll('[data-reactroot], #root > div');
+      reactRoots.forEach(element => {
+        element.setAttribute('style', 'display: block !important; opacity: 1 !important; visibility: visible !important;');
+      });
+    }, 50);
+  }, 1000);
 })();
