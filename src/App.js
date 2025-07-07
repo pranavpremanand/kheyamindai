@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { LandingPageLayout, MainLayout } from "./Layout";
 import ScrollToTopButton from "./Components/ScrollToTopButton";
+import WhatsAppButton from "./Components/WhatsAppButton";
 import SpinnerContextProvider from "./Components/SpinnerContext";
 import { Suspense, lazy, useEffect } from "react";
 import { LoadingSpinner } from "./Components/LoadingSpinner";
@@ -80,6 +81,7 @@ function App() {
       <QueryProvider>
         <BrowserRouter>
           <ScrollToTopButton />
+          <WhatsAppButton phoneNumber="919163885060" message="Hello! I'm interested in your AI services." />
           <ScrollToTop />
           <Suspense fallback={null}>
             <Toaster position="top-center" />
