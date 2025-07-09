@@ -22,10 +22,11 @@ const WhatsAppButton = () => {
   }, []);
 
   const openWhatsApp = () => {
-    const whatsappUrl = `https://wa.me/${companyDetails.phone.replace(
-      /\D/g,
-      ""
-    )}`;
+    // Format phone number for WhatsApp - ensure it starts with country code without + sign
+    let phoneNumber = companyDetails.phone.replace(/\D/g, "");
+
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
+
     window.open(whatsappUrl, "_blank");
   };
 
