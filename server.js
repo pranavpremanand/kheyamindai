@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { generateSitemap } = require('./src/utils/sitemapGenerator');
+const { generateSitemap } = require('./src/utils/serverSitemapGenerator');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
