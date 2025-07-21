@@ -31,15 +31,14 @@ const fetchBlogs = async () => {
   try {
     console.log('Fetching blogs from API for sitemap generation...');
     
-    // Generate a unique cache-busting parameter
+    // Generate unique cache-busting parameters
     const timestamp = Date.now();
     const random = Math.random().toString(36).substring(2, 15);
-    const cacheBuster = `_t=${timestamp}&_r=${random}`;
     
     // Make the API request with aggressive cache busting
     const response = await axios({
       method: 'get',
-      url: `${API_BASE_URL}/blogs/published?${cacheBuster}`,
+      url: `${API_BASE_URL}/blogs/published`,
       timeout: 30000, // 30 second timeout
       headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -50,7 +49,8 @@ const fetchBlogs = async () => {
         'X-Cache-Bust': timestamp
       },
       params: {
-        _nocache: timestamp
+        _t: timestamp,
+        _r: random
       }
     });
     
@@ -147,12 +147,26 @@ const generateSitemap = async () => {
     // Fetch blog posts
     console.log('📡 Fetching blog posts...');
     const blogs = await fetchBlogs();
-    const blogPages = blogs.map(blog => ({
-      url: `/blogs/${blog.slug}`,
-      lastmod: blog.updatedAt || blog.createdAt || new Date().toISOString(),
-      changefreq: 'weekly',
-      priority: '0.7'
-    }));
+    const blogPages = (await Promise.all(blogs.map(async (blog) => {
+      const blogUrl = `${SITE_URL}/blogs/${blog.slug}`;
+      try {
+        await axios.head(blogUrl, { timeout: 5000 });
+        return {
+          url: `/blogs/${blog.slug}`,
+          lastmod: blog.updatedAt || blog.createdAt || new Date().toISOString(),
+          changefreq: 'weekly',
+          priority: '0.7'
+        };
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          console.log(`Skipping non-existent blog: ${blogUrl}`);
+          return null;
+        } else {
+          console.error(`Error checking blog URL ${blogUrl}:`, error.message);
+          return null;
+        }
+      }
+    }))).filter(Boolean);
 
     console.log(`📝 Found ${blogPages.length} blog posts`);
 

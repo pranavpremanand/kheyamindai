@@ -23,8 +23,14 @@ export const blogsApi = {
   // Get all published blogs
   getBlogs: async () => {
     try {
-      console.log('Fetching blogs from API...');
-      const response = await api.get("/blogs/published");
+      console.log('Fetching blogs from API with cache-busting...');
+      const response = await api.get("/blogs/published", {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+      });
       console.log(`API response status: ${response.status}`);
       console.log(`Found ${response.data?.blogs?.length || 0} blogs`);
       return response.data;
