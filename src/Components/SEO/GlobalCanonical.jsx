@@ -21,8 +21,10 @@ const GlobalCanonical = () => {
     });
   }
 
+  // Force update the canonical URL by removing any existing ones first
   return (
     <Helmet>
+      <link rel="canonical" href="" />
       <link rel="canonical" href={canonicalUrl} />
     </Helmet>
   );

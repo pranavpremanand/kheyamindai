@@ -52,12 +52,16 @@ app.get('*', (req, res) => {
     normalizedPath = '/services/voice-ai-agents';
   }
   
-  const canonicalUrl = `https://www.kheyamind.ai${normalizedPath === '/' ? '' : normalizedPath}`;
+  const canonicalUrl = `https://www.kheyamind.ai${normalizedPath}`;
   
-  // Replace the default canonical URL with the current page's canonical URL  
+  // Replace any existing canonical URLs with the current page's canonical URL
+  // First, remove any existing canonical links
+  html = html.replace(/<link rel="canonical"[^>]*>/gi, '');
+  
+  // Then add the correct canonical URL in the head section
   html = html.replace(
-    /<link rel="canonical" href="https:\/\/www\.kheyamind\.ai\/" \/>/,
-    `<link rel="canonical" href="${canonicalUrl}" />`
+    /<\/head>/i,
+    `  <link rel="canonical" href="${canonicalUrl}" />\n</head>`
   );
   
   console.log(`Serving page: ${req.path} with canonical: ${canonicalUrl}`);
