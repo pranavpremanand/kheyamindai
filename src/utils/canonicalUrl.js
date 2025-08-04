@@ -14,6 +14,7 @@ export const generateCanonicalUrl = (path) => {
     let normalizedPath = path;
     
     // Remove query parameters and hash
+}
 
 /**
  * Validates if a URL is a valid canonical URL
