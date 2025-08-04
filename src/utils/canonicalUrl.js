@@ -30,6 +30,8 @@ export const generateCanonicalUrl = (path) => {
   if (normalizedPath.includes('/services/cloud-devops.ai')) {
     normalizedPath = '/services/cloud-devops-ai';
   } else if (normalizedPath.includes('/services/voice.ai-agents')) {
+  }
+}
 
 /**
  * Validates if a URL is a valid canonical URL
