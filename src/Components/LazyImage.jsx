@@ -83,7 +83,7 @@ const LazyImage = ({
     // if (process.env.NODE_ENV === "development") {
     //   console.log(`Image loaded: ${currentSrc}`);
     // }
-  }, [onLoad, currentSrc]);
+  }, [onLoad]);
 
   const handleError = useCallback(() => {
     setHasError(true);

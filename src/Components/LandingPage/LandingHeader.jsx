@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { companyDetails, logo, LogoSvg } from "../../data/constant";
+import { companyDetails, LogoSvg } from "../../data/constant";
 import { Divide as Hamburger } from "hamburger-react";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 import { IoClose, IoMail } from "react-icons/io5";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
 import { ImPhone } from "react-icons/im";
 import { Link as Scroll } from "react-scroll";
 

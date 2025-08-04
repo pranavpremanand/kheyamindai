@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaRocket, FaCalendarAlt, FaArrowRight } from "react-icons/fa";
+import { FaRocket, FaArrowRight } from "react-icons/fa";
 import { getServiceCTA } from "../utils/internalLinking";
 
 const ServiceCTA = ({ serviceSlug, serviceName, className = "" }) => {

@@ -19,6 +19,8 @@ const RecentBlogs = ({ slug }) => {
     : [];
     
   useEffect(() => {
+    const currentSectionRef = sectionRef.current;
+    
     const observer = new IntersectionObserver(
       ([entry]) => {
         // When the component enters the viewport
@@ -35,13 +37,13 @@ const RecentBlogs = ({ slug }) => {
       }
     );
     
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (currentSectionRef) {
+      observer.observe(currentSectionRef);
     }
     
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentSectionRef) {
+        observer.unobserve(currentSectionRef);
       }
     };
   }, []);
