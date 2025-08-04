@@ -119,33 +119,26 @@ const SEO = ({
   }
 
   // Debug logging for development
-  // if (process.env.NODE_ENV === 'development') {
-  //   console.log('SEO Component Debug:', {
-  //     type,
-  //     providedUrl: url,
-  //     canonicalUrl,
-  //     title,
-  //     description: description?.substring(0, 100),
-  //     absoluteImageUrl,
-  //     hasCanonicalUrl: !!canonicalUrl,
-  //     canonicalUrlLength: canonicalUrl?.length || 0,
-  //     serviceData: pageData.serviceData?.title || 'No service data'
-  //   });
-
-  //   console.log('Meta Tags to render:', {
-  //     'og:title': title,
-  //     'og:description': description,
-  //     'og:image': absoluteImageUrl,
-  //     'og:url': canonicalUrl,
-  //     'twitter:title': title,
-  //     'twitter:description': description,
-  //     'twitter:image': absoluteImageUrl
-  //   });
-  // }
+  if (process.env.NODE_ENV === 'development') {
+    console.log('SEO Component Debug:', {
+      type,
+      providedUrl: url,
+      canonicalUrl,
+      title,
+      description: description?.substring(0, 100),
+      absoluteImageUrl,
+      hasCanonicalUrl: !!canonicalUrl,
+      canonicalUrlLength: canonicalUrl?.length || 0,
+      serviceData: pageData.serviceData?.title || 'No service data'
+    });
+  }
 
   return (
     <>
       <Helmet>
+        {/* Remove any existing canonical links first */}
+        <link rel="canonical" href="" />
+        
         {/* Basic Meta Tags */}
         <title>{title}</title>
         <meta name="description" content={description} />

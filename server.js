@@ -32,7 +32,21 @@ app.get('/sitemap.xml', async (req, res) => {
 
 // All other requests should serve the React app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  const indexPath = path.join(__dirname, 'build', 'index.html');
+  
+  // Read the HTML file
+  let html = require('fs').readFileSync(indexPath, 'utf8');
+  
+  // Generate canonical URL for the current path
+  const canonicalUrl = `https://www.kheyamind.ai${req.path === '/' ? '' : req.path}`;
+  
+  // Replace the default canonical URL with the current page's canonical URL
+  html = html.replace(
+    /<link rel="canonical" href="[^"]*" \/>/,
+    `<link rel="canonical" href="${canonicalUrl}" />`
+  );
+  
+  res.send(html);
 });
 
 // Start the server
