@@ -122,6 +122,7 @@ const SEO = ({
   if (process.env.NODE_ENV === 'development') {
     console.log('SEO Component Debug:', {
       type,
+      currentPath: location.pathname,
       providedUrl: url,
       canonicalUrl,
       title,

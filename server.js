@@ -37,14 +37,30 @@ app.get('*', (req, res) => {
   // Read the HTML file
   let html = require('fs').readFileSync(indexPath, 'utf8');
   
-  // Generate canonical URL for the current path
-  const canonicalUrl = `https://www.kheyamind.ai${req.path === '/' ? '' : req.path}`;
+  // Generate canonical URL for the current path with proper normalization
+  let normalizedPath = req.path || '/';
   
-  // Replace the default canonical URL with the current page's canonical URL
+  // Remove trailing slash except for root
+  if (normalizedPath.endsWith('/') && normalizedPath !== '/') {
+    normalizedPath = normalizedPath.slice(0, -1);
+  }
+  
+  // Handle specific problem URLs
+  if (normalizedPath.includes('/services/cloud-devops.ai')) {
+    normalizedPath = '/services/cloud-devops-ai';
+  } else if (normalizedPath.includes('/services/voice.ai-agents')) {
+    normalizedPath = '/services/voice-ai-agents';
+  }
+  
+  const canonicalUrl = `https://www.kheyamind.ai${normalizedPath === '/' ? '' : normalizedPath}`;
+  
+  // Replace the default canonical URL with the current page's canonical URL  
   html = html.replace(
-    /<link rel="canonical" href="[^"]*" \/>/,
+    /<link rel="canonical" href="https:\/\/www\.kheyamind\.ai\/" \/>/,
     `<link rel="canonical" href="${canonicalUrl}" />`
   );
+  
+  console.log(`Serving page: ${req.path} with canonical: ${canonicalUrl}`);
   
   res.send(html);
 });
