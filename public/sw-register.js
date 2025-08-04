@@ -3,9 +3,20 @@
   // Detect iOS devices
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
   
+  // Detect StackBlitz environment
+  const isStackBlitz = window.location.hostname.includes('stackblitz') || 
+                       window.location.hostname.includes('webcontainer') ||
+                       window.navigator.userAgent.includes('WebContainer');
+  
   // If on iOS, don't register service worker
   if (isIOS) {
     console.log('iOS device detected - skipping service worker registration');
+    return;
+  }
+  
+  // If on StackBlitz, don't register service worker
+  if (isStackBlitz) {
+    console.log('StackBlitz environment detected - skipping service worker registration');
     return;
   }
   
