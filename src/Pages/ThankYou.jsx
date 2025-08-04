@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaCheckCircle } from "react-icons/fa";
 import { IoArrowBack } from "react-icons/io5";
+import SEO from "../Components/SEO/SEO";
 
 const ThankYou = () => {
   useEffect(() => {
@@ -11,6 +12,14 @@ const ThankYou = () => {
   }, []);
 
   return (
+    <>
+      <SEO
+        type="website"
+        title="Thank You | KheyaMind AI Technologies"
+        description="Thank you for contacting KheyaMind AI. We have received your message and will get back to you soon."
+        keywords="thank you, contact confirmation, KheyaMind AI"
+        url="https://www.kheyamind.ai/thank-you"
+      />
     <div className="pt-[6rem] sm:pt-[8rem] md:pt-[12rem] min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative z-[1]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -70,6 +79,7 @@ const ThankYou = () => {
         </motion.div>
       </motion.div>
     </div>
+    </>
   );
 };
 

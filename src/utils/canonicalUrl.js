@@ -10,14 +10,10 @@
 export const generateCanonicalUrl = (path) => {
     const BASE_URL = 'https://www.kheyamind.ai';
 
-    // Remove trailing slashes except for homepage
-    const normalizedPath = path === '/' ? path : path.replace(/\/$/, '');
-
-    // Handle query parameters and hash
-    const cleanPath = normalizedPath.split('?')[0].split('#')[0];
-
-    return `${BASE_URL}${cleanPath}`;
-};
+    // Clean and normalize the path
+    let normalizedPath = path;
+    
+    // Remove query parameters and hash
 
 /**
  * Validates if a URL is a valid canonical URL

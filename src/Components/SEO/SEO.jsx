@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { MultipleJsonLd } from './JsonLd';
 import { useLocation } from 'react-router-dom';
-import { generateCanonicalUrl, isValidCanonicalUrl } from '../../utils/canonicalUrl';
+import { generateCanonicalUrl } from '../../utils/canonicalUrl';
 import {
   getOrganizationSchema,
   getWebsiteSchema,
@@ -46,10 +46,8 @@ const SEO = ({
 }) => {
   const location = useLocation();
 
-  // Generate canonical URL if not provided or invalid
-  const canonicalUrl = (url && isValidCanonicalUrl(url))
-    ? url
-    : generateCanonicalUrl(location.pathname);
+  // Always generate canonical URL from current location to ensure consistency
+  const canonicalUrl = url || generateCanonicalUrl(location.pathname);
 
   // Ensure image URL is absolute and has a fallback
   const absoluteImageUrl = image

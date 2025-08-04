@@ -17,6 +17,7 @@ import { initIconOptimizations } from "./utils/iconOptimization";
 import { HelmetProvider } from 'react-helmet-async';
 import { initializeAnimations } from './utils/animationConfig';
 import { initMobileFixes } from './utils/mobileFix';
+import GlobalCanonical from './Components/SEO/GlobalCanonical';
 
 // Lazy load Toaster to reduce initial bundle
 const Toaster = lazy(() => import("react-hot-toast").then(module => ({ default: module.Toaster })));
@@ -80,6 +81,7 @@ function App() {
     <HelmetProvider>
       <QueryProvider>
         <BrowserRouter>
+          <GlobalCanonical />
           <ScrollToTopButton />
           <WhatsAppButton phoneNumber="919163885060" message="Hello! I'm interested in your AI services." />
           <ScrollToTop />

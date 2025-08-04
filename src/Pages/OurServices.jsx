@@ -20,7 +20,7 @@ const OurServices = () => {
           title: "AI Services by KheyaMind",
           description: "Custom IT Solutions for Your Successful Business with AI-powered automation, chatbots, and voice assistants."
         }}
-        url="https://www.kheymind.ai/services"
+        url="https://www.kheyamind.ai/services"
       />
       <PageBanner banner={banner} title="Our Services" />
       <Services

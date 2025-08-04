@@ -81,6 +81,7 @@ const Home = () => {
           ],
         }}
         url="https://www.kheymind.ai"
+        url="https://www.kheyamind.ai"
       />
       <section className="relative min-h-screen flex items-center justify-center">
         <div className="absolute inset-0 bg-black/40 z-[1] w-full h-full" />

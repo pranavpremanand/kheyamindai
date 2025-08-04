@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { companyDetails, logo, LogoSvg } from "../../data/constant";
+import { companyDetails, LogoSvg } from "../../data/constant";
 import { Divide as Hamburger } from "hamburger-react";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";

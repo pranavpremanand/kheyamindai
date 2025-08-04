@@ -21,7 +21,7 @@ const AboutUs = () => {
         description="Learn about KheyaMind AI Technologies, a boutique AI consulting and solutions company specializing in AI-driven automation and digital products."
         keywords="About KheyaMind, AI Company, AI Solutions, Company History, AI Vision, AI Mission"
         image={banner}
-        url="https://www.kheymind.ai/about-us"
+        url="https://www.kheyamind.ai/about-us"
       />
       <PageBanner banner={banner} title="About Us" />
 
