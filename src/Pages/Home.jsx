@@ -80,7 +80,6 @@ const Home = () => {
             },
           ],
         }}
-        url="https://www.kheymind.ai"
         url="https://www.kheyamind.ai"
       />
       <section className="relative min-h-screen flex items-center justify-center">
@@ -139,7 +138,7 @@ const Home = () => {
         </div>
       </section>
       <div className="wrapper relative z-[1] pt-[3rem] sm:pt-0 sm:-translate-y-1/3 lg:-translate-y-1/2">
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 lg:gap-0">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-0">
           <div
             data-aos="fade-up"
             className="bg-primary w-full text-white flex gap-3 justify-center p-6"
@@ -220,59 +219,9 @@ const Home = () => {
               </h3>
             </div>
           </div>
-          <div
-            data-aos="fade-up"
-            className="col-span-2 lg:col-span-1 bg-gradient-to-br from-orange-500 to-green-600 w-full text-white flex flex-col gap-3 justify-center items-center p-4 lg:p-6"
-          >
-            <div className="bg-white rounded-lg p-2 flex justify-center items-center">
-              <img 
-                src="https://via.placeholder.com/80x60/FF6B35/FFFFFF?text=DPIIT" 
-                alt="DPIIT Startup India Certified"
-                className="h-8 lg:h-10 w-auto object-contain"
-              />
-            </div>
-            <div className="text-center">
-              <p className="font-semibold text-sm lg:text-base leading-tight">
-                Startup India
-              </p>
-              <p className="font-bold text-lg lg:text-xl">
-                Certified
-              </p>
-              <p className="text-xs opacity-90 mt-1">
-                DPIIT Recognized
-              </p>
-            </div>
-          </div>
         </div>
       </div>
 
-      {/* Startup India Certification Badge */}
-      <div className="wrapper relative z-[1] pt-8">
-        <div 
-          data-aos="fade-up"
-          className="flex justify-center"
-        >
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
-            <div className="flex flex-col sm:flex-row items-center gap-4">
-              <div className="flex-shrink-0">
-                <img 
-                  src="https://via.placeholder.com/120x80/FF6B35/FFFFFF?text=DPIIT+Badge" 
-                  alt="DPIIT Startup India Certified"
-                  className="h-16 w-auto object-contain"
-                />
-              </div>
-              <div className="text-center sm:text-left">
-                <h4 className="font-bold text-lg text-secondary mb-1">
-                  Startup India Certified
-                </h4>
-                <p className="text-gray-600 text-sm">
-                  Recognized by Department for Promotion of Industry and Internal Trade (DPIIT)
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <section className="pt-[5rem]">
         <div className="wrapper grid md:grid-cols-2 gap-7">
           <div data-aos="fade-up" className="space-y-4">
