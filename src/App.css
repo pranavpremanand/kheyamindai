@@ -163,17 +163,6 @@ body {
 }
 
 /* Style the AnythingLLM widget to match our design */
-.anythingllm-chat-widget {
-  bottom: 180px !important; /* Position above WhatsApp button */
-  right: 32px !important;
-  z-index: 25 !important;
-}
-
-@media (min-width: 768px) {
-  .anythingllm-chat-widget {
-    right: 96px !important; /* Match md:right-24 */
-  }
-}
 
 /* Mobile-specific fixes */
 @media (max-width: 768px) {
