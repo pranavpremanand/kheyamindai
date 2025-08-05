@@ -139,7 +139,7 @@ const Home = () => {
         </div>
       </section>
       <div className="wrapper relative z-[1] pt-[3rem] sm:pt-0 sm:-translate-y-1/3 lg:-translate-y-1/2">
-        <div className="grid lg:grid-cols-4">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 lg:gap-0">
           <div
             data-aos="fade-up"
             className="bg-primary w-full text-white flex gap-3 justify-center p-6"
@@ -218,6 +218,29 @@ const Home = () => {
                   scrollSpyOnce
                 />
               </h3>
+            </div>
+          </div>
+          <div
+            data-aos="fade-up"
+            className="col-span-2 lg:col-span-1 bg-gradient-to-br from-orange-500 to-green-600 w-full text-white flex flex-col gap-3 justify-center items-center p-4 lg:p-6"
+          >
+            <div className="bg-white rounded-lg p-2 flex justify-center items-center">
+              <img 
+                src="https://via.placeholder.com/80x60/FF6B35/FFFFFF?text=DPIIT" 
+                alt="DPIIT Startup India Certified"
+                className="h-8 lg:h-10 w-auto object-contain"
+              />
+            </div>
+            <div className="text-center">
+              <p className="font-semibold text-sm lg:text-base leading-tight">
+                Startup India
+              </p>
+              <p className="font-bold text-lg lg:text-xl">
+                Certified
+              </p>
+              <p className="text-xs opacity-90 mt-1">
+                DPIIT Recognized
+              </p>
             </div>
           </div>
         </div>
@@ -339,7 +362,7 @@ const Home = () => {
               <div className="space-y-1">
                 <p className="font-bold text-lg">AI-First Thinking</p>
                 <p>
-                  AI isn’t a feature — it’s the foundation of every solution we
+                  AI isn't a feature — it's the foundation of every solution we
                   build.
                 </p>
               </div>
@@ -381,7 +404,7 @@ const Home = () => {
               <div className="space-y-1">
                 <p className="font-bold text-lg">Strategic Consulting</p>
                 <p>
-                  We don’t just deliver projects — we guide transformations.
+                  We don't just deliver projects — we guide transformations.
                 </p>
               </div>
             </div>
@@ -403,7 +426,7 @@ const Home = () => {
             </h2>
             <p className="mt-4">
               We ask for a few details so we can better understand your business
-              challenges and recommend the right AI solutions — whether it’s
+              challenges and recommend the right AI solutions — whether it's
               Chatbots, Voice AI, ERP Automation, or a custom AI-driven app.
               <br />
               <br />
@@ -411,7 +434,7 @@ const Home = () => {
               solutions designed to save time, reduce costs, and help you scale
               with confidence. <br />
               <br />
-              Let’s start building smarter solutions, together.
+              Let's start building smarter solutions, together.
             </p>
             <div className="flex sm:flex-row flex-col justify-center gap-5 mt-8">
               <Link
@@ -445,7 +468,7 @@ const Home = () => {
           >
             <LazyImage
               src={DesignRushIcon}
-              alt="Verified agency on DesignRush"
+              alt="Verified agency on DesignRush"
               className="w-[5rem] md:w-[6rem]"
             />
           </Link>
