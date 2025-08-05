@@ -54,9 +54,7 @@ const ChatbotWidget = () => {
   const closeTestChat = () => {
     setShowTestChat(false);
   };
-    setIsLoading(false);
 
-    setIsLoading(true);
   const handleIframeLoad = () => {
     setIsLoading(false);
   };
