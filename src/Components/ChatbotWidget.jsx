@@ -137,18 +137,6 @@ const ChatbotWidget = () => {
         transform: translateY(-1px) !important;
       }
       
-      /* Enhanced scrollbar */
-      [data-embed-id] .chat-messages::-webkit-scrollbar,
-      [data-embed-id] .messages::-webkit-scrollbar {
-        width: 6px !important;
-      }
-      
-      [data-embed-id] .chat-messages::-webkit-scrollbar-thumb,
-      [data-embed-id] .messages::-webkit-scrollbar-thumb {
-        background-color: #FFB703 !important;
-        border-radius: 6px !important;
-      }
-      
       /* WHITE BACKGROUND for AI assistant messages with enhanced shadow and proper styling */
       [data-embed-id] .assistant-message,
       [data-embed-id] .ai-message,
@@ -180,6 +168,18 @@ const ChatbotWidget = () => {
         padding: 12px 16px !important;
         margin: 8px 0 !important;
         font-weight: 500 !important;
+      }
+      
+      /* Enhanced scrollbar */
+      [data-embed-id] .chat-messages::-webkit-scrollbar,
+      [data-embed-id] .messages::-webkit-scrollbar {
+        width: 6px !important;
+      }
+      
+      [data-embed-id] .chat-messages::-webkit-scrollbar-thumb,
+      [data-embed-id] .messages::-webkit-scrollbar-thumb {
+        background-color: #FFB703 !important;
+        border-radius: 6px !important;
       }
       
       /* COMPLETELY HIDE ALL AnythingLLM branding - Complete White Label */
