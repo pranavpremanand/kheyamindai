@@ -33,22 +33,24 @@ const ChatbotWidget = () => {
     customStyle.textContent = `
       /* Custom styling for AnythingLLM widget - Complete White Label */
       [data-embed-id] {
-        z-index: 25 !important;
+        z-index: 998 !important;
       }
       
-      /* Position the chat button well above WhatsApp with proper spacing */
+      /* UPDATED POSITIONING - Chat button above WhatsApp */
       [data-embed-id] > div:first-child,
-      [data-embed-id] .chat-widget-container {
-        bottom: 220px !important;
+      [data-embed-id] .chat-widget-container,
+      #anythingllm-chat-button {
+        bottom: 100px !important;
         right: 32px !important;
-        z-index: 25 !important;
+        z-index: 998 !important;
         position: fixed !important;
       }
       
-      /* Chat button styling with robot icon - PROPER POSITIONING */
+      /* Chat button styling with robot icon - UPDATED POSITIONING */
       [data-embed-id] .chat-button,
       [data-embed-id] .open-chat-button,
-      [data-embed-id] button {
+      [data-embed-id] button[aria-label*="chat"],
+      [data-embed-id] > button {
         background-color: #FFB703 !important;
         border: 2px solid #003049 !important;
         box-shadow: 0 6px 16px rgba(255, 183, 3, 0.4) !important;
@@ -60,9 +62,9 @@ const ChatbotWidget = () => {
         align-items: center !important;
         justify-content: center !important;
         position: fixed !important;
-        bottom: 220px !important;
+        bottom: 100px !important;
         right: 32px !important;
-        z-index: 25 !important;
+        z-index: 998 !important;
       }
       
       /* Force robot emoji icon */
@@ -91,19 +93,20 @@ const ChatbotWidget = () => {
         box-shadow: 0 8px 20px rgba(0, 48, 73, 0.4) !important;
       }
       
-      /* Enhanced chat window styling - Responsive */
+      /* Enhanced chat window styling - UPDATED POSITIONING */
       [data-embed-id] .chat-window,
       [data-embed-id] iframe,
-      [data-embed-id] .chat-container {
+      [data-embed-id] .chat-container,
+      #anythingllm-chat-window {
         border: 2px solid #FFB703 !important;
         border-radius: 16px !important;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
         overflow: hidden !important;
         width: 400px !important;
         height: 600px !important;
-        bottom: 280px !important;
+        bottom: 170px !important;
         right: 32px !important;
-        z-index: 25 !important;
+        z-index: 998 !important;
         position: fixed !important;
       }
       
@@ -307,20 +310,22 @@ const ChatbotWidget = () => {
         font-weight: 400 !important;
       }
       
-      /* Mobile responsive adjustments */
+      /* UPDATED Mobile responsive adjustments */
       @media (max-width: 768px) {
-        /* Adjust positioning for mobile - MORE SPACING */
+        /* Adjust positioning for mobile */
         [data-embed-id] > div:first-child,
-        [data-embed-id] .chat-widget-container {
-          bottom: 160px !important;
+        [data-embed-id] .chat-widget-container,
+        #anythingllm-chat-button {
+          bottom: 90px !important;
           right: 20px !important;
         }
         
         /* Chat button positioning on mobile */
         [data-embed-id] .chat-button,
         [data-embed-id] .open-chat-button,
-        [data-embed-id] button {
-          bottom: 160px !important;
+        [data-embed-id] button[aria-label*="chat"],
+        [data-embed-id] > button {
+          bottom: 90px !important;
           right: 20px !important;
           width: 56px !important;
           height: 56px !important;
@@ -335,12 +340,13 @@ const ChatbotWidget = () => {
         /* Smaller chat window on mobile */
         [data-embed-id] .chat-window,
         [data-embed-id] iframe,
-        [data-embed-id] .chat-container {
+        [data-embed-id] .chat-container,
+        #anythingllm-chat-window {
           width: calc(100vw - 32px) !important;
           max-width: 340px !important;
           height: 480px !important;
           right: 16px !important;
-          bottom: 220px !important;
+          bottom: 160px !important;
         }
         
         /* Adjust header padding on mobile */
@@ -369,10 +375,11 @@ const ChatbotWidget = () => {
       @media (min-width: 769px) and (max-width: 1024px) {
         [data-embed-id] .chat-window,
         [data-embed-id] iframe,
-        [data-embed-id] .chat-container {
+        [data-embed-id] .chat-container,
+        #anythingllm-chat-window {
           width: 380px !important;
           height: 550px !important;
-          bottom: 260px !important;
+          bottom: 165px !important;
         }
       }
       
@@ -380,10 +387,11 @@ const ChatbotWidget = () => {
       @media (min-width: 1025px) {
         [data-embed-id] .chat-window,
         [data-embed-id] iframe,
-        [data-embed-id] .chat-container {
+        [data-embed-id] .chat-container,
+        #anythingllm-chat-window {
           width: 420px !important;
           height: 620px !important;
-          bottom: 280px !important;
+          bottom: 170px !important;
         }
       }
       
