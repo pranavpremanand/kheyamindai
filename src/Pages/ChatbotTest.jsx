@@ -10,6 +10,119 @@ const ChatbotTest = () => {
     setDebugInfo(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
   };
 
+  const forceChatbotOpen = () => {
+    addDebugInfo('🔧 Attempting to force open chatbot...');
+    
+    // Method 1: Try to find and click the AnythingLLM widget button
+    const selectors = [
+      '[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button',
+      '[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"]',
+      '.anythingllm-chat-widget button',
+      '.anythingllm-widget button',
+      '[class*="anythingllm"] button',
+      'iframe[src*="anythingllm"]',
+      '[id*="anythingllm"]'
+    ];
+    
+    let found = false;
+    for (const selector of selectors) {
+      const element = document.querySelector(selector);
+      if (element) {
+        addDebugInfo(`✅ Found element with selector: ${selector}`);
+        if (element.tagName === 'BUTTON' || element.onclick) {
+          element.click();
+          addDebugInfo('🖱️ Clicked on widget element');
+          found = true;
+          break;
+        } else if (element.tagName === 'IFRAME') {
+          addDebugInfo('📱 Found iframe widget');
+          // Try to make iframe visible
+          element.style.display = 'block';
+          element.style.visibility = 'visible';
+          element.style.opacity = '1';
+          found = true;
+          break;
+        }
+      }
+    }
+    
+    if (!found) {
+      addDebugInfo('❌ No clickable widget found');
+      
+      // Method 2: Try global functions
+      if (window.AnythingLLM) {
+        addDebugInfo('🌐 Found AnythingLLM global object');
+        if (typeof window.AnythingLLM.open === 'function') {
+          window.AnythingLLM.open();
+          addDebugInfo('📞 Called AnythingLLM.open()');
+        } else if (typeof window.AnythingLLM.toggle === 'function') {
+          window.AnythingLLM.toggle();
+          addDebugInfo('📞 Called AnythingLLM.toggle()');
+        }
+      } else {
+        addDebugInfo('❌ No AnythingLLM global object found');
+      }
+      
+      // Method 3: Dispatch custom events
+      const events = ['anythingllm-open', 'chatbot-open', 'widget-toggle'];
+      events.forEach(eventName => {
+        window.dispatchEvent(new CustomEvent(eventName));
+        addDebugInfo(`📡 Dispatched event: ${eventName}`);
+      });
+    }
+  };
+  
+  const findChatbotWidget = () => {
+    addDebugInfo('🔍 Scanning page for chatbot elements...');
+    
+    // Get all elements on the page
+    const allElements = document.querySelectorAll('*');
+    const chatbotElements = [];
+    
+    allElements.forEach((element, index) => {
+      const hasEmbedId = element.hasAttribute('data-embed-id');
+      const hasAnythingLLM = element.className.toLowerCase().includes('anythingllm') || 
+                            element.id.toLowerCase().includes('anythingllm');
+      const isChatWidget = element.className.toLowerCase().includes('chat') && 
+                          element.className.toLowerCase().includes('widget');
+      
+      if (hasEmbedId || hasAnythingLLM || isChatWidget) {
+        chatbotElements.push({
+          index,
+          tagName: element.tagName,
+          className: element.className,
+          id: element.id,
+          embedId: element.getAttribute('data-embed-id'),
+          visible: element.offsetWidth > 0 && element.offsetHeight > 0,
+          position: {
+            top: element.offsetTop,
+            left: element.offsetLeft,
+            width: element.offsetWidth,
+            height: element.offsetHeight
+          }
+        });
+      }
+    });
+    
+    if (chatbotElements.length > 0) {
+      addDebugInfo(`✅ Found ${chatbotElements.length} potential chatbot elements:`);
+      chatbotElements.forEach((el, i) => {
+        addDebugInfo(`   ${i+1}. ${el.tagName} - ${el.visible ? 'VISIBLE' : 'HIDDEN'} - ${el.className || 'no class'}`);
+      });
+    } else {
+      addDebugInfo('❌ No chatbot elements found on page');
+    }
+    
+    // Also check for iframes
+    const iframes = document.querySelectorAll('iframe');
+    if (iframes.length > 0) {
+      addDebugInfo(`📱 Found ${iframes.length} iframes on page:`);
+      iframes.forEach((iframe, i) => {
+        addDebugInfo(`   ${i+1}. ${iframe.src || 'no src'} - ${iframe.style.display !== 'none' ? 'VISIBLE' : 'HIDDEN'}`);
+      });
+    }
+  };
+
   useEffect(() => {
     addDebugInfo('Page loaded, checking for chatbot script...');
     
@@ -133,14 +246,31 @@ const ChatbotTest = () => {
             <h2 className="text-2xl font-bold mb-4">Test Instructions:</h2>
             <ol className="text-left max-w-2xl mx-auto space-y-2">
               <li>1. Wait for the chatbot script to load (status will update below)</li>
-              <li>2. Look for the chatbot widget (usually appears as a floating button)</li>
-              <li>3. Click on the chatbot widget to open the chat interface</li>
-              <li>4. Test sending a message to verify it's working</li>
+              <li>2. Look for the chatbot widget (usually appears as a floating button in bottom-right)</li>
+              <li>3. If you can't see the widget, use the "Force Open Chatbot" button below</li>
+              <li>4. Click on the chatbot widget to open the chat interface</li>
+              <li>5. Test sending a message to verify it's working</li>
             </ol>
           </div>
           
           <div className={`border-2 rounded-lg p-4 mb-8 font-bold ${getStatusClass()}`}>
             {getStatusMessage()}
+          </div>
+          
+          {/* Manual chatbot trigger */}
+          <div className="mb-8">
+            <button
+              onClick={forceChatbotOpen}
+              className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-bold transition-all duration-300 hover:transform hover:-translate-y-1 mr-4"
+            >
+              🤖 Force Open Chatbot
+            </button>
+            <button
+              onClick={findChatbotWidget}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold transition-all duration-300 hover:transform hover:-translate-y-1"
+            >
+              🔍 Find Widget
+            </button>
           </div>
           
           <div className="bg-black/30 rounded-lg p-6 mb-8 text-left">
@@ -151,6 +281,17 @@ const ChatbotTest = () => {
               ))}
             </div>
           </div>
+          
+          {/* Widget detection results */}
+          {widgetFound && (
+            <div className="bg-green-900/50 border border-green-400 rounded-lg p-4 mb-8">
+              <h3 className="text-green-300 font-bold mb-2">✅ Widget Detection Results:</h3>
+              <p className="text-green-100">
+                The AnythingLLM widget has been detected on the page. Look for a floating chat button, 
+                usually in the bottom-right corner. If you can't see it, try the "Force Open Chatbot" button above.
+              </p>
+            </div>
+          )}
           
           <Link 
             to="/" 
