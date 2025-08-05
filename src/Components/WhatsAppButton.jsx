@@ -1,4 +1,4 @@
-// WhatsAppButton.jsx - Updated positioning
+// WhatsAppButton.jsx - Keep it simple and visible
 import React, { useState, useEffect } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { companyDetails } from "../data/constant";
@@ -25,10 +25,9 @@ const WhatsAppButton = () => {
 
   return (
     <div
-      className="fixed z-30 group" // Changed z-index to 30 for better layering
+      className="fixed bottom-8 right-8"  // Keep original position
       style={{ 
-        bottom: '32px',  // Match the spacing
-        right: '32px'    // Same right position as chatbot
+        zIndex: 999  // High z-index to ensure visibility
       }}
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
