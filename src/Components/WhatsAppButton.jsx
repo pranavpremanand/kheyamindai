@@ -32,7 +32,7 @@ const WhatsAppButton = () => {
 
   return (
     <div
-      className="fixed z-[999] bottom-6 right-8 group"
+      className="fixed z-[998] bottom-6 right-8 group"
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
