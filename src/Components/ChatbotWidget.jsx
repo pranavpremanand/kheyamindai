@@ -5,6 +5,7 @@ const ChatbotWidget = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showTestChat, setShowTestChat] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,11 +54,17 @@ const ChatbotWidget = () => {
   const closeTestChat = () => {
     setShowTestChat(false);
   };
+    setIsLoading(false);
+
+    setIsLoading(true);
+  const handleIframeLoad = () => {
+    setIsLoading(false);
+  };
 
   return (
     <>
       <div
-        className="fixed z-30 bottom-24 right-8 md:right-24 group"
+        className="fixed z-30 bottom-20 right-8 md:right-8 group"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
@@ -92,28 +99,46 @@ const ChatbotWidget = () => {
 
       {/* Test Chat Interface */}
       {showTestChat && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-end justify-end p-4">
-          <div className="bg-white rounded-lg w-full max-w-sm h-96 flex flex-col shadow-2xl mr-4 mb-20 relative">
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-end justify-end">
+          <div className="bg-white rounded-lg w-full max-w-sm h-[500px] flex flex-col shadow-2xl mr-8 mb-24 relative border border-gray-200">
             {/* Arrow pointing to chatbot icon */}
-            <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white transform rotate-45 border-r border-b border-gray-200"></div>
+            <div className="absolute -bottom-3 right-8 w-6 h-6 bg-white transform rotate-45 border-r border-b border-gray-200"></div>
+            
+            {/* Header */}
             <div className="flex justify-between items-center p-4 border-b bg-primary text-white rounded-t-lg">
               <h3 className="font-bold">🤖 AI Assistant</h3>
               <button
                 onClick={closeTestChat}
-                className="text-white hover:text-gray-200 text-xl font-bold"
+                className="text-white hover:text-gray-200 text-xl font-bold w-6 h-6 flex items-center justify-center"
               >
                 ×
               </button>
             </div>
-            <div className="p-4 bg-blue-50 border-b text-sm text-blue-700">
+            
+            {/* Preview notice */}
+            <div className="p-3 bg-blue-50 border-b text-xs text-blue-700">
               <p>
-                <strong>Preview Mode:</strong> This is a test interface. The full chatbot will work on www.kheyamind.ai
+                <strong>Preview Mode:</strong> Testing interface - full version on production
               </p>
             </div>
+            
+            {/* Loading state */}
+            {isLoading && (
+              <div className="flex-1 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
+                  <p className="text-sm text-gray-600">Loading AI Assistant...</p>
+                </div>
+              </div>
+            )}
+            
+            {/* Chat iframe */}
             <iframe
               src="https://llm.kheyamind.ai/api/embed/b905d324-b48c-403f-bd1f-298de7708007"
-              className="flex-1 border-0"
+              className={`flex-1 border-0 ${isLoading ? 'hidden' : 'block'}`}
               title="AI Chat Assistant"
+              onLoad={handleIframeLoad}
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
             />
           </div>
         </div>
