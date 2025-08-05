@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced AnythingLLM Debug</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        .debug-info {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: left;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .button {
+            background: #FFB703;
+            color: #003049;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+        }
+        .button:hover {
+            background: #003049;
+            color: #FFB703;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.success { background: #28a745; color: white; }
+        .status.error { background: #dc3545; color: white; }
+        .status.warning { background: #ffc107; color: black; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .log-entry {
+            padding: 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 11px;
+        }
+        .error { color: #ff6b6b; }
+        .success { color: #51cf66; }
+        .warning { color: #ffd43b; }
+        .info { color: #74c0fc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Enhanced AnythingLLM Debug Tool</h1>
+        <p>Comprehensive debugging for AnythingLLM integration issues</p>
+        
+        <div class="grid">
+            <div class="section">
+                <h2>🚦 Current Status</h2>
+                <div id="status-info">
+                    <p>Initializing...</p>
+                </div>
+                <button class="button" onclick="checkStatus()">🔄 Refresh Status</button>
+                <button class="button" onclick="clearLogs()">🗑️ Clear Logs</button>
+            </div>
+            
+            <div class="section">
+                <h2>🧪 Manual Tests</h2>
+                <button class="button" onclick="testScriptLoad()">📥 Test Script Load</button>
+                <button class="button" onclick="testAPIConnection()">🌐 Test API</button>
+                <button class="button" onclick="testOpenChat()">💬 Test Open Chat</button>
+                <button class="button" onclick="inspectDOM()">🔍 Inspect DOM</button>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>📊 Network Analysis</h2>
+            <div id="network-info" class="debug-info">
+                Click "Test API" to analyze network connectivity
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>📝 Real-time Logs</h2>
+            <div id="log-output" class="debug-info">
+                <div class="log-entry info">Debug session started...</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🛠️ Alternative Solutions</h2>
+            <button class="button" onclick="tryDirectEmbed()">🔗 Try Direct Embed</button>
+            <button class="button" onclick="tryIframeEmbed()">📱 Try Iframe Embed</button>
+            <button class="button" onclick="createFallbackChat()">💬 Create Fallback Chat</button>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced logging system
+        const logs = [];
+        
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = { timestamp, message, type };
+            logs.push(logEntry);
+            
+            const logOutput = document.getElementById('log-output');
+            const logDiv = document.createElement('div');
+            logDiv.className = `log-entry ${type}`;
+            logDiv.innerHTML = `[${timestamp}] ${message}`;
+            logOutput.appendChild(logDiv);
+            logOutput.scrollTop = logOutput.scrollHeight;
+            
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+        
+        function clearLogs() {
+            logs.length = 0;
+            document.getElementById('log-output').innerHTML = '<div class="log-entry info">Logs cleared...</div>';
+        }
+        
+        // Enhanced status checker
+        function checkStatus() {
+            addLog('Checking integration status...', 'info');
+            
+            const statusDiv = document.getElementById('status-info');
+            let html = '';
+            
+            // Check script element
+            const scriptElement = document.querySelector('script[data-embed-id]');
+            const scriptStatus = scriptElement ? 'Found' : 'Not Found';
+            html += `<p><strong>Script Element:</strong> <span class="status ${scriptElement ? 'success' : 'error'}">${scriptStatus}</span></p>`;
+            addLog(`Script element: ${scriptStatus}`, scriptElement ? 'success' : 'error');
+            
+            // Check AnythingLLM object
+            const hasAnythingLLM = !!window.AnythingLLMEmbed;
+            html += `<p><strong>AnythingLLM Object:</strong> <span class="status ${hasAnythingLLM ? 'success' : 'error'}">${hasAnythingLLM ? 'Available' : 'Not Available'}</span></p>`;
+            addLog(`AnythingLLM object: ${hasAnythingLLM ? 'Available' : 'Not Available'}`, hasAnythingLLM ? 'success' : 'error');
+            
+            if (hasAnythingLLM) {
+                const methods = Object.keys(window.AnythingLLMEmbed);
+                html += `<p><strong>Available Methods:</strong> ${methods.join(', ')}</p>`;
+                addLog(`Available methods: ${methods.join(', ')}`, 'info');
+            }
+            
+            // Check widget element
+            const widget = document.querySelector('.anythingllm-chat-widget') || 
+                          document.querySelector('[class*="anythingllm"]') ||
+                          document.querySelector('[id*="anythingllm"]');
+            const widgetStatus = widget ? 'Rendered' : 'Not Rendered';
+            html += `<p><strong>Widget Element:</strong> <span class="status ${widget ? 'success' : 'error'}">${widgetStatus}</span></p>`;
+            addLog(`Widget element: ${widgetStatus}`, widget ? 'success' : 'error');
+            
+            // Check for errors in console
+            html += `<p><strong>Console Errors:</strong> Check browser console for details</p>`;
+            
+            statusDiv.innerHTML = html;
+        }
+        
+        // Test script loading
+        function testScriptLoad() {
+            addLog('Testing script load...', 'info');
+            
+            // Remove existing script
+            const existingScript = document.querySelector('script[data-embed-id]');
+            if (existingScript) {
+                existingScript.remove();
+                addLog('Removed existing script', 'warning');
+            }
+            
+            // Create new script with enhanced error handling
+            const script = document.createElement('script');
+            script.setAttribute('data-embed-id', 'b905d324-b48c-403f-bd1f-298de7708007');
+            script.setAttribute('data-base-api-url', 'https://llm.kheyamind.ai/api/embed');
+            script.setAttribute('data-chat-icon', 'support');
+            script.setAttribute('data-button-color', '#FFB703');
+            script.setAttribute('data-user-bg-color', '#FFB703');
+            script.setAttribute('data-assistant-bg-color', '#003049');
+            script.setAttribute('data-greeting', 'Hello! How can I help you today?');
+            script.setAttribute('data-assistant-name', 'KheyaMind AI Assistant');
+            script.setAttribute('data-position', 'bottom-right');
+            script.setAttribute('data-window-height', '500px');
+            script.setAttribute('data-window-width', '400px');
+            script.setAttribute('data-no-sponsor', 'true');
+            script.src = 'https://llm.kheyamind.ai/embed/anythingllm-chat-widget.min.js';
+            
+            script.onload = function() {
+                addLog('✅ Script loaded successfully!', 'success');
+                setTimeout(() => {
+                    checkStatus();
+                    if (window.AnythingLLMEmbed) {
+                        addLog('AnythingLLMEmbed object is now available', 'success');
+                    } else {
+                        addLog('AnythingLLMEmbed object still not available after script load', 'error');
+                    }
+                }, 1000);
+            };
+            
+            script.onerror = function(e) {
+                addLog('❌ Script failed to load: ' + e.message, 'error');
+                addLog('Trying alternative loading method...', 'warning');
+                tryAlternativeLoad();
+            };
+            
+            document.head.appendChild(script);
+            addLog('Script element added to head', 'info');
+        }
+        
+        // Alternative loading method
+        function tryAlternativeLoad() {
+            addLog('Attempting alternative script loading...', 'warning');
+            
+            fetch('https://llm.kheyamind.ai/embed/anythingllm-chat-widget.min.js')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    return response.text();
+                })
+                .then(scriptContent => {
+                    addLog('✅ Script content fetched successfully', 'success');
+                    
+                    // Execute the script content
+                    const script = document.createElement('script');
+                    script.textContent = scriptContent;
+                    document.head.appendChild(script);
+                    
+                    addLog('Script content executed', 'info');
+                    setTimeout(checkStatus, 1000);
+                })
+                .catch(error => {
+                    addLog(`❌ Alternative loading failed: ${error.message}`, 'error');
+                    addLog('Possible CORS or network issue', 'error');
+                });
+        }
+        
+        // Test API connection
+        function testAPIConnection() {
+            addLog('Testing API connection...', 'info');
+            
+            const networkDiv = document.getElementById('network-info');
+            networkDiv.innerHTML = 'Testing API endpoints...';
+            
+            const endpoints = [
+                'https://llm.kheyamind.ai/api/embed/b905d324-b48c-403f-bd1f-298de7708007',
+                'https://llm.kheyamind.ai/api/embed',
+                'https://llm.kheyamind.ai/embed/anythingllm-chat-widget.min.js'
+            ];
+            
+            Promise.all(endpoints.map(url => 
+                fetch(url, { method: 'HEAD' })
+                    .then(response => ({ url, status: response.status, ok: response.ok }))
+                    .catch(error => ({ url, status: 'Failed', ok: false, error: error.message }))
+            )).then(results => {
+                let html = '<h3>API Endpoint Tests:</h3>';
+                results.forEach(result => {
+                    const statusClass = result.ok ? 'success' : 'error';
+                    html += `<p><strong>${result.url}:</strong> <span class="status ${statusClass}">${result.status}</span></p>`;
+                    addLog(`API test - ${result.url}: ${result.status}`, result.ok ? 'success' : 'error');
+                });
+                networkDiv.innerHTML = html;
+            });
+        }
+        
+        // Test opening chat
+        function testOpenChat() {
+            addLog('Testing chat open functionality...', 'info');
+            
+            if (window.AnythingLLMEmbed) {
+                try {
+                    if (typeof window.AnythingLLMEmbed.open === 'function') {
+                        window.AnythingLLMEmbed.open();
+                        addLog('✅ Chat opened using AnythingLLMEmbed.open()', 'success');
+                    } else if (typeof window.AnythingLLMEmbed.toggle === 'function') {
+                        window.AnythingLLMEmbed.toggle();
+                        addLog('✅ Chat toggled using AnythingLLMEmbed.toggle()', 'success');
+                    } else {
+                        addLog('❌ No open/toggle methods available', 'error');
+                        addLog('Available methods: ' + Object.keys(window.AnythingLLMEmbed).join(', '), 'info');
+                    }
+                } catch (error) {
+                    addLog(`❌ Error calling AnythingLLM methods: ${error.message}`, 'error');
+                }
+            } else {
+                addLog('❌ AnythingLLMEmbed object not available', 'error');
+                
+                // Try to find widget button manually
+                const buttons = document.querySelectorAll('button, [role="button"]');
+                let chatButton = null;
+                
+                buttons.forEach(button => {
+                    const text = button.textContent || button.getAttribute('aria-label') || '';
+                    if (text.toLowerCase().includes('chat') || 
+                        button.className.includes('chat') ||
+                        button.className.includes('anythingllm')) {
+                        chatButton = button;
+                    }
+                });
+                
+                if (chatButton) {
+                    chatButton.click();
+                    addLog('✅ Found and clicked chat button manually', 'success');
+                } else {
+                    addLog('❌ No chat button found in DOM', 'error');
+                }
+            }
+        }
+        
+        // Inspect DOM for AnythingLLM elements
+        function inspectDOM() {
+            addLog('Inspecting DOM for AnythingLLM elements...', 'info');
+            
+            const allElements = document.querySelectorAll('*');
+            const anythingLLMElements = [];
+            
+            allElements.forEach(el => {
+                if (el.className && el.className.toString().toLowerCase().includes('anythingllm')) {
+                    anythingLLMElements.push(el);
+                }
+                if (el.id && el.id.toLowerCase().includes('anythingllm')) {
+                    anythingLLMElements.push(el);
+                }
+            });
+            
+            addLog(`Found ${anythingLLMElements.length} AnythingLLM-related elements`, 'info');
+            
+            anythingLLMElements.forEach((el, index) => {
+                addLog(`Element ${index + 1}: ${el.tagName} - Class: ${el.className} - ID: ${el.id}`, 'info');
+            });
+            
+            // Check for iframes
+            const iframes = document.querySelectorAll('iframe');
+            addLog(`Found ${iframes.length} iframe elements`, 'info');
+            
+            iframes.forEach((iframe, index) => {
+                addLog(`Iframe ${index + 1}: src=${iframe.src}`, 'info');
+            });
+        }
+        
+        // Try direct embed approach
+        function tryDirectEmbed() {
+            addLog('Trying direct embed approach...', 'warning');
+            
+            // Create a simple chat interface
+            const chatContainer = document.createElement('div');
+            chatContainer.id = 'direct-chat-container';
+            chatContainer.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 350px;
+                height: 500px;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                z-index: 10000;
+                display: flex;
+                flex-direction: column;
+            `;
+            
+            chatContainer.innerHTML = `
+                <div style="background: #FFB703; color: #003049; padding: 15px; border-radius: 10px 10px 0 0; font-weight: bold;">
+                    🤖 KheyaMind AI Assistant
+                    <button onclick="this.parentElement.parentElement.remove()" style="float: right; background: none; border: none; color: #003049; font-size: 18px; cursor: pointer;">×</button>
+                </div>
+                <iframe 
+                    src="https://llm.kheyamind.ai/embed/b905d324-b48c-403f-bd1f-298de7708007"
+                    style="flex: 1; border: none; border-radius: 0 0 10px 10px;"
+                    allow="microphone; camera"
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                ></iframe>
+            `;
+            
+            document.body.appendChild(chatContainer);
+            addLog('✅ Direct embed chat created', 'success');
+        }
+        
+        // Try iframe embed
+        function tryIframeEmbed() {
+            addLog('Trying iframe embed approach...', 'warning');
+            
+            const iframe = document.createElement('iframe');
+            iframe.src = 'https://llm.kheyamind.ai/embed/b905d324-b48c-403f-bd1f-298de7708007';
+            iframe.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 350px;
+                height: 500px;
+                border: none;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                z-index: 10000;
+            `;
+            iframe.allow = 'microphone; camera';
+            iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups';
+            
+            iframe.onload = function() {
+                addLog('✅ Iframe loaded successfully', 'success');
+            };
+            
+            iframe.onerror = function() {
+                addLog('❌ Iframe failed to load', 'error');
+            };
+            
+            document.body.appendChild(iframe);
+            addLog('Iframe embed created', 'info');
+        }
+        
+        // Create fallback chat
+        function createFallbackChat() {
+            addLog('Creating fallback chat interface...', 'warning');
+            
+            const fallbackChat = document.createElement('div');
+            fallbackChat.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 350px;
+                height: 500px;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                z-index: 10000;
+                display: flex;
+                flex-direction: column;
+                color: #333;
+            `;
+            
+            fallbackChat.innerHTML = `
+                <div style="background: #FFB703; color: #003049; padding: 15px; border-radius: 10px 10px 0 0; font-weight: bold;">
+                    🤖 KheyaMind AI Assistant (Fallback)
+                    <button onclick="this.parentElement.parentElement.remove()" style="float: right; background: none; border: none; color: #003049; font-size: 18px; cursor: pointer;">×</button>
+                </div>
+                <div style="flex: 1; padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                    <p style="margin-bottom: 20px;">AnythingLLM widget is not loading properly.</p>
+                    <p style="margin-bottom: 20px; font-size: 14px; color: #666;">Please contact us directly:</p>
+                    <a href="mailto:hello@kheyamind.ai" style="background: #FFB703; color: #003049; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 5px;">📧 Email Us</a>
+                    <a href="tel:+919242049993" style="background: #003049; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 5px;">📞 Call Us</a>
+                    <a href="https://api.whatsapp.com/send?phone=919242049993" target="_blank" style="background: #25D366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 5px;">💬 WhatsApp</a>
+                </div>
+            `;
+            
+            document.body.appendChild(fallbackChat);
+            addLog('✅ Fallback chat interface created', 'success');
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('load', function() {
+            addLog('Page loaded, initializing debug tools...', 'info');
+            setTimeout(checkStatus, 1000);
+            
+            // Monitor for script loading
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.tagName === 'SCRIPT' && node.src && node.src.includes('anythingllm')) {
+                            addLog('AnythingLLM script detected in DOM', 'info');
+                        }
+                    });
+                });
+            });
+            
+            observer.observe(document.head, { childList: true });
+        });
+        
+        // Override console methods to capture errors
+        const originalError = console.error;
+        console.error = function(...args) {
+            addLog('Console Error: ' + args.join(' '), 'error');
+            originalError.apply(console, args);
+        };
+        
+        const originalWarn = console.warn;
+        console.warn = function(...args) {
+            addLog('Console Warning: ' + args.join(' '), 'warning');
+            originalWarn.apply(console, args);
+        };
+    </script>
+
+    <!-- Try to load AnythingLLM script -->
+    <script
+        data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"
+        data-base-api-url="https://llm.kheyamind.ai/api/embed"
+        data-chat-icon="support"
+        data-button-color="#FFB703"
+        data-user-bg-color="#FFB703"
+        data-assistant-bg-color="#003049"
+        data-greeting="Hello! I'm the KheyaMind AI Assistant. How can I help you today?"
+        data-assistant-name="KheyaMind AI Assistant"
+        data-position="bottom-right"
+        data-window-height="500px"
+        data-window-width="400px"
+        data-no-sponsor="true"
+        data-default-messages="What services do you offer?, How can AI help my business?, Tell me about your chatbot solutions"
+        src="https://llm.kheyamind.ai/embed/anythingllm-chat-widget.min.js">
+    </script>
+</body>
+</html>
