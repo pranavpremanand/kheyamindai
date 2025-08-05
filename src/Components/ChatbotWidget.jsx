@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 const ChatbotWidget = () => {
   useEffect(() => {
-    // Create and inject the AnythingLLM script with custom styling
+    // Create and inject the AnythingLLM script with complete white-label customization
     const script = document.createElement('script');
     script.setAttribute('data-embed-id', 'b905d324-b48c-403f-bd1f-298de7708007');
     script.setAttribute('data-base-api-url', 'https://llm.kheyamind.ai/api/embed');
@@ -28,37 +28,45 @@ const ChatbotWidget = () => {
     
     script.src = 'https://llm.kheyamind.ai/embed/anythingllm-chat-widget.min.js';
     
-    // Add custom CSS for additional styling
+    // Add comprehensive custom CSS for complete white-labeling
     const customStyle = document.createElement('style');
     customStyle.textContent = `
-      /* Custom styling for AnythingLLM widget - Mobile Responsive */
+      /* Custom styling for AnythingLLM widget - Complete White Label */
       [data-embed-id] {
-        z-index: 999 !important;
+        z-index: 25 !important;
       }
       
       /* Position the chat button well above WhatsApp with proper spacing */
       [data-embed-id] > div:first-child {
         bottom: 140px !important;
         right: 32px !important;
-        z-index: 999 !important;
+        z-index: 25 !important;
       }
       
-      /* Mobile responsive positioning */
-      @media (max-width: 768px) {
-        [data-embed-id] > div:first-child {
-          bottom: 140px !important;
-          right: 32px !important;
-        }
-        
-        /* Ensure chat window fits mobile screen */
-        [data-embed-id] .chat-window,
-        [data-embed-id] iframe {
-          width: calc(100vw - 40px) !important;
-          max-width: 350px !important;
-          height: 500px !important;
-          right: 20px !important;
-          bottom: 200px !important;
-        }
+      /* Chat button styling with robot icon - PROPER POSITIONING */
+      [data-embed-id] .chat-button,
+      [data-embed-id] .open-chat-button {
+        background-color: #FFB703 !important;
+        border: 2px solid #003049 !important;
+        box-shadow: 0 6px 16px rgba(255, 183, 3, 0.4) !important;
+        transition: all 0.3s ease !important;
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: fixed !important;
+        bottom: 140px !important;
+        right: 32px !important;
+        z-index: 25 !important;
+      }
+      
+      [data-embed-id] .chat-button:hover,
+      [data-embed-id] .open-chat-button:hover {
+        background-color: #003049 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 20px rgba(0, 48, 73, 0.4) !important;
       }
       
       /* Enhanced chat window styling - Responsive */
@@ -71,9 +79,11 @@ const ChatbotWidget = () => {
         width: 400px !important;
         height: 600px !important;
         bottom: 200px !important;
+        right: 32px !important;
+        z-index: 25 !important;
       }
       
-      /* Enhanced header styling with gradient and larger logo */
+      /* Enhanced header styling with gradient and MUCH LARGER logo */
       [data-embed-id] .chat-header,
       [data-embed-id] .header {
         background: linear-gradient(135deg, #FFB703 0%, #003049 100%) !important;
@@ -107,36 +117,6 @@ const ChatbotWidget = () => {
         color: white !important;
       }
       
-      /* Enhanced input styling */
-      [data-embed-id] .chat-input,
-      [data-embed-id] input,
-      [data-embed-id] textarea {
-        border: 1px solid #FFB703 !important;
-        border-radius: 12px !important;
-        padding: 12px 16px !important;
-        font-size: 14px !important;
-        background-color: white !important;
-      }
-      
-      /* Enhanced send button */
-      [data-embed-id] .send-button,
-      [data-embed-id] button[type="submit"] {
-        background-color: #FFB703 !important;
-        color: #003049 !important;
-        border-radius: 12px !important;
-        font-weight: 600 !important;
-        padding: 12px 20px !important;
-        border: none !important;
-        transition: all 0.3s ease !important;
-      }
-      
-      [data-embed-id] .send-button:hover,
-      [data-embed-id] button[type="submit"]:hover {
-        background-color: #003049 !important;
-        color: white !important;
-        transform: translateY(-1px) !important;
-      }
-      
       /* WHITE BACKGROUND for AI assistant messages with enhanced shadow and proper styling */
       [data-embed-id] .assistant-message,
       [data-embed-id] .ai-message,
@@ -168,6 +148,36 @@ const ChatbotWidget = () => {
         padding: 12px 16px !important;
         margin: 8px 0 !important;
         font-weight: 500 !important;
+      }
+      
+      /* Enhanced input styling */
+      [data-embed-id] .chat-input,
+      [data-embed-id] input,
+      [data-embed-id] textarea {
+        border: 1px solid #FFB703 !important;
+        border-radius: 12px !important;
+        padding: 12px 16px !important;
+        font-size: 14px !important;
+        background-color: white !important;
+      }
+      
+      /* Enhanced send button */
+      [data-embed-id] .send-button,
+      [data-embed-id] button[type="submit"] {
+        background-color: #FFB703 !important;
+        color: #003049 !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        padding: 12px 20px !important;
+        border: none !important;
+        transition: all 0.3s ease !important;
+      }
+      
+      [data-embed-id] .send-button:hover,
+      [data-embed-id] button[type="submit"]:hover {
+        background-color: #003049 !important;
+        color: white !important;
+        transform: translateY(-1px) !important;
       }
       
       /* Enhanced scrollbar */
@@ -271,32 +281,6 @@ const ChatbotWidget = () => {
       [data-embed-id] .response-message * {
         color: #003049 !important;
         font-weight: 400 !important;
-      }
-      
-      /* Chat button styling with robot icon - PROPER POSITIONING */
-      [data-embed-id] .chat-button,
-      [data-embed-id] .open-chat-button {
-        background-color: #FFB703 !important;
-        border: 2px solid #003049 !important;
-        box-shadow: 0 6px 16px rgba(255, 183, 3, 0.4) !important;
-        transition: all 0.3s ease !important;
-        width: 60px !important;
-        height: 60px !important;
-        border-radius: 50% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        position: fixed !important;
-        bottom: 140px !important;
-        right: 32px !important;
-        z-index: 999 !important;
-      }
-      
-      [data-embed-id] .chat-button:hover,
-      [data-embed-id] .open-chat-button:hover {
-        background-color: #003049 !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 20px rgba(0, 48, 73, 0.4) !important;
       }
       
       /* Mobile responsive adjustments */
