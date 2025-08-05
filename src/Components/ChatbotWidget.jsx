@@ -5,7 +5,6 @@ const ChatbotWidget = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showTestChat, setShowTestChat] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
