@@ -112,8 +112,82 @@
         data-window-width="400px"
         data-no-sponsor="true"
         data-default-messages="What services do you offer?, How can AI help my business?, Tell me about your chatbot solutions"
-        src="https://llm.kheyamind.ai/embed/anythingllm-chat-widget.min.js"
-        async>
+        src="https://llm.kheyamind.ai/embed/anythingllm-chat-widget.min.js">
+    </script>
+    
+    <!-- Fallback script loader with better error handling -->
+    <script>
+        // Enhanced script loading with timeout and retry
+        (function() {
+            let scriptLoaded = false;
+            let retryCount = 0;
+            const maxRetries = 3;
+            
+            function loadAnythingLLM() {
+                console.log('Attempting to load AnythingLLM script...');
+                
+                const script = document.createElement('script');
+                script.src = 'https://llm.kheyamind.ai/embed/anythingllm-chat-widget.min.js';
+                script.setAttribute('data-embed-id', 'b905d324-b48c-403f-bd1f-298de7708007');
+                script.setAttribute('data-base-api-url', 'https://llm.kheyamind.ai/api/embed');
+                script.setAttribute('data-chat-icon', 'support');
+                script.setAttribute('data-button-color', '#FFB703');
+                script.setAttribute('data-user-bg-color', '#FFB703');
+                script.setAttribute('data-assistant-bg-color', '#003049');
+                script.setAttribute('data-greeting', 'Hello! I\'m the KheyaMind AI Assistant. How can I help you today?');
+                script.setAttribute('data-assistant-name', 'KheyaMind AI Assistant');
+                script.setAttribute('data-position', 'bottom-right');
+                script.setAttribute('data-window-height', '500px');
+                script.setAttribute('data-window-width', '400px');
+                script.setAttribute('data-no-sponsor', 'true');
+                script.setAttribute('data-default-messages', 'What services do you offer?, How can AI help my business?, Tell me about your chatbot solutions');
+                
+                script.onload = function() {
+                    console.log('✅ AnythingLLM script loaded successfully');
+                    scriptLoaded = true;
+                    
+                    // Wait for the widget to initialize
+                    setTimeout(function() {
+                        if (window.AnythingLLMEmbed) {
+                            console.log('✅ AnythingLLMEmbed object is available');
+                            console.log('Available methods:', Object.keys(window.AnythingLLMEmbed));
+                        } else {
+                            console.warn('⚠️ AnythingLLMEmbed object not found after script load');
+                        }
+                        checkStatus();
+                    }, 2000);
+                };
+                
+                script.onerror = function() {
+                    console.error('❌ Failed to load AnythingLLM script');
+                    retryCount++;
+                    
+                    if (retryCount < maxRetries) {
+                        console.log(`Retrying... (${retryCount}/${maxRetries})`);
+                        setTimeout(loadAnythingLLM, 2000);
+                    } else {
+                        console.error('❌ Max retries reached. AnythingLLM script failed to load.');
+                    }
+                };
+                
+                // Set timeout for script loading
+                setTimeout(function() {
+                    if (!scriptLoaded) {
+                        console.warn('⚠️ Script loading timeout');
+                        script.onerror();
+                    }
+                }, 10000);
+                
+                document.head.appendChild(script);
+            }
+            
+            // Start loading when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadAnythingLLM);
+            } else {
+                loadAnythingLLM();
+            }
+        })();
     </script>
 
     <script>
