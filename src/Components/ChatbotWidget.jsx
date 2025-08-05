@@ -8,7 +8,7 @@ const ChatbotWidget = () => {
     script.setAttribute('data-base-api-url', 'https://llm.kheyamind.ai/api/embed');
     
     // Custom branding and styling
-    script.setAttribute('data-chat-icon', 'support');
+    script.setAttribute('data-chat-icon', 'robot');
     script.setAttribute('data-button-color', '#FFB703'); // Primary color
     script.setAttribute('data-user-bg-color', '#FFB703'); // Primary color
     script.setAttribute('data-assistant-bg-color', '#003049'); // Secondary color
