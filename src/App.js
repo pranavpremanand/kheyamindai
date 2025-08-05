@@ -41,7 +41,6 @@ const EnterpriseAILanding = createLazyComponent(() =>
 const RealEstateAILanding = createLazyComponent(() =>
   import("./Pages/landingPages/RealEstateAILanding")
 );
-const ChatbotTest = createLazyComponent(() => import("./Pages/ChatbotTest"));
 
 function App() {
   useEffect(() => {
@@ -104,7 +103,6 @@ function App() {
                 <Route path="blogs/:slug" element={<BlogDetails />} />
                 <Route path="contact-us" element={<ContactUs />} />
                 <Route path="thank-you" element={<ThankYou />} />
-                <Route path="chatbot-test" element={<ChatbotTest />} />
               </Route>
 
                 {/* Landing Page Layout Routes */}
