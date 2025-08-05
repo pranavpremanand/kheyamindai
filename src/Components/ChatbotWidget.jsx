@@ -7,12 +7,12 @@ const ChatbotWidget = () => {
     script.setAttribute('data-embed-id', 'b905d324-b48c-403f-bd1f-298de7708007');
     script.setAttribute('data-base-api-url', 'https://llm.kheyamind.ai/api/embed');
     
-    // Complete white-label branding
-    script.setAttribute('data-chat-icon', 'support');
+    // Complete white-label branding with robot icon
+    script.setAttribute('data-chat-icon', 'robot');
     script.setAttribute('data-button-color', '#FFB703'); // Primary color
     script.setAttribute('data-user-bg-color', '#FFB703'); // Primary color
     script.setAttribute('data-assistant-bg-color', '#ffffff');
-    script.setAttribute('data-brand-image-url', 'https://www.kheyamind.ai/logo.png');
+    script.setAttribute('data-brand-image-url', 'https://www.kheyamind.ai/fav.png');
     script.setAttribute('data-greeting', 'Hello! I\'m your KheyaMind AI assistant. How can I help you with AI solutions today?');
     script.setAttribute('data-assistant-name', 'KheyaMind AI Assistant');
     script.setAttribute('data-position', 'bottom-right');
@@ -31,42 +31,77 @@ const ChatbotWidget = () => {
     // Add custom CSS for additional styling
     const customStyle = document.createElement('style');
     customStyle.textContent = `
-      /* Custom styling for AnythingLLM widget */
+      /* Custom styling for AnythingLLM widget - Mobile Responsive */
       [data-embed-id] {
-        z-index: 998 !important;
+        z-index: 997 !important;
       }
       
-      /* Position the chat button above WhatsApp with proper spacing */
+      /* Position the chat button above WhatsApp with proper spacing - Mobile Responsive */
       [data-embed-id] > div:first-child {
-        bottom: 90px !important;
-        right: 20px !important;
-        z-index: 998 !important;
+        bottom: 100px !important;
+        right: 32px !important;
+        z-index: 997 !important;
       }
       
-      /* Enhanced chat window styling */
+      /* Mobile responsive positioning */
+      @media (max-width: 768px) {
+        [data-embed-id] > div:first-child {
+          bottom: 100px !important;
+          right: 32px !important;
+        }
+        
+        /* Ensure chat window fits mobile screen */
+        [data-embed-id] .chat-window,
+        [data-embed-id] iframe {
+          width: calc(100vw - 40px) !important;
+          max-width: 350px !important;
+          height: 500px !important;
+          right: 20px !important;
+          bottom: 160px !important;
+        }
+      }
+      
+      /* Enhanced chat window styling - Responsive */
       [data-embed-id] .chat-window,
       [data-embed-id] iframe {
         border: 2px solid #FFB703 !important;
         border-radius: 16px !important;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
         overflow: hidden !important;
+        width: 400px !important;
+        height: 600px !important;
       }
       
-      /* Enhanced header styling with gradient */
+      /* Enhanced header styling with gradient and larger logo */
       [data-embed-id] .chat-header,
       [data-embed-id] .header {
         background: linear-gradient(135deg, #FFB703 0%, #003049 100%) !important;
         color: white !important;
-        padding: 16px !important;
+        padding: 20px !important;
         font-weight: 600 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
       }
       
-      /* Larger brand logo in header */
+      /* Much larger brand logo in header */
       [data-embed-id] .brand-logo,
+      [data-embed-id] img[src*="fav"],
       [data-embed-id] img[src*="logo"] {
-        width: 32px !important;
-        height: 32px !important;
-        border-radius: 6px !important;
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: 8px !important;
+        object-fit: contain !important;
+        background: white !important;
+        padding: 4px !important;
+      }
+      
+      /* Assistant name styling */
+      [data-embed-id] .assistant-name,
+      [data-embed-id] .chat-title {
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        color: white !important;
       }
       
       /* Enhanced input styling */
@@ -77,6 +112,7 @@ const ChatbotWidget = () => {
         border-radius: 12px !important;
         padding: 12px 16px !important;
         font-size: 14px !important;
+        background-color: white !important;
       }
       
       /* Enhanced send button */
@@ -110,16 +146,18 @@ const ChatbotWidget = () => {
         border-radius: 6px !important;
       }
       
-      /* White background for AI assistant messages with shadow */
+      /* WHITE BACKGROUND for AI assistant messages with enhanced shadow */
       [data-embed-id] .assistant-message,
       [data-embed-id] .ai-message,
       [data-embed-id] .bot-message,
       [data-embed-id] [data-role="assistant"],
-      [data-embed-id] .message.assistant {
+      [data-embed-id] .message.assistant,
+      [data-embed-id] .message[data-sender="assistant"],
+      [data-embed-id] .response-message {
         background-color: #ffffff !important;
         color: #003049 !important;
-        border: 1px solid #e5e7eb !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        border: 1px solid #FFB703 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
         border-radius: 12px !important;
         padding: 12px 16px !important;
         margin: 8px 0 !important;
@@ -134,30 +172,41 @@ const ChatbotWidget = () => {
         border-radius: 12px !important;
         padding: 12px 16px !important;
         margin: 8px 0 !important;
+        font-weight: 500 !important;
       }
       
-      /* Hide AnythingLLM branding completely */
+      /* COMPLETELY HIDE AnythingLLM branding - White Label */
       [data-embed-id] .powered-by,
       [data-embed-id] .anythingllm-branding,
       [data-embed-id] .footer-branding,
       [data-embed-id] [class*="anythingllm"],
       [data-embed-id] [class*="powered"],
-      [data-embed-id] a[href*="anythingllm"] {
+      [data-embed-id] a[href*="anythingllm"],
+      [data-embed-id] *[class*="AnythingLLM"],
+      [data-embed-id] *[title*="AnythingLLM"],
+      [data-embed-id] *[alt*="AnythingLLM"] {
         display: none !important;
         visibility: hidden !important;
+        opacity: 0 !important;
       }
       
-      /* Replace assistant avatar with KheyaMind favicon */
+      /* Replace ALL assistant avatars with KheyaMind favicon */
       [data-embed-id] .assistant-avatar,
       [data-embed-id] .bot-avatar,
-      [data-embed-id] .ai-avatar {
+      [data-embed-id] .ai-avatar,
+      [data-embed-id] .avatar.assistant,
+      [data-embed-id] [data-role="assistant"] .avatar,
+      [data-embed-id] .message-avatar {
         background-image: url('https://www.kheyamind.ai/fav.png') !important;
         background-size: contain !important;
         background-repeat: no-repeat !important;
         background-position: center !important;
-        width: 32px !important;
-        height: 32px !important;
-        border-radius: 6px !important;
+        background-color: white !important;
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 8px !important;
+        border: 2px solid #FFB703 !important;
+        padding: 2px !important;
       }
       
       /* Chat window background */
@@ -181,35 +230,126 @@ const ChatbotWidget = () => {
         padding: 16px !important;
       }
       
-      /* Title and assistant name customization */
+      /* FORCE assistant name to be KheyaMind AI */
       [data-embed-id] .chat-title,
-      [data-embed-id] .assistant-name {
+      [data-embed-id] .assistant-name,
+      [data-embed-id] .sender-name,
+      [data-embed-id] .message-sender {
         color: white !important;
-        font-weight: 600 !important;
-        font-size: 16px !important;
+        font-weight: 700 !important;
+        font-size: 18px !important;
       }
       
-      /* Ensure proper text contrast */
+      /* Force replace any AnythingLLM text with KheyaMind AI */
+      [data-embed-id] *:contains("AnythingLLM"),
+      [data-embed-id] *:contains("Anything LLM") {
+        visibility: hidden !important;
+      }
+      
+      [data-embed-id] *:contains("AnythingLLM")::after,
+      [data-embed-id] *:contains("Anything LLM")::after {
+        content: "KheyaMind AI Assistant" !important;
+        visibility: visible !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        color: white !important;
+        font-weight: 700 !important;
+      }
+      
+      /* Ensure proper text contrast in AI messages */
       [data-embed-id] .assistant-message *,
       [data-embed-id] .ai-message *,
-      [data-embed-id] .bot-message * {
+      [data-embed-id] .bot-message *,
+      [data-embed-id] .response-message * {
         color: #003049 !important;
+        font-weight: 400 !important;
       }
       
-      /* Chat button styling */
+      /* Chat button styling with robot icon */
       [data-embed-id] .chat-button,
       [data-embed-id] .open-chat-button {
         background-color: #FFB703 !important;
         border: 2px solid #003049 !important;
-        box-shadow: 0 4px 12px rgba(255, 183, 3, 0.3) !important;
+        box-shadow: 0 6px 16px rgba(255, 183, 3, 0.4) !important;
         transition: all 0.3s ease !important;
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
       
       [data-embed-id] .chat-button:hover,
       [data-embed-id] .open-chat-button:hover {
         background-color: #003049 !important;
         transform: translateY(-2px) !important;
-        box-shadow: 0 6px 16px rgba(0, 48, 73, 0.3) !important;
+        box-shadow: 0 8px 20px rgba(0, 48, 73, 0.4) !important;
+      }
+      
+      /* Mobile responsive adjustments */
+      @media (max-width: 768px) {
+        /* Adjust positioning for mobile */
+        [data-embed-id] > div:first-child {
+          bottom: 100px !important;
+          right: 20px !important;
+        }
+        
+        /* Smaller chat window on mobile */
+        [data-embed-id] .chat-window,
+        [data-embed-id] iframe {
+          width: calc(100vw - 32px) !important;
+          max-width: 340px !important;
+          height: 480px !important;
+          right: 16px !important;
+          bottom: 170px !important;
+        }
+        
+        /* Smaller chat button on mobile */
+        [data-embed-id] .chat-button,
+        [data-embed-id] .open-chat-button {
+          width: 56px !important;
+          height: 56px !important;
+        }
+        
+        /* Adjust header padding on mobile */
+        [data-embed-id] .chat-header,
+        [data-embed-id] .header {
+          padding: 16px !important;
+        }
+        
+        /* Smaller logo on mobile */
+        [data-embed-id] .brand-logo,
+        [data-embed-id] img[src*="fav"],
+        [data-embed-id] img[src*="logo"] {
+          width: 40px !important;
+          height: 40px !important;
+        }
+        
+        /* Adjust font sizes for mobile */
+        [data-embed-id] .chat-title,
+        [data-embed-id] .assistant-name {
+          font-size: 16px !important;
+        }
+      }
+      
+      /* Tablet responsive adjustments */
+      @media (min-width: 769px) and (max-width: 1024px) {
+        [data-embed-id] .chat-window,
+        [data-embed-id] iframe {
+          width: 380px !important;
+          height: 550px !important;
+        }
+      }
+      
+      /* Large screen adjustments */
+      @media (min-width: 1025px) {
+        [data-embed-id] .chat-window,
+        [data-embed-id] iframe {
+          width: 420px !important;
+          height: 620px !important;
+        }
       }
     `;
     

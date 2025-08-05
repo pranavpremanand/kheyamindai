@@ -32,7 +32,7 @@ const WhatsAppButton = () => {
 
   return (
     <div
-      className="fixed z-[1000] bottom-24 right-8 group"
+      className="fixed z-[999] bottom-6 right-8 group"
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
@@ -55,7 +55,7 @@ const WhatsAppButton = () => {
       {/* Main button */}
       <button
         onClick={openWhatsApp}
-        className={`relative bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 ${
+        className={`relative bg-green-500 hover:bg-green-600 text-white w-14 h-14 flex items-center justify-center rounded-full shadow-lg transition-all duration-300 ${
           isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
         }`}
         aria-label="Contact us on WhatsApp"
