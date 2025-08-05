@@ -57,6 +57,50 @@ const ChatbotTest = () => {
     setShowIframe(true);
   };
 
+  const createTestChatInterface = () => {
+    addDebugInfo('🧪 Creating test chat interface...');
+    
+    // Create a functional test chat interface
+    const chatContainer = document.createElement('div');
+    chatContainer.id = 'test-chat-container';
+    chatContainer.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 350px;
+      height: 500px;
+      background: white;
+      border: 2px solid #007bff;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    `;
+    
+    chatContainer.innerHTML = `
+      <div style="background: #007bff; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="margin: 0; font-size: 16px;">🤖 AI Assistant (Test Mode)</h3>
+        <button onclick="document.body.removeChild(document.getElementById('test-chat-container'))" 
+                style="background: none; border: none; color: white; font-size: 20px; cursor: pointer;">×</button>
+      </div>
+      <div style="padding: 15px; background: #f8f9fa; border-bottom: 1px solid #ddd;">
+        <p style="margin: 0; font-size: 14px; color: #666;">
+          ⚠️ This is a test interface. The actual chatbot will work on www.kheyamind.ai
+        </p>
+      </div>
+      <iframe 
+        src="https://llm.kheyamind.ai/api/embed/b905d324-b48c-403f-bd1f-298de7708007"
+        style="flex: 1; border: none; width: 100%;"
+        title="AI Chat Assistant Test">
+      </iframe>
+    `;
+    
+    document.body.appendChild(chatContainer);
+    addDebugInfo('✅ Test chat interface created and displayed');
+  };
+
   const testDirectAPI = () => {
     addDebugInfo('🔌 Testing direct AnythingLLM API...');
     
@@ -379,6 +423,12 @@ const ChatbotTest = () => {
               className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-300 hover:transform hover:-translate-y-1 mb-4"
             >
               📱 Open Iframe Chat
+            </button>
+            <button
+              onClick={createTestChatInterface}
+              className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-300 hover:transform hover:-translate-y-1 mb-4"
+            >
+              🧪 Create Test Chat
             </button>
           </div>
           
