@@ -223,6 +223,33 @@ const Home = () => {
         </div>
       </div>
 
+      {/* Startup India Certification Badge */}
+      <div className="wrapper relative z-[1] pt-8">
+        <div 
+          data-aos="fade-up"
+          className="flex justify-center"
+        >
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <div className="flex-shrink-0">
+                <img 
+                  src="https://via.placeholder.com/120x80/FF6B35/FFFFFF?text=DPIIT+Badge" 
+                  alt="DPIIT Startup India Certified"
+                  className="h-16 w-auto object-contain"
+                />
+              </div>
+              <div className="text-center sm:text-left">
+                <h4 className="font-bold text-lg text-secondary mb-1">
+                  Startup India Certified
+                </h4>
+                <p className="text-gray-600 text-sm">
+                  Recognized by Department for Promotion of Industry and Internal Trade (DPIIT)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <section className="pt-[5rem]">
         <div className="wrapper grid md:grid-cols-2 gap-7">
           <div data-aos="fade-up" className="space-y-4">
