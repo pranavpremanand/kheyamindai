@@ -1,3 +1,4 @@
+// WhatsAppButton.jsx - Updated positioning
 import React, { useState, useEffect } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { companyDetails } from "../data/constant";
@@ -8,35 +9,31 @@ const WhatsAppButton = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Always keep the WhatsApp button visible
       setIsVisible(true);
     };
-
-    // Add scroll event listener
     window.addEventListener("scroll", handleScroll);
-
-    // Clean up
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const openWhatsApp = () => {
-    // Format phone number for WhatsApp - ensure it starts with country code without + sign
     let phoneNumber = companyDetails.phone.replace(/\D/g, "");
-
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
-
     window.open(whatsappUrl, "_blank");
   };
 
   return (
     <div
-      className="fixed z-[998] bottom-6 right-8 group"
+      className="fixed z-30 group" // Changed z-index to 30 for better layering
+      style={{ 
+        bottom: '32px',  // Match the spacing
+        right: '32px'    // Same right position as chatbot
+      }}
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
-      {/* Tooltip - hidden on mobile */}
+      {/* Tooltip */}
       <div
         className={`hidden md:block absolute bottom-full right-0 mb-2 bg-white text-gray-800 px-4 py-2 rounded-lg shadow-lg text-sm whitespace-nowrap transition-all duration-200 ${
           showTooltip
@@ -45,13 +42,12 @@ const WhatsAppButton = () => {
         }`}
       >
         Chat with us on WhatsApp
-        {/* Tooltip arrow */}
         <div className="absolute bottom-0 right-4 transform translate-y-1/2 rotate-45 w-2 h-2 bg-white"></div>
       </div>
-
+      
       {/* Pulsing effect */}
       <div className="absolute inset-0 rounded-full bg-green-500 opacity-30 animate-ping"></div>
-
+      
       {/* Main button */}
       <button
         onClick={openWhatsApp}
