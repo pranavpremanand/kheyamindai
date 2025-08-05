@@ -38,7 +38,7 @@ const ChatbotWidget = () => {
       
       /* Position the chat button well above WhatsApp with proper spacing */
       [data-embed-id] > div:first-child {
-        bottom: 140px !important;
+        bottom: 180px !important;
         right: 32px !important;
         z-index: 25 !important;
       }
@@ -57,7 +57,7 @@ const ChatbotWidget = () => {
         align-items: center !important;
         justify-content: center !important;
         position: fixed !important;
-        bottom: 140px !important;
+        bottom: 180px !important;
         right: 32px !important;
         z-index: 25 !important;
       }
