@@ -59,10 +59,6 @@ const ChatbotWidget = () => {
     setIsLoading(false);
   };
 
-  const handleIframeLoad = () => {
-    setIsLoading(false);
-  };
-
   return (
     <>
       <div
