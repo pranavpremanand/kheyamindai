@@ -38,42 +38,74 @@ const ChatbotWidget = () => {
 
   const toggleChatbot = () => {
     try {
-      // Method 1: Try to find and click the AnythingLLM widget button
-      const anythingLLMButton = document.querySelector('[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button');
-      if (anythingLLMButton) {
-        anythingLLMButton.click();
+      // Method 1: Use official AnythingLLM API
+      if (window.AnythingLLMEmbed && typeof window.AnythingLLMEmbed.open === 'function') {
+        window.AnythingLLMEmbed.open();
+        console.log('Opened chatbot using AnythingLLMEmbed.open()');
         return;
       }
 
-      // Method 2: Try to find the widget by class name
-      const widgetButton = document.querySelector('.anythingllm-chat-widget button');
-      if (widgetButton) {
-        widgetButton.click();
+      // Method 2: Look for iframe and make it visible
+      const iframe = document.querySelector('iframe[src*="llm.kheyamind.ai"]');
+      if (iframe) {
+        iframe.style.display = 'block';
+        iframe.style.position = 'fixed';
+        iframe.style.bottom = '20px';
+        iframe.style.right = '20px';
+        iframe.style.width = '400px';
+        iframe.style.height = '600px';
+        iframe.style.zIndex = '9999';
+        iframe.style.border = '2px solid #007bff';
+        iframe.style.borderRadius = '10px';
+        console.log('Made AnythingLLM iframe visible');
         return;
       }
 
-      // Method 3: Dispatch a custom event that the widget might listen to
-      const chatEvent = new CustomEvent('anythingllm-toggle', {
-        detail: { action: 'toggle' }
-      });
-      window.dispatchEvent(chatEvent);
-
-      // Method 4: Try global function if available
-      if (window.AnythingLLM && typeof window.AnythingLLM.toggle === 'function') {
-        window.AnythingLLM.toggle();
+      // Method 3: Try alternative global objects
+      if (window.AnythingLLM && typeof window.AnythingLLM.open === 'function') {
+        window.AnythingLLM.open();
+        console.log('Opened chatbot using AnythingLLM.open()');
         return;
       }
 
-      // If none of the above work, show a fallback message
-      console.log('AnythingLLM widget not found. Checking if script loaded...');
+      // Method 4: Create a direct iframe if none exists
+      console.log('Creating direct iframe for chatbot...');
+      const chatIframe = document.createElement('iframe');
+      chatIframe.src = 'https://llm.kheyamind.ai/api/embed/b905d324-b48c-403f-bd1f-298de7708007';
+      chatIframe.style.position = 'fixed';
+      chatIframe.style.bottom = '20px';
+      chatIframe.style.right = '20px';
+      chatIframe.style.width = '400px';
+      chatIframe.style.height = '600px';
+      chatIframe.style.zIndex = '9999';
+      chatIframe.style.border = '2px solid #007bff';
+      chatIframe.style.borderRadius = '10px';
+      chatIframe.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+      chatIframe.title = 'AI Chat Assistant';
       
-      // Check if the script is loaded
-      const script = document.querySelector('script[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"]');
-      if (!script) {
-        console.error('AnythingLLM script not found in DOM');
-      } else {
-        console.log('AnythingLLM script found, but widget not initialized yet');
-      }
+      // Add close button
+      const closeButton = document.createElement('button');
+      closeButton.innerHTML = '×';
+      closeButton.style.position = 'absolute';
+      closeButton.style.top = '5px';
+      closeButton.style.right = '10px';
+      closeButton.style.background = 'red';
+      closeButton.style.color = 'white';
+      closeButton.style.border = 'none';
+      closeButton.style.borderRadius = '50%';
+      closeButton.style.width = '25px';
+      closeButton.style.height = '25px';
+      closeButton.style.cursor = 'pointer';
+      closeButton.style.zIndex = '10000';
+      closeButton.onclick = () => {
+        document.body.removeChild(chatIframe);
+        document.body.removeChild(closeButton);
+      };
+      
+      document.body.appendChild(chatIframe);
+      document.body.appendChild(closeButton);
+      
+      console.log('Created direct iframe chatbot interface');
 
     } catch (error) {
       console.error('Error toggling chatbot:', error);

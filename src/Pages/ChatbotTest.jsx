@@ -57,79 +57,104 @@ const ChatbotTest = () => {
     setShowIframe(true);
   };
 
+  const testDirectAPI = () => {
+    addDebugInfo('🔌 Testing direct AnythingLLM API...');
+    
+    // Try to access the AnythingLLM API directly
+    if (window.AnythingLLMEmbed) {
+      addDebugInfo('✅ Found AnythingLLMEmbed global object');
+      try {
+        window.AnythingLLMEmbed.open();
+        addDebugInfo('📞 Called AnythingLLMEmbed.open()');
+      } catch (error) {
+        addDebugInfo(`❌ Error calling AnythingLLMEmbed.open(): ${error.message}`);
+      }
+    } else {
+      addDebugInfo('❌ AnythingLLMEmbed global object not found');
+    }
+    
+    // Check for the widget iframe
+    const iframe = document.querySelector('iframe[src*="llm.kheyamind.ai"]');
+    if (iframe) {
+      addDebugInfo('✅ Found AnythingLLM iframe');
+      addDebugInfo(`   Iframe src: ${iframe.src}`);
+      addDebugInfo(`   Iframe visible: ${iframe.offsetWidth > 0 && iframe.offsetHeight > 0}`);
+      addDebugInfo(`   Iframe position: ${iframe.style.position || 'static'}`);
+    } else {
+      addDebugInfo('❌ No AnythingLLM iframe found');
+    }
+  };
+
+  const checkDomainRestriction = () => {
+    addDebugInfo('🌐 Checking domain restriction...');
+    const currentDomain = window.location.hostname;
+    const allowedDomain = 'www.kheyamind.ai';
+    
+    addDebugInfo(`   Current domain: ${currentDomain}`);
+    addDebugInfo(`   Allowed domain: ${allowedDomain}`);
+    addDebugInfo(`   Domain match: ${currentDomain === allowedDomain ? 'YES' : 'NO'}`);
+    
+    if (currentDomain !== allowedDomain) {
+      addDebugInfo('⚠️ DOMAIN RESTRICTION: Widget is configured for www.kheyamind.ai only');
+      addDebugInfo('   This explains why the widget is not showing interactive elements');
+    }
+  };
+
   const forceChatbotOpen = () => {
     addDebugInfo('🔧 Attempting to force open chatbot...');
     
-    // Method 1: Look for the actual widget content inside the embed
-    const selectors = [
-      '[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button',
-      '[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] *[role="button"]',
-      '[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] div[onclick]',
-      '[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button',
-      '[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .widget-button',
-      '[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"]',
-      '.anythingllm-chat-widget button',
-      '.anythingllm-widget button',
-      '[class*="anythingllm"] button',
-      'iframe[src*="anythingllm"]'
-    ];
-    
-    let found = false;
-    for (const selector of selectors) {
-      const element = document.querySelector(selector);
-      if (element) {
-        addDebugInfo(`✅ Found element with selector: ${selector}`);
-        addDebugInfo(`   Element type: ${element.tagName}, clickable: ${element.onclick ? 'yes' : 'no'}`);
-        addDebugInfo(`   Element content: ${element.innerHTML ? element.innerHTML.substring(0, 100) + '...' : 'empty'}`);
-        
-        if (element.tagName === 'BUTTON' || element.onclick) {
-          element.click();
-          addDebugInfo('🖱️ Clicked on widget element');
-          found = true;
-          break;
-        } else if (element.getAttribute('data-embed-id')) {
-          // This is the main embed container, try to trigger it
-          addDebugInfo('📱 Found embed container, trying to activate...');
-          
-          // Try clicking on the container itself
-          element.click();
-          
-          // Try to find any child elements that might be clickable
-          const clickableChildren = element.querySelectorAll('*');
-          clickableChildren.forEach((child, index) => {
-            if (child.onclick || child.tagName === 'BUTTON' || child.getAttribute('role') === 'button') {
-              addDebugInfo(`🖱️ Clicking child element ${index}: ${child.tagName}`);
-              child.click();
-            }
-          });
-        }
+    // Method 1: Try AnythingLLM official API
+    if (window.AnythingLLMEmbed) {
+      addDebugInfo('✅ Found AnythingLLMEmbed - trying to open...');
+      try {
+        window.AnythingLLMEmbed.open();
+        addDebugInfo('📞 Successfully called AnythingLLMEmbed.open()');
+        return;
+      } catch (error) {
+        addDebugInfo(`❌ Error with AnythingLLMEmbed.open(): ${error.message}`);
       }
     }
     
-    if (!found) {
-      addDebugInfo('❌ No clickable widget found');
+    // Method 2: Look for iframe and try to interact with it
+    const iframe = document.querySelector('iframe[src*="llm.kheyamind.ai"]');
+    if (iframe) {
+      addDebugInfo('✅ Found AnythingLLM iframe - trying to make visible...');
+      iframe.style.display = 'block';
+      iframe.style.position = 'fixed';
+      iframe.style.bottom = '20px';
+      iframe.style.right = '20px';
+      iframe.style.width = '400px';
+      iframe.style.height = '600px';
+      iframe.style.zIndex = '9999';
+      iframe.style.border = '2px solid #007bff';
+      addDebugInfo('🎨 Made iframe visible with fixed positioning');
+      return;
+    }
+    
+    // Method 3: Look for any AnythingLLM related elements
+    const allElements = document.querySelectorAll('*');
+    let anythingLLMElements = [];
+    
+    allElements.forEach(element => {
+      const hasAnythingLLM = element.className.toLowerCase().includes('anythingllm') ||
+                           element.id.toLowerCase().includes('anythingllm') ||
+                           element.getAttribute('data-embed-id');
       
-      // Method 2: Try global functions
-      if (window.AnythingLLM) {
-        addDebugInfo('🌐 Found AnythingLLM global object');
-        if (typeof window.AnythingLLM.open === 'function') {
-          window.AnythingLLM.open();
-          addDebugInfo('📞 Called AnythingLLM.open()');
-        } else if (typeof window.AnythingLLM.toggle === 'function') {
-          window.AnythingLLM.toggle();
-          addDebugInfo('📞 Called AnythingLLM.toggle()');
-        }
-      } else {
-        addDebugInfo('❌ No AnythingLLM global object found');
+      if (hasAnythingLLM) {
+        anythingLLMElements.push(element);
       }
-      
-      // Method 3: Dispatch custom events
-      const events = ['anythingllm-open', 'chatbot-open', 'widget-toggle'];
-      events.forEach(eventName => {
-        window.dispatchEvent(new CustomEvent(eventName));
-        addDebugInfo(`📡 Dispatched event: ${eventName}`);
+    });
+    
+    if (anythingLLMElements.length > 0) {
+      addDebugInfo(`✅ Found ${anythingLLMElements.length} AnythingLLM elements`);
+      anythingLLMElements.forEach((element, index) => {
+        addDebugInfo(`   ${index + 1}. ${element.tagName} - ${element.className || 'no class'}`);
       });
+    } else {
+      addDebugInfo('❌ No AnythingLLM elements found');
     }
+    
+    addDebugInfo('⚠️ Widget may not be functional due to domain restriction');
   };
   
   const findChatbotWidget = () => {
@@ -336,6 +361,18 @@ const ChatbotTest = () => {
               className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-300 hover:transform hover:-translate-y-1 mr-4 mb-4"
             >
               🔬 Inspect Widget
+            </button>
+            <button
+              onClick={testDirectAPI}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-300 hover:transform hover:-translate-y-1 mr-4 mb-4"
+            >
+              🔌 Test Direct API
+            </button>
+            <button
+              onClick={checkDomainRestriction}
+              className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-300 hover:transform hover:-translate-y-1 mr-4 mb-4"
+            >
+              🌐 Check Domain
             </button>
             <button
               onClick={openIframeChat}
