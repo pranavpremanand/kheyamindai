@@ -57,7 +57,7 @@ const ChatbotWidget = () => {
   return (
     <>
       <div
-        className="fixed z-30 bottom-32 right-8 md:right-24 group"
+        className="fixed z-30 bottom-24 right-8 md:right-24 group"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
@@ -92,8 +92,10 @@ const ChatbotWidget = () => {
 
       {/* Test Chat Interface */}
       {showTestChat && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg w-full max-w-md h-96 flex flex-col shadow-2xl">
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-end justify-end p-4">
+          <div className="bg-white rounded-lg w-full max-w-sm h-96 flex flex-col shadow-2xl mr-4 mb-20 relative">
+            {/* Arrow pointing to chatbot icon */}
+            <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white transform rotate-45 border-r border-b border-gray-200"></div>
             <div className="flex justify-between items-center p-4 border-b bg-primary text-white rounded-t-lg">
               <h3 className="font-bold">🤖 AI Assistant</h3>
               <button
