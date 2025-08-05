@@ -11,6 +11,52 @@ const ChatbotTest = () => {
     setDebugInfo(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
   };
 
+  const inspectWidget = () => {
+    addDebugInfo('🔍 Detailed widget inspection...');
+    
+    const widget = document.querySelector('[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"]');
+    if (widget) {
+      addDebugInfo(`📊 Widget details:`);
+      addDebugInfo(`   Tag: ${widget.tagName}`);
+      addDebugInfo(`   Classes: ${widget.className || 'none'}`);
+      addDebugInfo(`   ID: ${widget.id || 'none'}`);
+      addDebugInfo(`   Style display: ${widget.style.display || 'default'}`);
+      addDebugInfo(`   Style visibility: ${widget.style.visibility || 'default'}`);
+      addDebugInfo(`   Style opacity: ${widget.style.opacity || 'default'}`);
+      addDebugInfo(`   Computed display: ${getComputedStyle(widget).display}`);
+      addDebugInfo(`   Computed visibility: ${getComputedStyle(widget).visibility}`);
+      addDebugInfo(`   Computed opacity: ${getComputedStyle(widget).opacity}`);
+      addDebugInfo(`   Position: ${widget.offsetLeft}x${widget.offsetTop}, Size: ${widget.offsetWidth}x${widget.offsetHeight}`);
+      addDebugInfo(`   Children count: ${widget.children.length}`);
+      
+      // Try to make it visible
+      widget.style.display = 'block';
+      widget.style.visibility = 'visible';
+      widget.style.opacity = '1';
+      widget.style.position = 'fixed';
+      widget.style.bottom = '20px';
+      widget.style.right = '20px';
+      widget.style.zIndex = '9999';
+      widget.style.backgroundColor = 'red'; // Temporary to make it visible
+      widget.style.width = '60px';
+      widget.style.height = '60px';
+      
+      addDebugInfo('🎨 Applied visibility styles to widget');
+      
+      // Check children
+      Array.from(widget.children).forEach((child, index) => {
+        addDebugInfo(`   Child ${index}: ${child.tagName} - ${child.className || 'no class'}`);
+      });
+    } else {
+      addDebugInfo('❌ Widget element not found for inspection');
+    }
+  };
+
+  const openIframeChat = () => {
+    addDebugInfo('📱 Opening iframe chat interface...');
+    setShowIframe(true);
+  };
+
   const forceChatbotOpen = () => {
     addDebugInfo('🔧 Attempting to force open chatbot...');
     
@@ -60,52 +106,6 @@ const ChatbotTest = () => {
       }
     }
     
-
-  const inspectWidget = () => {
-    addDebugInfo('🔍 Detailed widget inspection...');
-    
-    const widget = document.querySelector('[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"]');
-    if (widget) {
-      addDebugInfo(`📊 Widget details:`);
-      addDebugInfo(`   Tag: ${widget.tagName}`);
-      addDebugInfo(`   Classes: ${widget.className || 'none'}`);
-      addDebugInfo(`   ID: ${widget.id || 'none'}`);
-      addDebugInfo(`   Style display: ${widget.style.display || 'default'}`);
-      addDebugInfo(`   Style visibility: ${widget.style.visibility || 'default'}`);
-      addDebugInfo(`   Style opacity: ${widget.style.opacity || 'default'}`);
-      addDebugInfo(`   Computed display: ${getComputedStyle(widget).display}`);
-      addDebugInfo(`   Computed visibility: ${getComputedStyle(widget).visibility}`);
-      addDebugInfo(`   Computed opacity: ${getComputedStyle(widget).opacity}`);
-      addDebugInfo(`   Position: ${widget.offsetLeft}x${widget.offsetTop}, Size: ${widget.offsetWidth}x${widget.offsetHeight}`);
-      addDebugInfo(`   Children count: ${widget.children.length}`);
-      
-      // Try to make it visible
-      widget.style.display = 'block';
-      widget.style.visibility = 'visible';
-      widget.style.opacity = '1';
-      widget.style.position = 'fixed';
-      widget.style.bottom = '20px';
-      widget.style.right = '20px';
-      widget.style.zIndex = '9999';
-      widget.style.backgroundColor = 'red'; // Temporary to make it visible
-      widget.style.width = '60px';
-      widget.style.height = '60px';
-      
-      addDebugInfo('🎨 Applied visibility styles to widget');
-      
-      // Check children
-      Array.from(widget.children).forEach((child, index) => {
-        addDebugInfo(`   Child ${index}: ${child.tagName} - ${child.className || 'no class'}`);
-      });
-    } else {
-      addDebugInfo('❌ Widget element not found for inspection');
-    }
-  };
-
-  const openIframeChat = () => {
-    addDebugInfo('📱 Opening iframe chat interface...');
-    setShowIframe(true);
-  };
     if (!found) {
       addDebugInfo('❌ No clickable widget found');
       
