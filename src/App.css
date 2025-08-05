@@ -152,6 +152,29 @@ body {
   }
 }
 
+/* Chatbot widget custom styling */
+.chatbot-widget-container {
+  z-index: 25 !important;
+}
+
+/* Ensure chatbot appears below our custom button but above other content */
+[data-embed-id] {
+  z-index: 25 !important;
+}
+
+/* Style the AnythingLLM widget to match our design */
+.anythingllm-chat-widget {
+  bottom: 180px !important; /* Position above WhatsApp button */
+  right: 32px !important;
+  z-index: 25 !important;
+}
+
+@media (min-width: 768px) {
+  .anythingllm-chat-widget {
+    right: 96px !important; /* Match md:right-24 */
+  }
+}
+
 /* Mobile-specific fixes */
 @media (max-width: 768px) {
   html {
