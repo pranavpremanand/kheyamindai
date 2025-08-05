@@ -5,35 +5,20 @@ const ChatbotWidget = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showTestChat, setShowTestChat] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Always keep the chatbot button visible
       setIsVisible(true);
     };
 
-    // Add scroll event listener
     window.addEventListener("scroll", handleScroll);
 
-    // Clean up
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const toggleChatbot = () => {
-    // Check domain restriction
-    const currentDomain = window.location.hostname;
-    const allowedDomain = 'www.kheyamind.ai';
-    const isDomainRestricted = currentDomain !== allowedDomain;
-
-    // If domain is restricted, show test chat interface
-    if (isDomainRestricted) {
-      setShowTestChat(true);
-      return;
-    }
-
     try {
       // Method 1: Use official AnythingLLM API
       if (window.AnythingLLMEmbed && typeof window.AnythingLLMEmbed.open === 'function') {
@@ -42,7 +27,16 @@ const ChatbotWidget = () => {
         return;
       }
 
+      // Method 2: Try to find and click the existing widget
+      const existingWidget = document.querySelector('[data-embed-id]');
+      if (existingWidget) {
+        existingWidget.click();
+        console.log('Clicked existing AnythingLLM widget');
+        return;
+      }
+
       // Fallback: show test chat interface
+      console.log('No AnythingLLM widget found, showing test interface');
       setShowTestChat(true);
 
     } catch (error) {
@@ -55,14 +49,10 @@ const ChatbotWidget = () => {
     setShowTestChat(false);
   };
 
-  const handleIframeLoad = () => {
-    setIsLoading(false);
-  };
-
   return (
     <>
       <div
-        className="fixed z-[1000] bottom-20 right-8 md:right-8 group"
+        className="fixed z-[1000] bottom-24 right-8 group"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
@@ -75,7 +65,6 @@ const ChatbotWidget = () => {
           }`}
         >
           Chat with our AI Assistant
-          {/* Tooltip arrow */}
           <div className="absolute bottom-0 right-4 transform translate-y-1/2 rotate-45 w-2 h-2 bg-white"></div>
         </div>
 
@@ -98,7 +87,7 @@ const ChatbotWidget = () => {
       {/* Test Chat Interface */}
       {showTestChat && (
         <div className="fixed inset-0 bg-black/30 z-[1001] flex items-end justify-end p-4">
-          <div className="bg-white rounded-lg w-full max-w-sm h-[500px] flex flex-col shadow-2xl relative border border-gray-200 mb-16 mr-4">
+          <div className="bg-white rounded-lg w-full max-w-sm h-[500px] flex flex-col shadow-2xl relative border border-gray-200 mb-20 mr-4">
             {/* Arrow pointing to chatbot icon */}
             <div className="absolute -bottom-3 right-12 w-6 h-6 bg-white transform rotate-45 border-r border-b border-gray-200"></div>
             
@@ -116,31 +105,49 @@ const ChatbotWidget = () => {
             {/* Preview notice */}
             <div className="p-3 bg-blue-50 border-b text-xs text-blue-700">
               <p>
-                <strong>Preview Mode:</strong> Testing interface
+                <strong>Debug Mode:</strong> Testing AnythingLLM integration
               </p>
             </div>
             
-            {/* Chat content */}
-            <div className="flex-1 relative">
-              {/* Loading state */}
-              {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-white">
-                  <div className="text-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
-                    <p className="text-sm text-gray-600">Loading AI Assistant...</p>
-                  </div>
+            {/* Debug info */}
+            <div className="flex-1 p-4 overflow-y-auto">
+              <div className="space-y-3 text-sm">
+                <div>
+                  <strong>AnythingLLM Status:</strong>
+                  <p className="text-gray-600">
+                    {window.AnythingLLMEmbed ? '✅ Loaded' : '❌ Not loaded'}
+                  </p>
                 </div>
-              )}
-              
-              {/* Chat iframe */}
-              <iframe
-                src="https://llm.kheyamind.ai/api/embed/b905d324-b48c-403f-bd1f-298de7708007"
-                className="w-full h-full border-0"
-                title="AI Chat Assistant"
-                onLoad={handleIframeLoad}
-                allow="microphone; camera; geolocation"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
-              />
+                
+                <div>
+                  <strong>Widget Element:</strong>
+                  <p className="text-gray-600">
+                    {document.querySelector('[data-embed-id]') ? '✅ Found' : '❌ Not found'}
+                  </p>
+                </div>
+                
+                <div>
+                  <strong>Current Domain:</strong>
+                  <p className="text-gray-600">{window.location.hostname}</p>
+                </div>
+                
+                <div>
+                  <strong>Script Source:</strong>
+                  <p className="text-gray-600 break-all">
+                    {document.querySelector('script[data-embed-id]')?.src || 'Not found'}
+                  </p>
+                </div>
+                
+                <button
+                  onClick={() => {
+                    console.log('Window.AnythingLLMEmbed:', window.AnythingLLMEmbed);
+                    console.log('Available methods:', Object.keys(window.AnythingLLMEmbed || {}));
+                  }}
+                  className="bg-blue-500 text-white px-3 py-1 rounded text-xs"
+                >
+                  Log Debug Info
+                </button>
+              </div>
             </div>
           </div>
         </div>

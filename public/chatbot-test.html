@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnythingLLM Chatbot Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        .debug-info {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: left;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .button {
+            background: #FFB703;
+            color: #003049;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+        }
+        .button:hover {
+            background: #003049;
+            color: #FFB703;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #28a745;
+            color: white;
+        }
+        .status.error {
+            background: #dc3545;
+            color: white;
+        }
+        .status.warning {
+            background: #ffc107;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 AnythingLLM Chatbot Test Page</h1>
+        <p>This page tests the AnythingLLM integration without React interference</p>
+        
+        <div class="test-section">
+            <h2>Integration Status</h2>
+            <div id="status-info">
+                <p>Loading...</p>
+            </div>
+            <button class="button" onclick="checkStatus()">Refresh Status</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>Manual Tests</h2>
+            <button class="button" onclick="testOpenChat()">Test Open Chat</button>
+            <button class="button" onclick="testCloseChat()">Test Close Chat</button>
+            <button class="button" onclick="logDebugInfo()">Log Debug Info</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>Debug Information</h2>
+            <div id="debug-output" class="debug-info">
+                Click "Log Debug Info" to see detailed information
+            </div>
+        </div>
+    </div>
+
+    <!-- AnythingLLM Script with all customizations -->
+    <script
+        data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"
+        data-base-api-url="https://llm.kheyamind.ai/api/embed"
+        data-chat-icon="support"
+        data-button-color="#FFB703"
+        data-user-bg-color="#FFB703"
+        data-assistant-bg-color="#003049"
+        data-greeting="Hello! I'm the KheyaMind AI Assistant. How can I help you today?"
+        data-assistant-name="KheyaMind AI Assistant"
+        data-position="bottom-right"
+        data-window-height="500px"
+        data-window-width="400px"
+        data-no-sponsor="true"
+        data-default-messages="What services do you offer?, How can AI help my business?, Tell me about your chatbot solutions"
+        src="https://llm.kheyamind.ai/embed/anythingllm-chat-widget.min.js"
+        async>
+    </script>
+
+    <script>
+        function checkStatus() {
+            const statusDiv = document.getElementById('status-info');
+            let html = '';
+            
+            // Check if script is loaded
+            const scriptElement = document.querySelector('script[data-embed-id]');
+            html += `<p><strong>Script Element:</strong> <span class="status ${scriptElement ? 'success' : 'error'}">${scriptElement ? 'Found' : 'Not Found'}</span></p>`;
+            
+            // Check if AnythingLLM is available
+            html += `<p><strong>AnythingLLM Object:</strong> <span class="status ${window.AnythingLLMEmbed ? 'success' : 'error'}">${window.AnythingLLMEmbed ? 'Available' : 'Not Available'}</span></p>`;
+            
+            // Check if widget is rendered
+            const widget = document.querySelector('.anythingllm-chat-widget') || document.querySelector('[class*="anythingllm"]');
+            html += `<p><strong>Widget Element:</strong> <span class="status ${widget ? 'success' : 'error'}">${widget ? 'Rendered' : 'Not Rendered'}</span></p>`;
+            
+            // Check network connectivity to the API
+            fetch('https://llm.kheyamind.ai/api/embed/b905d324-b48c-403f-bd1f-298de7708007')
+                .then(response => {
+                    html += `<p><strong>API Connectivity:</strong> <span class="status success">Connected (${response.status})</span></p>`;
+                    statusDiv.innerHTML = html;
+                })
+                .catch(error => {
+                    html += `<p><strong>API Connectivity:</strong> <span class="status error">Failed (${error.message})</span></p>`;
+                    statusDiv.innerHTML = html;
+                });
+            
+            statusDiv.innerHTML = html;
+        }
+        
+        function testOpenChat() {
+            try {
+                if (window.AnythingLLMEmbed && typeof window.AnythingLLMEmbed.open === 'function') {
+                    window.AnythingLLMEmbed.open();
+                    console.log('✅ Successfully opened chat using AnythingLLMEmbed.open()');
+                } else if (window.AnythingLLMEmbed && typeof window.AnythingLLMEmbed.toggle === 'function') {
+                    window.AnythingLLMEmbed.toggle();
+                    console.log('✅ Successfully toggled chat using AnythingLLMEmbed.toggle()');
+                } else {
+                    // Try to find and click the widget button
+                    const widgetButton = document.querySelector('.anythingllm-chat-widget button') || 
+                                       document.querySelector('[class*="anythingllm"] button') ||
+                                       document.querySelector('button[class*="chat"]');
+                    
+                    if (widgetButton) {
+                        widgetButton.click();
+                        console.log('✅ Clicked widget button');
+                    } else {
+                        console.error('❌ No method available to open chat');
+                        alert('AnythingLLM widget not found or not loaded properly');
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error opening chat:', error);
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        function testCloseChat() {
+            try {
+                if (window.AnythingLLMEmbed && typeof window.AnythingLLMEmbed.close === 'function') {
+                    window.AnythingLLMEmbed.close();
+                    console.log('✅ Successfully closed chat');
+                } else {
+                    console.log('❌ Close method not available');
+                }
+            } catch (error) {
+                console.error('❌ Error closing chat:', error);
+            }
+        }
+        
+        function logDebugInfo() {
+            const debugDiv = document.getElementById('debug-output');
+            
+            const debugInfo = {
+                'Window.AnythingLLMEmbed': window.AnythingLLMEmbed,
+                'Available Methods': window.AnythingLLMEmbed ? Object.keys(window.AnythingLLMEmbed) : 'N/A',
+                'Script Elements': Array.from(document.querySelectorAll('script[data-embed-id]')).map(s => ({
+                    src: s.src,
+                    embedId: s.getAttribute('data-embed-id'),
+                    baseApiUrl: s.getAttribute('data-base-api-url')
+                })),
+                'Widget Elements': Array.from(document.querySelectorAll('[class*="anythingllm"], .anythingllm-chat-widget')).map(el => ({
+                    className: el.className,
+                    tagName: el.tagName,
+                    id: el.id
+                })),
+                'Console Errors': 'Check browser console for any errors',
+                'Network Status': 'Check Network tab in DevTools for failed requests'
+            };
+            
+            console.log('🔍 AnythingLLM Debug Info:', debugInfo);
+            debugDiv.innerHTML = '<pre>' + JSON.stringify(debugInfo, null, 2) + '</pre>';
+        }
+        
+        // Auto-check status when page loads
+        window.addEventListener('load', function() {
+            setTimeout(checkStatus, 2000); // Wait 2 seconds for script to load
+        });
+        
+        // Listen for script load events
+        document.addEventListener('DOMContentLoaded', function() {
+            const script = document.querySelector('script[data-embed-id]');
+            if (script) {
+                script.addEventListener('load', function() {
+                    console.log('✅ AnythingLLM script loaded');
+                    setTimeout(checkStatus, 1000);
+                });
+                
+                script.addEventListener('error', function() {
+                    console.error('❌ AnythingLLM script failed to load');
+                    setTimeout(checkStatus, 1000);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
