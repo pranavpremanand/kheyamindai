@@ -1,79 +1,243 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
+/**
+ * Enhanced AI Chatbot Widget Component
+ * 
+ * Features:
+ * - Modern AI robot icon with animated gradient button
+ * - Blue/purple AI-themed color scheme with gradients
+ * - Smooth hover effects and pulse animations
+ * - Enhanced messaging with AI-focused copy
+ * - Improved accessibility and user experience
+ * - Custom styling for all chat elements (messages, input, scrollbar)
+ * - Integration ready for AnythingLLM AI responses
+ * 
+ * @returns {null} Component renders via AnythingLLM script injection
+ */
 const ChatbotWidget = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
-    // Create and inject the AnythingLLM script with custom styling
+    // Track widget loading for analytics
+    const handleWidgetLoad = () => {
+      setIsLoaded(true);
+      // Optional: Track AI widget interaction analytics
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'ai_widget_loaded', {
+          'event_category': 'AI_Interaction',
+          'event_label': 'ChatWidget'
+        });
+      }
+    };
+    // Create and inject the AnythingLLM script with enhanced AI styling
     const script = document.createElement('script');
     script.setAttribute('data-embed-id', 'b905d324-b48c-403f-bd1f-298de7708007');
     script.setAttribute('data-base-api-url', 'https://llm.kheyamind.ai/api/embed');
     
-    // Custom branding and styling
+    // Enhanced AI branding and styling with modern gradients
     script.setAttribute('data-chat-icon', 'robot');
-    script.setAttribute('data-button-color', '#FFB703'); // Primary color
-    script.setAttribute('data-user-bg-color', '#FFB703'); // Primary color
-    script.setAttribute('data-assistant-bg-color', '#003049'); // Secondary color
+    script.setAttribute('data-button-color', 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'); // AI gradient
+    script.setAttribute('data-user-bg-color', '#667eea'); // Modern blue
+    script.setAttribute('data-assistant-bg-color', '#4c63d2'); // Deeper AI blue
     script.setAttribute('data-brand-image-url', 'https://www.kheyamind.ai/logo.png');
-    script.setAttribute('data-greeting', 'Hello! I\'m your KheyaMind AI assistant. How can I help you today?');
+    script.setAttribute('data-greeting', '🤖 Welcome to KheyaMind AI! I\'m your intelligent assistant, ready to help with AI solutions, chatbots, voice AI, and automation. How can I assist you today?');
     script.setAttribute('data-assistant-name', 'KheyaMind AI Assistant');
     script.setAttribute('data-position', 'bottom-right');
-    script.setAttribute('data-window-height', '600px');
-    script.setAttribute('data-window-width', '400px');
-    script.setAttribute('data-text-size', '14');
-    script.setAttribute('data-send-message-text', 'Ask KheyaMind AI...');
-    script.setAttribute('data-reset-chat-text', 'Start New Conversation');
+    script.setAttribute('data-window-height', '650px');
+    script.setAttribute('data-window-width', '420px');
+    script.setAttribute('data-text-size', '15');
+    script.setAttribute('data-send-message-text', '🚀 Ask our AI anything...');
+    script.setAttribute('data-reset-chat-text', '🔄 Start Fresh Conversation');
     script.setAttribute('data-support-email', 'hello@kheyamind.ai');
     script.setAttribute('data-no-sponsor', 'true');
     
     script.src = 'https://llm.kheyamind.ai/embed/anythingllm-chat-widget.min.js';
+    script.addEventListener('load', handleWidgetLoad);
     
-    // Add custom CSS for additional styling
+    // Add enhanced custom CSS for modern AI styling
     const customStyle = document.createElement('style');
     customStyle.textContent = `
-      /* Custom styling for AnythingLLM widget */
+      /* Enhanced AI-focused styling for AnythingLLM widget */
       [data-embed-id] {
-        z-index: 999 !important;
+        z-index: 1000 !important;
       }
       
-      /* Position the chat button above WhatsApp */
+      /* Modern AI chat button styling with gradient and animations */
       [data-embed-id] > div:first-child {
         bottom: 80px !important;
         right: 20px !important;
-        z-index: 999 !important;
+        z-index: 1000 !important;
+        position: fixed !important;
       }
       
-      /* Custom chat window styling */
+      /* AI Robot Button Enhanced Styling */
+      [data-embed-id] .chat-button, 
+      [data-embed-id] button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none !important;
+        border-radius: 50% !important;
+        width: 60px !important;
+        height: 60px !important;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        position: relative !important;
+        overflow: hidden !important;
+      }
+      
+      /* Hover effects for AI button */
+      [data-embed-id] .chat-button:hover,
+      [data-embed-id] button:hover {
+        transform: translateY(-3px) scale(1.05) !important;
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6) !important;
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
+      }
+      
+      /* AI pulse animation */
+      [data-embed-id] .chat-button::before,
+      [data-embed-id] button::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        border-radius: 50% !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        opacity: 0.7 !important;
+        animation: ai-pulse 2s infinite !important;
+        z-index: -1 !important;
+      }
+      
+      @keyframes ai-pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 0.3;
+        }
+        100% {
+          transform: scale(1.4);
+          opacity: 0;
+        }
+      }
+      
+      /* Modern AI chat window styling */
       [data-embed-id] .chat-window {
-        border: 2px solid #FFB703 !important;
-        border-radius: 12px !important;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+        border: 2px solid transparent !important;
+        background: linear-gradient(white, white) padding-box, linear-gradient(135deg, #667eea, #764ba2) border-box !important;
+        border-radius: 16px !important;
+        box-shadow: 0 20px 60px rgba(102, 126, 234, 0.25) !important;
+        backdrop-filter: blur(20px) !important;
+        overflow: hidden !important;
       }
       
-      /* Custom header styling */
+      /* AI-themed header with gradient */
       [data-embed-id] .chat-header {
-        background: linear-gradient(135deg, #FFB703 0%, #003049 100%) !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
         color: white !important;
+        padding: 20px 16px !important;
+        border-bottom: none !important;
+        position: relative !important;
       }
       
-      /* Custom input styling */
+      /* AI header effects */
+      [data-embed-id] .chat-header::after {
+        content: '🤖' !important;
+        position: absolute !important;
+        right: 16px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        font-size: 20px !important;
+        animation: ai-glow 3s ease-in-out infinite !important;
+      }
+      
+      @keyframes ai-glow {
+        0%, 100% { 
+          filter: brightness(1) drop-shadow(0 0 5px rgba(255,255,255,0.5)); 
+        }
+        50% { 
+          filter: brightness(1.3) drop-shadow(0 0 10px rgba(255,255,255,0.8)); 
+        }
+      }
+      
+      /* Enhanced input styling with AI focus */
       [data-embed-id] .chat-input {
-        border: 1px solid #FFB703 !important;
-        border-radius: 8px !important;
+        border: 2px solid transparent !important;
+        background: linear-gradient(white, white) padding-box, linear-gradient(135deg, #667eea, #764ba2) border-box !important;
+        border-radius: 12px !important;
+        padding: 12px 16px !important;
+        font-size: 15px !important;
+        transition: all 0.3s ease !important;
       }
       
-      /* Custom send button */
+      [data-embed-id] .chat-input:focus {
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.3) !important;
+        transform: scale(1.02) !important;
+      }
+      
+      /* AI send button with gradient */
       [data-embed-id] .send-button {
-        background-color: #FFB703 !important;
-        color: #003049 !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 10px !important;
+        padding: 10px 16px !important;
+        transition: all 0.3s ease !important;
+        font-weight: 600 !important;
       }
       
-      /* Custom scrollbar */
+      [data-embed-id] .send-button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
+      }
+      
+      /* AI message bubbles styling */
+      [data-embed-id] .assistant-message {
+        background: linear-gradient(135deg, #f8f9ff 0%, #e8eaff 100%) !important;
+        border: 1px solid #e0e4ff !important;
+        border-radius: 18px 18px 18px 4px !important;
+        position: relative !important;
+      }
+      
+      [data-embed-id] .user-message {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        border-radius: 18px 18px 4px 18px !important;
+      }
+      
+      /* Enhanced scrollbar with AI theme */
       [data-embed-id] .chat-messages::-webkit-scrollbar {
-        width: 6px !important;
+        width: 8px !important;
+      }
+      
+      [data-embed-id] .chat-messages::-webkit-scrollbar-track {
+        background: #f1f3ff !important;
+        border-radius: 4px !important;
       }
       
       [data-embed-id] .chat-messages::-webkit-scrollbar-thumb {
-        background-color: #FFB703 !important;
-        border-radius: 3px !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border-radius: 4px !important;
+        transition: all 0.3s ease !important;
+      }
+      
+      [data-embed-id] .chat-messages::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
+      }
+      
+      /* AI typing indicator enhancement */
+      [data-embed-id] .typing-indicator {
+        background: linear-gradient(135deg, #f8f9ff 0%, #e8eaff 100%) !important;
+        border: 1px solid #e0e4ff !important;
+        border-radius: 18px !important;
+        padding: 12px 16px !important;
+      }
+      
+      [data-embed-id] .typing-dots {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
       }
     `;
     
@@ -81,6 +245,11 @@ const ChatbotWidget = () => {
     document.head.appendChild(customStyle);
     document.head.appendChild(script);
     
+    // Add performance optimization and error handling
+    script.onerror = () => {
+      console.warn('KheyaMind AI Widget failed to load');
+    };
+
     // Cleanup function to remove script when component unmounts
     return () => {
       if (customStyle.parentNode) {
@@ -89,10 +258,12 @@ const ChatbotWidget = () => {
       if (script.parentNode) {
         script.parentNode.removeChild(script);
       }
+      script.removeEventListener('load', handleWidgetLoad);
     };
   }, []);
 
-  // This component doesn't render anything visible - the AnythingLLM script handles the UI
+  // Component renders null - AnythingLLM script handles the UI injection
+  // The isLoaded state can be used for conditional rendering or analytics
   return null;
 };
 
