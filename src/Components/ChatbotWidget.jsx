@@ -64,9 +64,9 @@ const ChatbotWidget = () => {
       
       /* Modern AI chat button styling with gradient and animations */
       [data-embed-id] > div:first-child {
-        bottom: 80px !important;
+        bottom: 160px !important;
         right: 20px !important;
-        z-index: 1000 !important;
+        z-index: 999 !important;
         position: fixed !important;
       }
       
@@ -76,49 +76,84 @@ const ChatbotWidget = () => {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
         border: none !important;
         border-radius: 50% !important;
-        width: 60px !important;
-        height: 60px !important;
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4) !important;
+        width: 64px !important;
+        height: 64px !important;
+        box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4) !important;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         position: relative !important;
-        overflow: hidden !important;
+        overflow: visible !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: white !important;
+        font-size: 24px !important;
+      }
+      
+      /* Replace any existing icon content with a robot emoji/icon */
+      [data-embed-id] .chat-button:before, 
+      [data-embed-id] button:before {
+        content: '🤖' !important;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        font-size: 28px !important;
+        z-index: 10 !important;
+        pointer-events: none !important;
+        filter: brightness(1.1) drop-shadow(0 2px 4px rgba(0,0,0,0.1)) !important;
+      }
+      
+      /* Hide any default icons that might be showing */
+      [data-embed-id] .chat-button svg,
+      [data-embed-id] button svg,
+      [data-embed-id] .chat-button img,
+      [data-embed-id] button img {
+        display: none !important;
       }
       
       /* Hover effects for AI button */
       [data-embed-id] .chat-button:hover,
       [data-embed-id] button:hover {
-        transform: translateY(-3px) scale(1.05) !important;
-        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6) !important;
+        transform: translateY(-4px) scale(1.08) !important;
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6) !important;
         background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
       }
       
+      /* Enhanced hover effect for the robot icon */
+      [data-embed-id] .chat-button:hover:before,
+      [data-embed-id] button:hover:before {
+        transform: translate(-50%, -50%) scale(1.1) !important;
+        filter: brightness(1.3) drop-shadow(0 4px 8px rgba(0,0,0,0.2)) !important;
+      }
+      
       /* AI pulse animation */
-      [data-embed-id] .chat-button::before,
-      [data-embed-id] button::before {
+      [data-embed-id] .chat-button::after,
+      [data-embed-id] button::after {
         content: '' !important;
         position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
+        top: -2px !important;
+        left: -2px !important;
+        right: -2px !important;
+        bottom: -2px !important;
         border-radius: 50% !important;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        opacity: 0.7 !important;
-        animation: ai-pulse 2s infinite !important;
+        opacity: 0.6 !important;
+        animation: ai-pulse 3s ease-in-out infinite !important;
         z-index: -1 !important;
+        pointer-events: none !important;
       }
       
       @keyframes ai-pulse {
         0% {
           transform: scale(1);
-          opacity: 0.7;
+          opacity: 0.6;
         }
         50% {
-          transform: scale(1.2);
-          opacity: 0.3;
+          transform: scale(1.3);
+          opacity: 0.2;
         }
         100% {
-          transform: scale(1.4);
+          transform: scale(1.6);
           opacity: 0;
         }
       }
@@ -149,8 +184,9 @@ const ChatbotWidget = () => {
         right: 16px !important;
         top: 50% !important;
         transform: translateY(-50%) !important;
-        font-size: 20px !important;
-        animation: ai-glow 3s ease-in-out infinite !important;
+        font-size: 22px !important;
+        animation: ai-glow 4s ease-in-out infinite !important;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)) !important;
       }
       
       @keyframes ai-glow {
