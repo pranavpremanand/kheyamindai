@@ -199,11 +199,11 @@ export const services = [
     slug: "ai-chatbots",
     seo: {
       title:
-        "AI Chatbots for Business | 24/7 Customer Support Automation | KheyaMind AI",
+        "AI Chatbots for Business | Conversational AI & Customer Support Automation | KheyaMind AI",
       description:
-        "Automate customer support with intelligent AI chatbots. Handle queries, generate leads, and enhance customer experience 24/7. Get your AI chatbot today.",
+        "Deploy intelligent AI chatbots for automated customer support, lead generation, and 24/7 service. Advanced conversational AI with multi-channel deployment, NLP, and CRM integration. Reduce support costs by 75%.",
       keywords:
-        "AI chatbots, customer support automation, chatbot development, business chatbots, conversational AI",
+        "AI chatbots for business, conversational AI platform, customer support automation, intelligent virtual assistants, chatbot development services, automated customer service, AI-powered customer support, natural language processing chatbots, multi-channel chatbots, enterprise chatbot solutions",
       canonicalUrl: "https://www.kheyamind.ai/services/ai-chatbots",
     },
     detailsPage: {
@@ -297,11 +297,11 @@ export const services = [
     slug: "voice-ai-agents",
     seo: {
       title:
-        "Voice AI Agents | AI-Powered Sales & Call Center Solutions | KheyaMind AI",
+        "Voice AI Agents | AI Phone Systems & Call Center Automation | KheyaMind AI",
       description:
-        "Transform call center operations with human-like voice AI agents. Automate sales calls, customer support, and lead qualification with advanced voice AI.",
+        "Deploy human-like voice AI agents for call center automation, sales calls, and customer support. Advanced AI phone systems with natural language processing, lead qualification, and 24/7 availability. Reduce operational costs by 90%.",
       keywords:
-        "voice AI agents, AI voice assistants, call center automation, sales automation, voice AI technology",
+        "voice AI agents, AI phone systems, call center automation, AI voice assistants, sales automation AI, automated phone calls, voice AI technology, AI call center solutions, intelligent phone agents, business phone automation",
       canonicalUrl: "https://www.kheyamind.ai/services/voice-ai-agents",
     },
     detailsPage: {
@@ -395,11 +395,11 @@ export const services = [
     slug: "nlp-custom-gpt-solutions",
     seo: {
       title:
-        "Custom GPT Development | NLP Solutions | Enterprise AI | KheyaMind AI",
+        "Custom GPT Development | NLP Solutions & Document Processing AI | KheyaMind AI",
       description:
-        "Build domain-specific AI with custom GPT solutions. Advanced NLP for document processing, content generation, and intelligent business automation.",
+        "Build enterprise-grade custom GPT solutions for document processing, knowledge management, and content generation. Advanced NLP technology with 1400+ document formats, semantic search, and intelligent automation. SOC2 compliant.",
       keywords:
-        "custom GPT development, NLP solutions, natural language processing, enterprise AI, document AI, content AI",
+        "custom GPT development, NLP solutions, document processing AI, natural language processing services, enterprise AI solutions, custom AI development, semantic search AI, intelligent document processing, knowledge management AI, content generation AI",
       canonicalUrl:
         "https://www.kheyamind.ai/services/nlp-custom-gpt-solutions",
     },
@@ -492,11 +492,11 @@ export const services = [
     slug: "ai-powered-erp-tools",
     seo: {
       title:
-        "AI-Powered ERP Systems | Smart Enterprise Resource Planning | KheyaMind AI",
+        "AI-Powered ERP Systems | Enterprise Resource Planning Automation | KheyaMind AI",
       description:
-        "Enhance enterprise systems with AI-powered ERP tools. Automate procurement, demand forecasting, and process optimization for maximum efficiency.",
+        "Transform enterprise operations with AI-powered ERP systems. Intelligent automation for supply chain, demand forecasting, procurement, and process optimization. Increase productivity by 30% with predictive analytics and autonomous operations.",
       keywords:
-        "AI ERP systems, enterprise resource planning, ERP automation, intelligent ERP, business process automation",
+        "AI-powered ERP systems, enterprise resource planning automation, intelligent ERP solutions, supply chain AI, ERP automation tools, predictive analytics ERP, autonomous ERP operations, enterprise AI automation, smart ERP systems, AI supply chain management",
       canonicalUrl: "https://www.kheyamind.ai/services/ai-powered-erp-tools",
     },
     detailsPage: {
@@ -589,11 +589,11 @@ export const services = [
     slug: "cloud-devops-ai",
     seo: {
       title:
-        "AI-Optimized Cloud Infrastructure | DevOps Automation | KheyaMind AI",
+        "AI-Optimized Cloud Infrastructure | DevOps Automation & MLOps | KheyaMind AI",
       description:
-        "Deploy AI-optimized cloud infrastructure with intelligent DevOps automation. Streamline deployment pipelines and reduce operational costs efficiently.",
+        "Deploy AI-optimized cloud infrastructure with intelligent DevOps automation. Advanced MLOps pipelines, predictive scaling, automated deployment, and intelligent monitoring. Reduce operational costs and accelerate delivery by 217%.",
       keywords:
-        "cloud DevOps AI, infrastructure automation, cloud optimization, DevOps consulting, AI deployment, cloud migration",
+        "AI cloud infrastructure, DevOps automation, MLOps pipelines, cloud infrastructure automation, intelligent deployment pipelines, AI DevOps tools, predictive cloud scaling, infrastructure as code AI, automated CI/CD pipelines, cloud optimization AI",
       canonicalUrl: "https://www.kheyamind.ai/services/cloud-devops-ai",
     },
     detailsPage: {
@@ -685,11 +685,11 @@ export const services = [
     slug: "ai-interface-design",
     seo: {
       title:
-        "AI Interface Design | Intelligent UI/UX for AI Applications | KheyaMind AI",
+        "AI Interface Design | Intelligent UI/UX & Conversational Design | KheyaMind AI",
       description:
-        "Create intuitive AI interfaces with specialized UI/UX design. Build user-friendly AI applications that deliver exceptional user experiences.",
+        "Design intuitive AI interfaces and conversational UI/UX for complex AI applications. Specialized design for chatbots, voice AI, and intelligent systems. Create user-friendly AI experiences that increase engagement and adoption.",
       keywords:
-        "AI interface design, AI UX design, intelligent UI, AI application design, user experience AI, conversational UI",
+        "AI interface design, conversational UI design, AI UX design, intelligent user interfaces, AI application design, chatbot UI design, voice AI interface, user experience design AI, AI dashboard design, interactive AI design",
       canonicalUrl: "https://www.kheyamind.ai/services/ai-interface-design",
     },
     detailsPage: {
@@ -781,11 +781,11 @@ export const services = [
     slug: "mobile-app-development",
     seo: {
       title:
-        "AI-Powered Mobile App Development | iOS & Android Apps | KheyaMind AI",
+        "AI-Powered Mobile App Development | Smart iOS & Android Apps | KheyaMind AI",
       description:
-        "Build intelligent mobile applications with embedded AI. Custom iOS and Android apps for real estate, HR, and productivity solutions with AI features.",
+        "Build intelligent mobile applications with embedded AI for iOS and Android. Custom apps with machine learning, computer vision, and natural language processing. Enterprise mobile solutions for real estate, HR, and productivity with AI features.",
       keywords:
-        "AI mobile app development, intelligent mobile apps, iOS app development, Android app development, AI-powered apps",
+        "AI mobile app development, intelligent mobile apps, iOS app development AI, Android app development AI, AI-powered mobile apps, machine learning mobile apps, enterprise mobile app development, cross-platform AI apps, mobile AI solutions, smart mobile applications",
       canonicalUrl: "https://www.kheyamind.ai/services/mobile-app-development",
     },
     detailsPage: {
