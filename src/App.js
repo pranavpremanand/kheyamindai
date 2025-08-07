@@ -3,7 +3,6 @@ import "./App.css";
 import { LandingPageLayout, MainLayout } from "./Layout";
 import ScrollToTopButton from "./Components/ScrollToTopButton";
 import WhatsAppButton from "./Components/WhatsAppButton";
-import ChatbotWidget from "./Components/ChatbotWidget";
 import SpinnerContextProvider from "./Components/SpinnerContext";
 import { Suspense, lazy, useEffect } from "react";
 import { LoadingSpinner } from "./Components/LoadingSpinner";
@@ -84,7 +83,6 @@ function App() {
         <BrowserRouter>
           <GlobalCanonical />
           <ScrollToTopButton />
-          <ChatbotWidget />
           <WhatsAppButton phoneNumber="919163885060" message="Hello! I'm interested in your AI services." />
           <ScrollToTop />
           <Suspense fallback={null}>
