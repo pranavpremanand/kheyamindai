@@ -30,7 +30,15 @@ export const generateCanonicalUrl = (path) => {
   if (normalizedPath.includes('/services/cloud-devops.ai')) {
     normalizedPath = '/services/cloud-devops-ai';
   } else if (normalizedPath.includes('/services/voice.ai-agents')) {
+    normalizedPath = '/services/voice-ai-agents';
   }
+  
+  // Ensure path starts with /
+  if (!normalizedPath.startsWith('/')) {
+    normalizedPath = '/' + normalizedPath;
+  }
+  
+  return BASE_URL + normalizedPath;
 }
 
 /**

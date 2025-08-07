@@ -17,9 +17,9 @@ const AboutUs = () => {
     <>
       <SEO
         type="about"
-        title="About KheyaMind AI Technologies | AI Solutions Company"
-        description="Learn about KheyaMind AI Technologies, a boutique AI consulting and solutions company specializing in AI-driven automation and digital products."
-        keywords="About KheyaMind, AI Company, AI Solutions, Company History, AI Vision, AI Mission"
+        title="About KheyaMind AI | Leading AI Consulting & Enterprise Solutions Company"
+        description="KheyaMind AI is a boutique AI consulting company specializing in enterprise AI solutions, business automation, and AI implementation services. Learn about our vision to transform businesses globally with innovative AI technologies."
+        keywords="AI consulting company, enterprise AI solutions, business automation company, AI implementation services, artificial intelligence consulting, machine learning company, AI transformation, custom AI development"
         image={banner}
         url="https://www.kheyamind.ai/about-us"
       />

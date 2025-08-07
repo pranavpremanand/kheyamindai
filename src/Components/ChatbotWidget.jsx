@@ -15,9 +15,13 @@ import React, { useEffect, useState } from "react";
  * @returns {null} Component renders via AnythingLLM script injection
  */
 const ChatbotWidget = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
+  // CHATBOT DISABLED - Only WhatsApp widget will be active
+  return null;
 
-  useEffect(() => {
+  // Commented out for Phase 1 SEO implementation
+  // const [isLoaded, setIsLoaded] = useState(false);
+
+  // useEffect(() => {
     // Track widget loading for analytics
     const handleWidgetLoad = () => {
       setIsLoaded(true);

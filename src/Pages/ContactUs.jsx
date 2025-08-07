@@ -14,9 +14,9 @@ const ContactUs = () => {
     <>
       <SEO 
         type="contact"
-        title="Contact Us | Get in Touch with KheyaMind AI Technologies"
-        description="Contact KheyaMind AI for AI chatbots, voice assistants, and automation solutions. Get expert consultation and transform your business with AI technology."
-        keywords="contact KheyaMind AI, AI consultation, chatbot development contact, voice AI contact, business automation inquiry"
+        title="Contact KheyaMind AI | AI Consulting Services & Enterprise Solutions"
+        description="Contact KheyaMind AI for expert AI consulting services, enterprise AI solutions, and business automation. Get free consultation for AI chatbots, voice AI, and custom AI development projects in India and globally."
+        keywords="AI consulting services contact, enterprise AI solutions inquiry, business automation consultation, AI implementation contact, machine learning consulting, custom AI development inquiry, AI transformation services"
         url="https://www.kheyamind.ai/contact-us"
         image={banner}
         pageData={{

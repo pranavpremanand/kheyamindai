@@ -45,9 +45,9 @@ const Home = () => {
     <div className="pt-[4rem] sm:pt-[5rem] relative z-[1]">
       <SEO
         type="home"
-        title="AI Chatbots, Voice Assistants & Automation Solutions | KheyaMind AI Technologies"
-        description="KheyaMind AI crafts intelligent solutions including AI Chatbots, Voice Assistants, ERP Automations, and NLP tools. Empower your enterprise with next-gen AI solutions."
-        keywords="AI Solutions, Chatbots, Voice AI, ERP Automation, NLP, AI Company India, AI Development, Business Automation"
+        title="AI Consulting Services | Enterprise AI Solutions & Business Automation | KheyaMind AI"
+        description="Leading AI consulting company offering enterprise AI solutions, custom chatbot development, voice AI agents, and business process automation. Transform your business with intelligent AI automation services in India, UAE, and globally."
+        keywords="AI consulting services, enterprise AI solutions, AI automation services, business process automation, AI chatbot development, voice AI solutions, machine learning consulting, custom AI development, AI implementation, artificial intelligence consulting"
         pageData={{
           faqs: [
             {
