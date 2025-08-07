@@ -98,7 +98,57 @@ const ChatbotWidget = () => {
         text-indent: -9999px !important; /* Hide any text content */
       }
       
-      /* Force robot icon to show - using ::after for better compatibility */
+      /* Ultra-aggressive content hiding - target all possible elements */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button *,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button *,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button span,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button span,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button div,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button div {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+      }
+      
+      /* Hide SVG icons and all graphics */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] svg,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] img,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] icon,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .icon,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button svg,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button img {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+      
+      /* Force empty button content and add robot via multiple methods */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button {
+        text-align: center !important;
+      }
+      
+      /* Method 1: ::before pseudo-element with robot */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button::before {
+        content: '' !important;
+        position: absolute !important;
+        top: -2px !important;
+        left: -2px !important;
+        right: -2px !important;
+        bottom: -2px !important;
+        border-radius: 50% !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        opacity: 0.4 !important;
+        animation: ai-pulse 3s ease-in-out infinite !important;
+        z-index: -1 !important;
+        pointer-events: none !important;
+      }
+      
+      /* Method 2: ::after pseudo-element with robot icon */
       div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button::after,
       div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button::after {
         content: '🤖' !important;
@@ -107,26 +157,14 @@ const ChatbotWidget = () => {
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
         font-size: 28px !important;
-        z-index: 10 !important;
+        z-index: 100 !important;
         pointer-events: none !important;
         filter: brightness(1.1) drop-shadow(0 2px 4px rgba(0,0,0,0.1)) !important;
         display: block !important;
         text-indent: 0 !important;
         line-height: 1 !important;
-      }
-      
-      /* Aggressively hide any default content */
-      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button *,
-      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button * {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-      }
-      
-      /* Hide SVG icons specifically */
-      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] svg {
-        display: none !important;
-        visibility: hidden !important;
+        font-weight: normal !important;
+        font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif !important;
       }
       
       /* Hover effects with high specificity */
@@ -142,23 +180,6 @@ const ChatbotWidget = () => {
       div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button:hover::after {
         transform: translate(-50%, -50%) scale(1.1) !important;
         filter: brightness(1.3) drop-shadow(0 4px 8px rgba(0,0,0,0.2)) !important;
-      }
-      
-      /* AI pulse animation using ::before to avoid conflict with icon */
-      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button::before,
-      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button::before {
-        content: '' !important;
-        position: absolute !important;
-        top: -2px !important;
-        left: -2px !important;
-        right: -2px !important;
-        bottom: -2px !important;
-        border-radius: 50% !important;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        opacity: 0.4 !important;
-        animation: ai-pulse 3s ease-in-out infinite !important;
-        z-index: -1 !important;
-        pointer-events: none !important;
       }
       
       @keyframes ai-pulse {
@@ -184,6 +205,22 @@ const ChatbotWidget = () => {
         box-shadow: 0 20px 60px rgba(102, 126, 234, 0.25) !important;
         backdrop-filter: blur(20px) !important;
         overflow: hidden !important;
+        z-index: 1001 !important;
+      }
+      
+      /* When chat window is open, hide WhatsApp button to prevent overlap */
+      body:has(div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-window) .fixed.bottom-24.right-8,
+      body:has(div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"][style*="block"]) .fixed.bottom-24.right-8 {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transform: translateX(100px) !important;
+        transition: all 0.3s ease !important;
+      }
+      
+      /* Alternative approach: Move WhatsApp button when chat is open */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] ~ * .fixed.bottom-24.right-8 {
+        transform: translateY(-100px) !important;
+        transition: transform 0.3s ease !important;
       }
       
       /* AI-themed header with gradient */
@@ -332,17 +369,96 @@ const ChatbotWidget = () => {
                   customStyle.parentNode.removeChild(customStyle);
                 }
                 document.head.appendChild(customStyle);
+                
+                // Handle WhatsApp button overlap
+                handleWhatsAppButtonOverlap();
+                
+                // Force robot icon to show
+                forceRobotIcon();
               }, 100);
             }
           }
         });
+        
+        // Check for chat window opening/closing
+        const chatWindow = document.querySelector('[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-window');
+        if (chatWindow) {
+          handleWhatsAppButtonOverlap();
+        }
       });
     });
+    
+    // Function to handle WhatsApp button overlap
+    const handleWhatsAppButtonOverlap = () => {
+      const chatWindow = document.querySelector('[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-window');
+      const whatsappButton = document.querySelector('.fixed.bottom-24.right-8') || 
+                           document.querySelector('[class*="bottom-24"][class*="right-8"]');
+      
+      if (whatsappButton) {
+        if (chatWindow && chatWindow.style.display !== 'none') {
+          // Chat is open - hide or move WhatsApp button
+          whatsappButton.style.transform = 'translateX(100px)';
+          whatsappButton.style.opacity = '0';
+          whatsappButton.style.pointerEvents = 'none';
+          whatsappButton.style.transition = 'all 0.3s ease';
+        } else {
+          // Chat is closed - restore WhatsApp button
+          whatsappButton.style.transform = '';
+          whatsappButton.style.opacity = '';
+          whatsappButton.style.pointerEvents = '';
+        }
+      }
+    };
+    
+    // Function to aggressively force robot icon to show
+    const forceRobotIcon = () => {
+      const chatButtons = document.querySelectorAll('[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button, [data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button');
+      
+      chatButtons.forEach(button => {
+        // Clear all inner content
+        const children = button.querySelectorAll('*');
+        children.forEach(child => {
+          child.style.display = 'none';
+          child.style.visibility = 'hidden';
+          child.style.opacity = '0';
+        });
+        
+        // Set button text content to empty and add data attribute
+        button.innerHTML = '';
+        button.textContent = '';
+        button.setAttribute('data-custom-icon', 'robot');
+        
+        // Force styles
+        button.style.fontSize = '0';
+        button.style.textIndent = '-9999px';
+        button.style.position = 'relative';
+        
+        // Add robot emoji directly via text content as fallback
+        if (!button.querySelector('::after')) {
+          button.setAttribute('aria-label', '🤖 AI Assistant');
+          button.title = '🤖 AI Assistant';
+        }
+      });
+    };
     
     observer.observe(document.body, {
       childList: true,
       subtree: true
     });
+    
+    // Continuous monitoring to ensure our customizations stick
+    const monitoringInterval = setInterval(() => {
+      const chatButton = document.querySelector('[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button');
+      if (chatButton && (chatButton.textContent.includes('+') || chatButton.innerHTML.includes('+'))) {
+        forceRobotIcon();
+        // Re-apply styles if needed
+        if (customStyle.parentNode) {
+          customStyle.parentNode.removeChild(customStyle);
+        }
+        document.head.appendChild(customStyle);
+      }
+      handleWhatsAppButtonOverlap();
+    }, 1000); // Check every second
     
     // Add performance optimization and error handling
     script.onerror = () => {
@@ -352,6 +468,7 @@ const ChatbotWidget = () => {
     // Cleanup function to remove script when component unmounts
     return () => {
       observer.disconnect();
+      clearInterval(monitoringInterval);
       if (customStyle.parentNode) {
         customStyle.parentNode.removeChild(customStyle);
       }
