@@ -50,6 +50,15 @@ const ChatbotWidget = () => {
     script.setAttribute('data-support-email', 'hello@kheyamind.ai');
     script.setAttribute('data-no-sponsor', 'true');
     
+    // Additional whitelabeling attributes
+    script.setAttribute('data-brand-name', 'KheyaMind AI');
+    script.setAttribute('data-brand-logo', 'https://www.kheyamind.ai/logo.png');
+    script.setAttribute('data-chat-icon', 'robot');
+    script.setAttribute('data-title', 'KheyaMind AI Assistant');
+    script.setAttribute('data-subtitle', 'Your Intelligent AI Companion');
+    script.setAttribute('data-powered-by', 'false');
+    script.setAttribute('data-show-brand', 'true');
+    
     script.src = 'https://llm.kheyamind.ai/embed/anythingllm-chat-widget.min.js';
     script.addEventListener('load', handleWidgetLoad);
     
@@ -331,6 +340,70 @@ const ChatbotWidget = () => {
       
       [data-embed-id] .typing-dots {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+      }
+      
+      /* WHITELABELING AND BRANDING OVERRIDES */
+      
+      /* Hide AnythingLLM branding and replace with KheyaMind AI */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [class*="anythingllm"],
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [data-text*="anythingllm"],
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [alt*="anythingllm"],
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [title*="anythingllm"] {
+        display: none !important;
+        visibility: hidden !important;
+      }
+      
+      /* Replace AnythingLLM text with KheyaMind AI */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [class*="brand"],
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [class*="title"],
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [class*="header"] h1,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [class*="header"] h2,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [class*="header"] h3 {
+        font-family: inherit !important;
+      }
+      
+      /* Custom logo styling */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [class*="logo"],
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [class*="brand-image"],
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] img[src*="logo"] {
+        max-width: 120px !important;
+        max-height: 40px !important;
+        object-fit: contain !important;
+      }
+      
+      /* Force button color override with higher specificity */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [role="button"],
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-toggle,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .open-button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        background-color: #667eea !important;
+        border: none !important;
+      }
+      
+      /* Remove powered by text */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [class*="powered"],
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [class*="sponsor"],
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [class*="footer"] small,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] [class*="attribution"] {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        overflow: hidden !important;
+      }
+      
+      /* Ensure header shows KheyaMind branding */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-header [class*="brand-name"],
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-header [class*="title"] {
+        color: white !important;
+        font-weight: 600 !important;
+      }
+      
+      /* Additional button styling reinforcement */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] > div:first-child button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        background-color: #667eea !important;
+        box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4) !important;
       }
     `;
     
