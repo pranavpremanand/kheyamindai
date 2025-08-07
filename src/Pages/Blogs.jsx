@@ -1,14 +1,20 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import banner from "../assets/images/banners/blogs.webp";
 import PageBanner from "../Components/Website/PageBanner";
 import BlogItem from "../Components/Website/BlogItem";
 import HrLine from "../Components/HrLine";
 import ContactForm from "../Components/ContactForm";
 import FancyLoader from "../Components/FancyLoader";
-import { useBlogsPaginated } from "../hooks/useBlogs";
+import { useBlogsPaginated, useBlogs } from "../hooks/useBlogs";
 import SEO from "../Components/SEO/SEO";
 
 const Blogs = () => {
+  // Get total count first (lightweight call to get just the count)
+  const { data: allBlogsData } = useBlogs({ 
+    select: (data) => ({ totalBlogs: data?.blogs?.length || 0 }),
+    staleTime: 10 * 60 * 1000 // Cache for 10 minutes
+  });
+
   // Use the paginated hook with 6 blogs per page for optimal performance
   const {
     data,
@@ -25,8 +31,8 @@ const Blogs = () => {
     return data?.pages?.flatMap(page => page.blogs) || [];
   }, [data]);
 
-  // Get total count for SEO and display purposes
-  const totalBlogs = data?.pages?.[0]?.totalBlogs || 0;
+  // Get total count from the dedicated query for accurate count
+  const totalBlogs = allBlogsData?.totalBlogs || 0;
 
   return (
     <>
