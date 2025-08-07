@@ -18,8 +18,8 @@ const ChatbotWidget = () => {
   // CHATBOT DISABLED - Only WhatsApp widget will be active
   return null;
 
-  // Commented out for Phase 1 SEO implementation
-  // const [isLoaded, setIsLoaded] = useState(false);
+  /* Commented out for Phase 1 SEO implementation
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // useEffect(() => {
     // Track widget loading for analytics
@@ -561,6 +561,7 @@ const ChatbotWidget = () => {
   // Component renders null - AnythingLLM script handles the UI injection
   // The isLoaded state can be used for conditional rendering or analytics
   return null;
+  */
 };
 
 export default ChatbotWidget;
