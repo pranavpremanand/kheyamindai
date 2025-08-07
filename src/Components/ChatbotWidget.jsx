@@ -287,10 +287,12 @@ const ChatbotWidget = () => {
       
       /* AI message bubbles styling */
       [data-embed-id] .assistant-message {
-        background: linear-gradient(135deg, #f8f9ff 0%, #e8eaff 100%) !important;
-        border: 1px solid #e0e4ff !important;
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
         border-radius: 18px 18px 18px 4px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05) !important;
         position: relative !important;
+        padding: 12px 16px !important;
       }
       
       [data-embed-id] .user-message {
