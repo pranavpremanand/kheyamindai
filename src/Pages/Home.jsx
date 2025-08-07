@@ -51,33 +51,55 @@ const Home = () => {
         pageData={{
           faqs: [
             {
-              question:
-                "What types of businesses can benefit from AI chatbots and automation?",
+              question: "What is AI consulting and how can it transform my business?",
               answer:
-                "Enterprises across industries including retail, finance, healthcare, and logistics can benefit from AI chatbots and automation solutions.",
+                "AI consulting involves strategic guidance on implementing artificial intelligence solutions to automate processes, enhance decision-making, and drive growth. KheyaMind AI helps businesses reduce operational costs by up to 75%, automate customer support, streamline workflows, and unlock new revenue opportunities through intelligent automation across industries like retail, finance, healthcare, and manufacturing."
             },
             {
-              question:
-                "Can KheyaMind solutions be customized to fit our unique business processes?",
+              question: "How much does AI implementation cost for small and medium businesses?",
               answer:
-                "Yes, all solutions are fully tailored to your workflows and goals. We provide custom AI development that integrates seamlessly with your existing business processes.",
+                "AI implementation costs vary based on project scope and complexity. Basic AI chatbot solutions start from $5,000, while comprehensive enterprise AI systems range from $25,000-$100,000. Most businesses see ROI within 6-12 months through reduced operational costs, improved efficiency, and enhanced customer experience. We offer flexible pricing and phased implementation to fit any budget."
             },
             {
-              question:
-                "What's the typical turnaround time for project delivery?",
+              question: "What's the difference between AI chatbots and voice AI agents?",
               answer:
-                "Timelines vary based on project scope, but we ensure fast, reliable deployment. Most projects are completed within 4-12 weeks depending on complexity.",
+                "AI chatbots handle text-based conversations on websites, mobile apps, and messaging platforms like WhatsApp, providing 24/7 customer support and lead qualification. Voice AI agents manage phone calls with human-like speech, handling sales calls, appointment scheduling, and customer service through natural voice interactions. Both reduce staffing costs by 60-90% while improving response times."
             },
             {
-              question: "Do you offer post-deployment support?",
+              question: "How long does it take to implement AI solutions in my business?",
               answer:
-                "Yes, all solutions come with dedicated support and maintenance plans. We provide ongoing technical support, updates, and optimization services.",
+                "Implementation timelines depend on project complexity. Basic AI chatbots deploy within 2-4 weeks, custom AI development takes 6-8 weeks, and enterprise-wide AI automation requires 8-16 weeks. We use agile development methodology with weekly progress updates, ensuring transparent communication and faster delivery without compromising quality."
             },
             {
-              question: "Is AI integration scalable as our business grows?",
+              question: "Can AI solutions integrate with my existing business software?",
               answer:
-                "Absolutely — scalability is built into every solution we deliver. Our AI systems are designed to grow with your business and handle increased workloads.",
+                "Yes, our AI solutions integrate seamlessly with popular CRM systems (Salesforce, HubSpot), ERP platforms (SAP, Oracle), helpdesk tools (Zendesk, Freshdesk), and communication channels (WhatsApp, Facebook Messenger). We provide custom API development and middleware solutions to ensure smooth integration with any existing business system or workflow."
             },
+            {
+              question: "What industries benefit most from AI automation and consulting?",
+              answer:
+                "All industries benefit from AI, but we specialize in retail and e-commerce (inventory management, customer service), healthcare (appointment scheduling, patient support), finance (fraud detection, customer onboarding), manufacturing (predictive maintenance, quality control), real estate (lead qualification, property management), and professional services (document processing, client communication)."
+            },
+            {
+              question: "How do you ensure AI solutions are secure and compliant?",
+              answer:
+                "We implement enterprise-grade security with SOC2 compliance, end-to-end encryption, secure API connections, and GDPR adherence. All AI models are hosted on secure cloud infrastructure with regular security audits, access controls, and data backup systems. We follow industry best practices for data privacy and maintain compliance with healthcare (HIPAA), finance (PCI DSS), and international regulations."
+            },
+            {
+              question: "What ongoing support do you provide after AI implementation?",
+              answer:
+                "We provide comprehensive post-deployment support including 24/7 technical monitoring, regular system updates, performance optimization, user training, and dedicated account management. Our support packages include monthly performance reports, quarterly strategy reviews, and continuous AI model improvement to ensure your solutions evolve with your business needs and market changes."
+            },
+            {
+              question: "Can AI solutions help reduce my business operational costs?",
+              answer:
+                "Absolutely. Our AI solutions typically reduce operational costs by 40-75% through automation of repetitive tasks, 24/7 availability eliminating overtime costs, reduced human error, and improved efficiency. Businesses save an average of $50,000-$200,000 annually on customer service, data processing, and administrative tasks while improving service quality and response times."
+            },
+            {
+              question: "What makes KheyaMind AI different from other AI consulting companies?",
+              answer:
+                "KheyaMind AI combines deep technical expertise with business strategy, offering end-to-end solutions from consulting to implementation and support. We provide transparent pricing, agile development, multilingual support, and proven results across 50+ industries. Our unique approach focuses on measurable ROI, seamless integration, and scalable solutions that grow with your business, backed by continuous optimization and dedicated support."
+            }
           ],
         }}
         url="https://www.kheyamind.ai"
