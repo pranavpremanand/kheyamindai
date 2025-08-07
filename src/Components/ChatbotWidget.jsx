@@ -35,8 +35,7 @@ const ChatbotWidget = () => {
     script.setAttribute('data-base-api-url', 'https://llm.kheyamind.ai/api/embed');
     
     // Enhanced AI branding and styling with modern gradients
-    script.setAttribute('data-chat-icon', 'robot');
-    script.setAttribute('data-button-color', 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'); // AI gradient
+    script.setAttribute('data-button-color', '#667eea'); // Primary brand color
     script.setAttribute('data-user-bg-color', '#667eea'); // Modern blue
     script.setAttribute('data-assistant-bg-color', '#4c63d2'); // Deeper AI blue
     script.setAttribute('data-brand-image-url', 'https://www.kheyamind.ai/logo.png');
@@ -57,27 +56,36 @@ const ChatbotWidget = () => {
     // Add enhanced custom CSS for modern AI styling
     const customStyle = document.createElement('style');
     customStyle.textContent = `
-      /* Enhanced AI-focused styling for AnythingLLM widget */
-      [data-embed-id] {
+      /* Enhanced AI-focused styling for AnythingLLM widget with maximum specificity */
+      
+      /* Widget container positioning */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] {
         z-index: 1000 !important;
       }
       
-      /* Modern AI chat button styling with gradient and animations */
-      [data-embed-id] > div:first-child {
+      /* Chat button container positioning - more specific selector */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] > div:first-child,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] > div {
         bottom: 160px !important;
         right: 20px !important;
         z-index: 999 !important;
         position: fixed !important;
       }
       
-      /* AI Robot Button Enhanced Styling */
-      [data-embed-id] .chat-button, 
-      [data-embed-id] button {
+      /* Ultra-specific selectors for the chat button itself */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] div button,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] div .chat-button {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
         border: none !important;
         border-radius: 50% !important;
         width: 64px !important;
         height: 64px !important;
+        min-width: 64px !important;
+        min-height: 64px !important;
+        max-width: 64px !important;
+        max-height: 64px !important;
         box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4) !important;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         position: relative !important;
@@ -86,12 +94,13 @@ const ChatbotWidget = () => {
         align-items: center !important;
         justify-content: center !important;
         color: white !important;
-        font-size: 24px !important;
+        font-size: 0 !important; /* Hide any text content */
+        text-indent: -9999px !important; /* Hide any text content */
       }
       
-      /* Replace any existing icon content with a robot emoji/icon */
-      [data-embed-id] .chat-button:before, 
-      [data-embed-id] button:before {
+      /* Force robot icon to show - using ::after for better compatibility */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button::after,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button::after {
         content: '🤖' !important;
         position: absolute !important;
         top: 50% !important;
@@ -101,34 +110,43 @@ const ChatbotWidget = () => {
         z-index: 10 !important;
         pointer-events: none !important;
         filter: brightness(1.1) drop-shadow(0 2px 4px rgba(0,0,0,0.1)) !important;
+        display: block !important;
+        text-indent: 0 !important;
+        line-height: 1 !important;
       }
       
-      /* Hide any default icons that might be showing */
-      [data-embed-id] .chat-button svg,
-      [data-embed-id] button svg,
-      [data-embed-id] .chat-button img,
-      [data-embed-id] button img {
+      /* Aggressively hide any default content */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button *,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button * {
         display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
       }
       
-      /* Hover effects for AI button */
-      [data-embed-id] .chat-button:hover,
-      [data-embed-id] button:hover {
+      /* Hide SVG icons specifically */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] svg {
+        display: none !important;
+        visibility: hidden !important;
+      }
+      
+      /* Hover effects with high specificity */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button:hover,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button:hover {
         transform: translateY(-4px) scale(1.08) !important;
         box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6) !important;
         background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
       }
       
       /* Enhanced hover effect for the robot icon */
-      [data-embed-id] .chat-button:hover:before,
-      [data-embed-id] button:hover:before {
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button:hover::after,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button:hover::after {
         transform: translate(-50%, -50%) scale(1.1) !important;
         filter: brightness(1.3) drop-shadow(0 4px 8px rgba(0,0,0,0.2)) !important;
       }
       
-      /* AI pulse animation */
-      [data-embed-id] .chat-button::after,
-      [data-embed-id] button::after {
+      /* AI pulse animation using ::before to avoid conflict with icon */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] button::before,
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-button::before {
         content: '' !important;
         position: absolute !important;
         top: -2px !important;
@@ -137,7 +155,7 @@ const ChatbotWidget = () => {
         bottom: -2px !important;
         border-radius: 50% !important;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        opacity: 0.6 !important;
+        opacity: 0.4 !important;
         animation: ai-pulse 3s ease-in-out infinite !important;
         z-index: -1 !important;
         pointer-events: none !important;
@@ -158,8 +176,8 @@ const ChatbotWidget = () => {
         }
       }
       
-      /* Modern AI chat window styling */
-      [data-embed-id] .chat-window {
+      /* Modern AI chat window styling with high specificity */
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-window {
         border: 2px solid transparent !important;
         background: linear-gradient(white, white) padding-box, linear-gradient(135deg, #667eea, #764ba2) border-box !important;
         border-radius: 16px !important;
@@ -169,7 +187,7 @@ const ChatbotWidget = () => {
       }
       
       /* AI-themed header with gradient */
-      [data-embed-id] .chat-header {
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
         color: white !important;
         padding: 20px 16px !important;
@@ -178,7 +196,7 @@ const ChatbotWidget = () => {
       }
       
       /* AI header effects */
-      [data-embed-id] .chat-header::after {
+      div[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"] .chat-header::after {
         content: '🤖' !important;
         position: absolute !important;
         right: 16px !important;
@@ -278,8 +296,53 @@ const ChatbotWidget = () => {
     `;
     
     // Add the script to the document head
-    document.head.appendChild(customStyle);
     document.head.appendChild(script);
+    
+    // Add custom styles immediately and with delay
+    document.head.appendChild(customStyle);
+    
+    // Also apply styles after delay to override AnythingLLM defaults
+    setTimeout(() => {
+      // Re-inject styles to ensure they take precedence
+      if (customStyle.parentNode) {
+        customStyle.parentNode.removeChild(customStyle);
+      }
+      document.head.appendChild(customStyle);
+      
+      // Force a style recalculation
+      const widgets = document.querySelectorAll('[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"]');
+      widgets.forEach(widget => {
+        widget.style.display = 'none';
+        // eslint-disable-next-line no-unused-expressions
+        widget.offsetHeight; // Trigger reflow
+        widget.style.display = '';
+      });
+    }, 2000);
+    
+    // Use MutationObserver to apply styles when widget DOM is created
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            const widget = node.querySelector && node.querySelector('[data-embed-id="b905d324-b48c-403f-bd1f-298de7708007"]');
+            if (widget || (node.getAttribute && node.getAttribute('data-embed-id') === 'b905d324-b48c-403f-bd1f-298de7708007')) {
+              // Widget detected, re-apply our styles
+              setTimeout(() => {
+                if (customStyle.parentNode) {
+                  customStyle.parentNode.removeChild(customStyle);
+                }
+                document.head.appendChild(customStyle);
+              }, 100);
+            }
+          }
+        });
+      });
+    });
+    
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
     
     // Add performance optimization and error handling
     script.onerror = () => {
@@ -288,6 +351,7 @@ const ChatbotWidget = () => {
 
     // Cleanup function to remove script when component unmounts
     return () => {
+      observer.disconnect();
       if (customStyle.parentNode) {
         customStyle.parentNode.removeChild(customStyle);
       }
