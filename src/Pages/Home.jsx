@@ -23,6 +23,7 @@ import { BiSupport } from "react-icons/bi";
 import { ImPhone } from "react-icons/im";
 import aiEnterpriseBanner from "../assets/images/ai-enterprise-banner.webp";
 import SEO from "../Components/SEO/SEO";
+import LocalBusinessSchema from "../Components/SEO/LocalBusinessSchema";
 import LazyImage, { OptimizedImage } from "../Components/LazyImage";
 import {
   LazyTestimonials,
@@ -46,7 +47,7 @@ const Home = () => {
       <SEO
         type="home"
         title="AI Consulting Services | Enterprise AI Solutions & Business Automation | KheyaMind AI"
-        description="Leading AI consulting company offering enterprise AI solutions, custom chatbot development, voice AI agents, and business process automation. Transform your business with intelligent AI automation services in India, UAE, and globally."
+        description="Leading AI consulting company offering enterprise AI solutions, custom chatbot development, voice AI agents, and business process automation. Reduce costs by 75% with proven AI automation from India to Global markets. ROI in 6-12 months."
         keywords="AI consulting services, enterprise AI solutions, AI automation services, business process automation, AI chatbot development, voice AI solutions, machine learning consulting, custom AI development, AI implementation, artificial intelligence consulting"
         pageData={{
           faqs: [
@@ -104,6 +105,7 @@ const Home = () => {
         }}
         url="https://www.kheyamind.ai"
       />
+      <LocalBusinessSchema />
       <section className="relative min-h-screen flex items-center justify-center">
         <div className="absolute inset-0 bg-black/40 z-[1] w-full h-full" />
         <div className="pt-[4rem] md:pt-[8rem] pb-[4rem]">
@@ -112,11 +114,10 @@ const Home = () => {
             className="wrapper relative z-[1] flex flex-col text-center text-white gap-5 justify-center h-full"
           >
             <h1 className="heading">
-              Vision Beyond AI: Intelligent Solutions for the Next Era
+              AI Consulting Services | Reduce Costs by 75% with Enterprise AI Automation
             </h1>
             <p>
-              KheyaMind combines cognitive automation, design-led thinking, and
-              future-focused AI to help enterprises grow smarter.
+              Leading AI consulting company offering custom chatbot development, voice AI agents, and business process automation. Transform your business with intelligent AI solutions from India to Global markets.
             </p>
             <div className="flex sm:flex-row flex-col justify-center gap-5 mt-5">
               <Link to="/services" className="primary-btn">
@@ -244,6 +245,40 @@ const Home = () => {
         </div>
       </div>
 
+      {/* Social Proof Statistics Section */}
+      <section className="py-[3rem] bg-gradient-to-r from-primary/5 via-white to-secondary/5">
+        <div className="wrapper text-center">
+          <div data-aos="fade-up" className="max-w-4xl mx-auto space-y-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-primary">
+              Trusted Results That Drive Growth
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+              <div className="space-y-2">
+                <h3 className="text-3xl font-bold text-secondary">₹2.5+ Cr</h3>
+                <p className="text-gray-600">Cost Savings Generated for Clients</p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-3xl font-bold text-secondary">75%</h3>
+                <p className="text-gray-600">Average Operational Cost Reduction</p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-3xl font-bold text-secondary">2-16 Weeks</h3>
+                <p className="text-gray-600">Implementation Timeline</p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-3xl font-bold text-secondary">24/7</h3>
+                <p className="text-gray-600">AI-Powered Support Available</p>
+              </div>
+            </div>
+            <div className="pt-4">
+              <p className="text-lg text-gray-700">
+                <strong>From India to Global:</strong> Serving enterprises across healthcare, finance, retail, and manufacturing with proven AI automation solutions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="pt-[5rem]">
         <div className="wrapper grid md:grid-cols-2 gap-7">
           <div data-aos="fade-up" className="space-y-4">
@@ -261,13 +296,35 @@ const Home = () => {
             <h3 className="section-heading">Welcome to KheyaMind.ai</h3>
             <HrLine />
             <p>
-              {/* Founded in 2025 by Niraj Modak, */}
               KheyaMind is a boutique AI consulting and solutions company based
               in India with global aspirations. We specialize in deploying
               AI-driven automation and digital products across enterprise
               verticals, empowering clients to rethink operations, service
               delivery, and intelligence.
             </p>
+            
+            {/* Industry Expertise & Case Studies */}
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold text-primary">Industry Expertise & Proven Results</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <h5 className="font-semibold text-sm text-secondary">Healthcare AI (HIPAA Compliant)</h5>
+                  <p className="text-sm text-gray-600 mt-1">Automated 80% of appointment scheduling for healthcare practice, reducing wait times by 60%</p>
+                </div>
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <h5 className="font-semibold text-sm text-secondary">Retail & E-commerce</h5>
+                  <p className="text-sm text-gray-600 mt-1">Reduced customer service costs by 67% with intelligent chatbot handling 90% of inquiries</p>
+                </div>
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <h5 className="font-semibold text-sm text-secondary">Finance & Banking</h5>
+                  <p className="text-sm text-gray-600 mt-1">Implemented fraud detection system reducing false positives by 45%</p>
+                </div>
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <h5 className="font-semibold text-sm text-secondary">Manufacturing</h5>
+                  <p className="text-sm text-gray-600 mt-1">Quality control automation increased defect detection accuracy by 85%</p>
+                </div>
+              </div>
+            </div>
             <div className="grid grid-cols-2 gap-5 pt-5">
               {[
                 "Innovative Solutions",
@@ -383,6 +440,51 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Technology Stack Section */}
+      <section className="py-[5rem] bg-gray-50">
+        <div className="wrapper text-center">
+          <div data-aos="fade-up" className="max-w-4xl mx-auto space-y-6">
+            <h2 className="section-heading">
+              Powered by Leading AI Technologies
+            </h2>
+            <p className="text-lg text-gray-600">
+              We leverage cutting-edge AI platforms and custom development to deliver enterprise-grade solutions
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8">
+              <div className="space-y-3 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-3xl">🤖</div>
+                <h4 className="font-semibold">OpenAI GPT-4</h4>
+                <p className="text-sm text-gray-600">Advanced language models</p>
+              </div>
+              <div className="space-y-3 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-3xl">⚡</div>
+                <h4 className="font-semibold">Claude AI</h4>
+                <p className="text-sm text-gray-600">Intelligent reasoning</p>
+              </div>
+              <div className="space-y-3 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-3xl">☁️</div>
+                <h4 className="font-semibold">Azure AI</h4>
+                <p className="text-sm text-gray-600">Microsoft cloud services</p>
+              </div>
+              <div className="space-y-3 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-3xl">🛠️</div>
+                <h4 className="font-semibold">Custom Models</h4>
+                <p className="text-sm text-gray-600">Tailored AI development</p>
+              </div>
+            </div>
+            <div className="pt-6">
+              <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+                <span className="bg-white px-3 py-1 rounded-full border">AWS AI Services</span>
+                <span className="bg-white px-3 py-1 rounded-full border">Google Gemini</span>
+                <span className="bg-white px-3 py-1 rounded-full border">Hugging Face</span>
+                <span className="bg-white px-3 py-1 rounded-full border">TensorFlow</span>
+                <span className="bg-white px-3 py-1 rounded-full border">PyTorch</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-[5rem] bg-secondary relative">
         <LazyImage
           src={aiEnterpriseBanner}
@@ -424,6 +526,93 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* ROI Calculator Section */}
+      <section className="py-[5rem] bg-primary text-white">
+        <div className="wrapper text-center">
+          <div data-aos="fade-up" className="max-w-4xl mx-auto space-y-6">
+            <h2 className="text-2xl md:text-3xl font-bold">
+              Calculate Your AI ROI Potential
+            </h2>
+            <p className="text-lg opacity-90">
+              See how much you could save with AI automation
+            </p>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 mt-8">
+              <div className="grid md:grid-cols-3 gap-6 text-center">
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold">Current Monthly Costs</h3>
+                  <div className="space-y-2">
+                    <p className="text-sm opacity-80">Customer Service Staff</p>
+                    <p className="text-2xl font-bold">₹5,00,000</p>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-sm opacity-80">Manual Processing</p>
+                    <p className="text-2xl font-bold">₹3,00,000</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold">With AI Automation</h3>
+                  <div className="space-y-2">
+                    <p className="text-sm opacity-80">75% Cost Reduction</p>
+                    <p className="text-2xl font-bold text-green-300">₹2,00,000 Saved</p>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-sm opacity-80">24/7 Availability</p>
+                    <p className="text-xl font-semibold text-green-300">∞ Uptime</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold">Annual Savings</h3>
+                  <div className="space-y-2">
+                    <p className="text-sm opacity-80">Total Cost Reduction</p>
+                    <p className="text-3xl font-bold text-yellow-300">₹24,00,000</p>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-sm opacity-80">ROI Timeline</p>
+                    <p className="text-xl font-semibold">6-12 Months</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-8 pt-6 border-t border-white/20">
+                <p className="text-sm opacity-80 mb-4">
+                  *Calculations based on average enterprise client results. Your actual savings may vary based on implementation scope.
+                </p>
+                <div className="flex flex-col sm:flex-row justify-center gap-4">
+                  <Link to="/contact-us" className="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    Get Custom ROI Analysis
+                  </Link>
+                  <Link to="/services" className="border border-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors">
+                    View AI Services
+                  </Link>
+                </div>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 text-sm">
+              <div className="space-y-1">
+                <p className="font-semibold">Implementation</p>
+                <p className="opacity-80">2-16 weeks</p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-semibold">Support</p>
+                <p className="opacity-80">24/7 monitoring</p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-semibold">Scalability</p>
+                <p className="opacity-80">Enterprise ready</p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-semibold">Compliance</p>
+                <p className="opacity-80">HIPAA, GDPR ready</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Services
         title="our services"
         heading="AI-Powered Services Crafted to Deliver Business Results"
