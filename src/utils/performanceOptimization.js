@@ -114,18 +114,18 @@ export const preventDoubleLoading = () => {
   };
 
   // Override navigation functions to prevent double loading
-  const originalPushState = history.pushState;
-  const originalReplaceState = history.replaceState;
+  const originalPushState = window.history.pushState;
+  const originalReplaceState = window.history.replaceState;
   
-  history.pushState = function(...args) {
+  window.history.pushState = function(...args) {
     if (handlePageLoad()) {
-      return originalPushState.apply(history, args);
+      return originalPushState.apply(window.history, args);
     }
   };
   
-  history.replaceState = function(...args) {
+  window.history.replaceState = function(...args) {
     if (handlePageLoad()) {
-      return originalReplaceState.apply(history, args);
+      return originalReplaceState.apply(window.history, args);
     }
   };
 

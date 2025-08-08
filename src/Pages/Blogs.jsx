@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import banner from "../assets/images/banners/blogs.webp";
 import PageBanner from "../Components/Website/PageBanner";
 import BlogItem from "../Components/Website/BlogItem";
