@@ -253,21 +253,21 @@ const Home = () => {
               Trusted Results That Drive Growth
             </h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-6 sm:mt-8">
-              <div className="space-y-1 sm:space-y-2 p-3 sm:p-4 bg-white rounded-lg shadow-sm">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary">₹2.5+ Cr</h3>
-                <p className="text-xs sm:text-sm md:text-base text-gray-600">Cost Savings Generated</p>
+              <div className="space-y-1 sm:space-y-2 p-4 sm:p-6 bg-gradient-to-br from-primary to-primary/80 text-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold">₹2.5+ Cr</h3>
+                <p className="text-xs sm:text-sm md:text-base opacity-90">Cost Savings Generated</p>
               </div>
-              <div className="space-y-1 sm:space-y-2 p-3 sm:p-4 bg-white rounded-lg shadow-sm">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary">75%</h3>
-                <p className="text-xs sm:text-sm md:text-base text-gray-600">Cost Reduction</p>
+              <div className="space-y-1 sm:space-y-2 p-4 sm:p-6 bg-gradient-to-br from-secondary to-secondary/80 text-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold">75%</h3>
+                <p className="text-xs sm:text-sm md:text-base opacity-90">Cost Reduction</p>
               </div>
-              <div className="space-y-1 sm:space-y-2 p-3 sm:p-4 bg-white rounded-lg shadow-sm">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary">2-16 Weeks</h3>
-                <p className="text-xs sm:text-sm md:text-base text-gray-600">Implementation</p>
+              <div className="space-y-1 sm:space-y-2 p-4 sm:p-6 bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold">2-16 Weeks</h3>
+                <p className="text-xs sm:text-sm md:text-base opacity-90">Implementation</p>
               </div>
-              <div className="space-y-1 sm:space-y-2 p-3 sm:p-4 bg-white rounded-lg shadow-sm">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary">24/7</h3>
-                <p className="text-xs sm:text-sm md:text-base text-gray-600">AI Support</p>
+              <div className="space-y-1 sm:space-y-2 p-4 sm:p-6 bg-gradient-to-br from-green-600 to-green-700 text-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold">24/7</h3>
+                <p className="text-xs sm:text-sm md:text-base opacity-90">AI Support</p>
               </div>
             </div>
             <div className="pt-3 sm:pt-4">
@@ -411,12 +411,13 @@ const Home = () => {
             </div>
             <div
               data-aos="fade-up"
-              className="sm:row-span-2 md:row-span-1 w-full h-full min-h-[300px] overflow-hidden rounded-xl"
+              className="sm:row-span-2 md:row-span-1 w-full flex items-center overflow-hidden rounded-xl"
             >
               <LazyImage
                 src={whyChooseImg}
                 alt="Why Choose KheyaMind AI - Leading AI Solutions Provider"
-                className="w-full h-full object-cover object-center"
+                className="w-full h-auto object-cover object-center"
+                style={{ maxHeight: "400px" }}
               />
             </div>
             <div data-aos="fade-up" className="flex flex-col gap-8">
