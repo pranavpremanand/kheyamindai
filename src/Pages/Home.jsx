@@ -260,7 +260,7 @@ const Home = () => {
             </p>
           </div>
           
-          <div data-aos="fade-up">
+          <div data-aos="fade-up" data-aos-offset="20" data-aos-once="true" data-aos-anchor-placement="top-bottom">
             <InteractiveAIDemos />
           </div>
           

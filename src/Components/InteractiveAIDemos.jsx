@@ -97,13 +97,26 @@ const InteractiveAIDemos = () => {
   });
   const fileInputRef = useRef(null);
 
-  // Auto-scroll messages
+  // Auto-scroll messages only within chat container
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ 
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest"
+      });
+    }
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // Only auto-scroll if user is already focused on chat area
+    const chatContainer = messagesEndRef.current?.closest('.overflow-y-auto');
+    if (chatContainer && messages.length > 1) {
+      // Small delay to prevent page jumping
+      setTimeout(() => {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }, 100);
+    }
   }, [messages]);
 
   // Simulate typing effect
@@ -154,7 +167,9 @@ const InteractiveAIDemos = () => {
   const handleKeyPress = useCallback((e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
+      e.stopPropagation();
       sendMessage();
+      return false; // Prevent any default form submission behavior
     }
   }, [sendMessage]);
 
@@ -304,7 +319,11 @@ const InteractiveAIDemos = () => {
     }
   }, []);
 
-  const clearChat = useCallback(() => {
+  const clearChat = useCallback((e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     setMessages([
       {
         id: '1',
@@ -313,6 +332,7 @@ const InteractiveAIDemos = () => {
         timestamp: new Date()
       }
     ]);
+    return false;
   }, []);
 
   const resetVoiceDemo = useCallback(() => {
@@ -326,7 +346,7 @@ const InteractiveAIDemos = () => {
   }, []);
 
   return (
-    <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden max-w-4xl mx-auto">
+    <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden max-w-4xl mx-auto touch-manipulation">
       {/* Header */}
       <div className="bg-gradient-to-r from-primary to-secondary p-4 sm:p-6">
         <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">
@@ -386,14 +406,14 @@ const InteractiveAIDemos = () => {
             </div>
             
             {/* Messages */}
-            <div className="bg-gray-50 rounded-lg p-4 h-80 overflow-y-auto">
+            <div className="bg-gray-50 rounded-lg p-3 sm:p-4 h-64 sm:h-80 overflow-y-auto scroll-smooth touch-pan-y" id="chat-messages-container">
               {messages.map((message) => (
                 <div
                   key={message.id}
                   className={`mb-3 flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-xs sm:max-w-md px-4 py-2 rounded-lg ${
+                    className={`max-w-[75%] sm:max-w-xs md:max-w-md px-3 sm:px-4 py-2 rounded-lg ${
                       message.sender === 'user'
                         ? 'bg-primary text-white'
                         : 'bg-white text-gray-800 shadow-sm border'
@@ -421,24 +441,37 @@ const InteractiveAIDemos = () => {
             </div>
 
             {/* Input */}
-            <div className="flex gap-2">
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                sendMessage();
+                return false;
+              }}
+              className="flex gap-2"
+            >
               <textarea
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyPress}
                 placeholder="Type your message... (Try asking about AI solutions, pricing, or implementation)"
-                className="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                className="flex-1 p-2 sm:p-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent resize-none touch-manipulation"
                 rows={2}
                 disabled={isTyping}
+                style={{ 
+                  minHeight: '44px', // Ensures touch-friendly minimum tap target
+                  fontSize: '16px', // Prevents zoom on iOS
+                  WebkitAppearance: 'none' // Removes iOS styling
+                }}
               />
               <button
-                onClick={sendMessage}
+                type="submit"
                 disabled={!inputMessage.trim() || isTyping}
-                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="px-3 sm:px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 {isTyping ? <FaSpinner className="animate-spin" /> : <FaPaperPlane />}
               </button>
-            </div>
+            </form>
 
             <div className="text-xs text-gray-500 bg-blue-50 p-3 rounded-lg">
               💡 <strong>Demo Features:</strong> Try asking about "pricing", "implementation time", "industries served", or "ROI calculations"
@@ -459,8 +492,8 @@ const InteractiveAIDemos = () => {
             </div>
 
             {/* Recording Interface */}
-            <div className="text-center py-8">
-              <div className={`mx-auto w-24 h-24 rounded-full flex items-center justify-center mb-4 transition-all ${
+            <div className="text-center py-6 sm:py-8">
+              <div className={`mx-auto w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mb-4 transition-all touch-manipulation ${
                 voiceState.isRecording ? 'bg-red-100 animate-pulse' : 'bg-blue-100'
               }`}>
                 {voiceState.isProcessing ? (
@@ -475,7 +508,7 @@ const InteractiveAIDemos = () => {
               <button
                 onClick={voiceState.isRecording ? stopRecording : startRecording}
                 disabled={voiceState.isProcessing}
-                className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                className={`px-4 sm:px-6 py-3 rounded-lg font-medium transition-all touch-manipulation min-h-[48px] min-w-[120px] ${
                   voiceState.isRecording
                     ? 'bg-red-500 hover:bg-red-600 text-white'
                     : 'bg-blue-500 hover:bg-blue-600 text-white'
@@ -558,7 +591,7 @@ const InteractiveAIDemos = () => {
             </div>
 
             {!documentState.fileName ? (
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-primary transition-colors">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 sm:p-8 text-center hover:border-primary transition-colors touch-manipulation">
                 <input
                   type="file"
                   ref={fileInputRef}
@@ -575,7 +608,7 @@ const InteractiveAIDemos = () => {
                 </p>
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+                  className="px-4 sm:px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors touch-manipulation min-h-[48px] min-w-[120px]"
                 >
                   Choose File
                 </button>
