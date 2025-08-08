@@ -280,20 +280,20 @@ const Home = () => {
       </section>
 
       {/* About Us Section - Redesigned */}
-      <section className="pt-[3rem] sm:pt-[5rem] pb-[3rem] sm:pb-[5rem]">
+      <section className="py-[3rem] sm:py-[5rem]">
         <div className="wrapper">
           <div data-aos="fade-up" className="max-w-6xl mx-auto">
-            <div className="text-center mb-8 sm:mb-12">
+            <div className="text-center mb-6 sm:mb-8">
               <p className="uppercase text-primary font-medium mb-4">About us</p>
-              <h3 className="section-heading mb-6">Welcome to KheyaMind.ai</h3>
+              <h3 className="section-heading mb-4">Welcome to KheyaMind.ai</h3>
               <HrLine />
             </div>
             
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+            <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-start">
               {/* Main Content */}
-              <div className="space-y-6">
-                <div className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl p-6 sm:p-8 border border-gray-100">
-                  <p className="text-lg leading-relaxed text-gray-700">
+              <div className="h-full flex flex-col">
+                <div className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl p-6 border border-gray-100 mb-6 flex-grow">
+                  <p className="text-base sm:text-lg leading-relaxed text-gray-700">
                     KheyaMind is a <span className="text-primary font-semibold">boutique AI consulting and solutions company</span> based
                     in India with global aspirations. We specialize in deploying
                     AI-driven automation and digital products across enterprise
@@ -302,42 +302,42 @@ const Home = () => {
                   </p>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                <div className="grid grid-cols-2 gap-4">
                   {[
                     { icon: "🚀", title: "Innovative Solutions", desc: "Cutting-edge AI technology" },
                     { icon: "🛟", title: "24/7 Support", desc: "Round-the-clock assistance" },
                     { icon: "👥", title: "Expert Team", desc: "Seasoned AI professionals" },
                     { icon: "🎯", title: "Quality Assurance", desc: "Rigorous testing standards" },
                   ].map((item) => (
-                    <div key={item.title} className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                      <div className="text-2xl sm:text-3xl mb-2">{item.icon}</div>
-                      <h4 className="font-semibold text-sm sm:text-base text-gray-900 mb-1">{item.title}</h4>
-                      <p className="text-xs sm:text-sm text-gray-600">{item.desc}</p>
+                    <div key={item.title} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                      <div className="text-2xl mb-2">{item.icon}</div>
+                      <h4 className="font-semibold text-sm text-gray-900 mb-1">{item.title}</h4>
+                      <p className="text-xs text-gray-600">{item.desc}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Industry Expertise */}
-              <div className="space-y-6">
-                <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100">
-                  <h4 className="text-xl sm:text-2xl font-bold text-primary mb-6">Industry Expertise & Proven Results</h4>
+              <div className="h-full">
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-full">
+                  <h4 className="text-lg sm:text-xl font-bold text-primary mb-6">Industry Expertise & Proven Results</h4>
                   <div className="space-y-4">
                     <div className="border-l-4 border-primary pl-4 py-2">
-                      <h5 className="font-semibold text-sm sm:text-base text-secondary">Healthcare AI (HIPAA Compliant)</h5>
-                      <p className="text-xs sm:text-sm text-gray-600 mt-1">Automated 80% of appointment scheduling, reducing wait times by 60%</p>
+                      <h5 className="font-semibold text-sm text-secondary">Healthcare AI (HIPAA Compliant)</h5>
+                      <p className="text-xs text-gray-600 mt-1">Automated 80% of appointment scheduling, reducing wait times by 60%</p>
                     </div>
                     <div className="border-l-4 border-secondary pl-4 py-2">
-                      <h5 className="font-semibold text-sm sm:text-base text-secondary">Retail & E-commerce</h5>
-                      <p className="text-xs sm:text-sm text-gray-600 mt-1">Reduced customer service costs by 67% with 90% inquiry automation</p>
+                      <h5 className="font-semibold text-sm text-secondary">Retail & E-commerce</h5>
+                      <p className="text-xs text-gray-600 mt-1">Reduced customer service costs by 67% with 90% inquiry automation</p>
                     </div>
                     <div className="border-l-4 border-primary pl-4 py-2">
-                      <h5 className="font-semibold text-sm sm:text-base text-secondary">Finance & Banking</h5>
-                      <p className="text-xs sm:text-sm text-gray-600 mt-1">Implemented fraud detection reducing false positives by 45%</p>
+                      <h5 className="font-semibold text-sm text-secondary">Finance & Banking</h5>
+                      <p className="text-xs text-gray-600 mt-1">Implemented fraud detection reducing false positives by 45%</p>
                     </div>
                     <div className="border-l-4 border-secondary pl-4 py-2">
-                      <h5 className="font-semibold text-sm sm:text-base text-secondary">Manufacturing</h5>
-                      <p className="text-xs sm:text-sm text-gray-600 mt-1">Quality control automation increased accuracy by 85%</p>
+                      <h5 className="font-semibold text-sm text-secondary">Manufacturing</h5>
+                      <p className="text-xs text-gray-600 mt-1">Quality control automation increased accuracy by 85%</p>
                     </div>
                   </div>
                 </div>
@@ -345,19 +345,19 @@ const Home = () => {
             </div>
             
             {/* Call to Action */}
-            <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
               <Link to="/about-us" className="primary-btn w-full sm:w-auto">
                 Learn More About Us
               </Link>
-              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
-                <div className="bg-primary w-12 h-12 flex justify-center items-center rounded-lg">
-                  <BiSupport size={24} className="text-white" />
+              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                <div className="bg-primary w-10 h-10 flex justify-center items-center rounded-lg">
+                  <BiSupport size={20} className="text-white" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Need Help? Call Us Now</p>
                   <Link
                     to={`tel:${companyDetails.phone}`}
-                    className="font-semibold text-primary hover:text-secondary transition-colors"
+                    className="font-semibold text-primary hover:text-secondary transition-colors text-sm"
                   >
                     {companyDetails.phone}
                   </Link>
@@ -367,72 +367,74 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="wrapper py-[5rem]">
-        <div
-          data-aos="fade-up"
-          className="space-y-4 flex flex-col sm:items-center sm:text-center max-w-2xl mx-auto"
-        >
-          <p className="uppercase text-primary font-medium">
-            Why Choose KheyaMind{" "}
-          </p>
-          <h3 className="section-heading">
-            Why Choose KheyaMind For Your Business
-          </h3>
-          <HrLine />
-        </div>
-        <div className="mt-[2rem] grid sm:grid-cols-2 md:grid-cols-3 gap-7">
-          <div data-aos="fade-up" className="flex flex-col gap-10">
-            <div className="space-y-3">
-              <div className="bg-primary w-[3.5rem] aspect-square flex justify-center items-center p-3">
-                <FaBrain size={30} className="text-white" />
-              </div>
-              <div className="space-y-1">
-                <p className="font-bold text-lg">AI-First Thinking</p>
-                <p>
-                  AI isn't a feature — it's the foundation of every solution we
-                  build.
-                </p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div className="bg-primary w-[3.5rem] aspect-square flex justify-center items-center p-3">
-                <FaEye size={30} className="text-white" />
-              </div>
-              <div className="space-y-1">
-                <p className="font-bold text-lg">Clarity-Driven Design</p>
-                <p>We pair intuitive UI with intelligent workflows.</p>
-              </div>
-            </div>
-          </div>
+      <section className="py-[3rem] sm:py-[5rem]">
+        <div className="wrapper">
           <div
             data-aos="fade-up"
-            className="sm:row-span-2 md:row-span-1 w-full h-full aspect-[4/3] sm:aspect-auto md:aspect-square overflow-hidden rounded-xl"
+            className="text-center mb-6 sm:mb-8 max-w-2xl mx-auto"
           >
-            <LazyImage
-              src={whyChooseImg}
-              alt="Why Choose KheyaMind AI - Leading AI Solutions Provider"
-              className="md:aspect-[2/3] w-full h-full object-cover object-bottom"
-            />
+            <p className="uppercase text-primary font-medium mb-4">
+              Why Choose KheyaMind
+            </p>
+            <h3 className="section-heading mb-4">
+              Why Choose KheyaMind For Your Business
+            </h3>
+            <HrLine />
           </div>
-          <div data-aos="fade-up" className="flex flex-col gap-10">
-            <div className="space-y-3">
-              <div className="bg-primary w-[3.5rem] aspect-square flex justify-center items-center p-3">
-                <FaNetworkWired size={30} className="text-white" />
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
+            <div data-aos="fade-up" className="flex flex-col gap-8">
+              <div className="space-y-3">
+                <div className="bg-primary w-14 h-14 flex justify-center items-center p-3 rounded-lg">
+                  <FaBrain size={24} className="text-white" />
+                </div>
+                <div className="space-y-2">
+                  <p className="font-bold text-lg">AI-First Thinking</p>
+                  <p className="text-gray-600">
+                    AI isn't a feature — it's the foundation of every solution we
+                    build.
+                  </p>
+                </div>
               </div>
-              <div className="space-y-1">
-                <p className="font-bold text-lg">Scalable Architecture</p>
-                <p>Cloud-native, API-ready systems built to scale globally.</p>
+              <div className="space-y-3">
+                <div className="bg-primary w-14 h-14 flex justify-center items-center p-3 rounded-lg">
+                  <FaEye size={24} className="text-white" />
+                </div>
+                <div className="space-y-2">
+                  <p className="font-bold text-lg">Clarity-Driven Design</p>
+                  <p className="text-gray-600">We pair intuitive UI with intelligent workflows.</p>
+                </div>
               </div>
             </div>
-            <div className="space-y-3">
-              <div className="bg-primary w-[3.5rem] aspect-square flex justify-center items-center p-3">
-                <FaChessKnight size={30} className="text-white" />
+            <div
+              data-aos="fade-up"
+              className="sm:row-span-2 md:row-span-1 w-full h-full min-h-[300px] overflow-hidden rounded-xl"
+            >
+              <LazyImage
+                src={whyChooseImg}
+                alt="Why Choose KheyaMind AI - Leading AI Solutions Provider"
+                className="w-full h-full object-cover object-center"
+              />
+            </div>
+            <div data-aos="fade-up" className="flex flex-col gap-8">
+              <div className="space-y-3">
+                <div className="bg-primary w-14 h-14 flex justify-center items-center p-3 rounded-lg">
+                  <FaNetworkWired size={24} className="text-white" />
+                </div>
+                <div className="space-y-2">
+                  <p className="font-bold text-lg">Scalable Architecture</p>
+                  <p className="text-gray-600">Cloud-native, API-ready systems built to scale globally.</p>
+                </div>
               </div>
-              <div className="space-y-1">
-                <p className="font-bold text-lg">Strategic Consulting</p>
-                <p>
-                  We don't just deliver projects — we guide transformations.
-                </p>
+              <div className="space-y-3">
+                <div className="bg-primary w-14 h-14 flex justify-center items-center p-3 rounded-lg">
+                  <FaChessKnight size={24} className="text-white" />
+                </div>
+                <div className="space-y-2">
+                  <p className="font-bold text-lg">Strategic Consulting</p>
+                  <p className="text-gray-600">
+                    We don't just deliver projects — we guide transformations.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -484,7 +486,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-[5rem] bg-secondary relative">
+      <section className="py-[3rem] sm:py-[5rem] bg-secondary relative">
         <LazyImage
           src={aiEnterpriseBanner}
           className="absolute inset-0 z-[-2] h-full w-full object-cover"
