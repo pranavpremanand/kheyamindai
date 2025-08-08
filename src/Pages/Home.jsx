@@ -25,6 +25,7 @@ import aiEnterpriseBanner from "../assets/images/ai-enterprise-banner.webp";
 import SEO from "../Components/SEO/SEO";
 import LocalBusinessSchema from "../Components/SEO/LocalBusinessSchema";
 import LazyImage, { OptimizedImage } from "../Components/LazyImage";
+import InteractiveAIDemos from "../Components/InteractiveAIDemos";
 import {
   LazyTestimonials,
   LazyContactForm,
@@ -244,6 +245,46 @@ const Home = () => {
           </div>
         </div>
       </div>
+
+      {/* Interactive AI Demos Section */}
+      <section className="py-[3rem] sm:py-[5rem] bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <div className="wrapper">
+          <div className="text-center mb-8 sm:mb-12">
+            <p className="uppercase text-primary font-medium mb-4">Experience AI in Action</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Try Our AI Solutions Live
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Don't just read about AI - experience it! Try our interactive demos to see how 
+              KheyaMind AI can transform your business operations with intelligent automation.
+            </p>
+          </div>
+          
+          <div data-aos="fade-up">
+            <InteractiveAIDemos />
+          </div>
+          
+          <div className="text-center mt-8">
+            <p className="text-sm text-gray-600 mb-4">
+              Impressed by what you see? Let's discuss how we can customize these solutions for your business.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/contact-us"
+                className="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-xl font-semibold transition-colors shadow-lg hover:shadow-xl"
+              >
+                Schedule Free Demo Call
+              </Link>
+              <Link
+                to="/services"
+                className="bg-white hover:bg-gray-50 text-primary border-2 border-primary px-6 py-3 rounded-xl font-semibold transition-colors"
+              >
+                Explore All Services
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Social Proof Statistics Section */}
       <section className="py-[2rem] sm:py-[3rem] bg-gradient-to-r from-primary/5 via-white to-secondary/5">
