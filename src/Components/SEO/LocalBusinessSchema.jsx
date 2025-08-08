@@ -80,7 +80,7 @@ const LocalBusinessSchema = () => {
           "itemOffered": {
             "@type": "Service",
             "name": "AI Chatbot Development",
-            "description": "Custom AI chatbots for automated customer support and lead generation"
+            "description": "Custom AI chatbots powered by GPT-5 for automated customer support and lead generation"
           }
         },
         {

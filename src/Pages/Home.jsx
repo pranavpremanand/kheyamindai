@@ -246,32 +246,32 @@ const Home = () => {
       </div>
 
       {/* Social Proof Statistics Section */}
-      <section className="py-[3rem] bg-gradient-to-r from-primary/5 via-white to-secondary/5">
+      <section className="py-[2rem] sm:py-[3rem] bg-gradient-to-r from-primary/5 via-white to-secondary/5">
         <div className="wrapper text-center">
-          <div data-aos="fade-up" className="max-w-4xl mx-auto space-y-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-primary">
+          <div data-aos="fade-up" className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">
               Trusted Results That Drive Growth
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-              <div className="space-y-2">
-                <h3 className="text-3xl font-bold text-secondary">₹2.5+ Cr</h3>
-                <p className="text-gray-600">Cost Savings Generated for Clients</p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-6 sm:mt-8">
+              <div className="space-y-1 sm:space-y-2 p-3 sm:p-4 bg-white rounded-lg shadow-sm">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary">₹2.5+ Cr</h3>
+                <p className="text-xs sm:text-sm md:text-base text-gray-600">Cost Savings Generated</p>
               </div>
-              <div className="space-y-2">
-                <h3 className="text-3xl font-bold text-secondary">75%</h3>
-                <p className="text-gray-600">Average Operational Cost Reduction</p>
+              <div className="space-y-1 sm:space-y-2 p-3 sm:p-4 bg-white rounded-lg shadow-sm">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary">75%</h3>
+                <p className="text-xs sm:text-sm md:text-base text-gray-600">Cost Reduction</p>
               </div>
-              <div className="space-y-2">
-                <h3 className="text-3xl font-bold text-secondary">2-16 Weeks</h3>
-                <p className="text-gray-600">Implementation Timeline</p>
+              <div className="space-y-1 sm:space-y-2 p-3 sm:p-4 bg-white rounded-lg shadow-sm">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary">2-16 Weeks</h3>
+                <p className="text-xs sm:text-sm md:text-base text-gray-600">Implementation</p>
               </div>
-              <div className="space-y-2">
-                <h3 className="text-3xl font-bold text-secondary">24/7</h3>
-                <p className="text-gray-600">AI-Powered Support Available</p>
+              <div className="space-y-1 sm:space-y-2 p-3 sm:p-4 bg-white rounded-lg shadow-sm">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary">24/7</h3>
+                <p className="text-xs sm:text-sm md:text-base text-gray-600">AI Support</p>
               </div>
             </div>
-            <div className="pt-4">
-              <p className="text-lg text-gray-700">
+            <div className="pt-3 sm:pt-4">
+              <p className="text-sm sm:text-base md:text-lg text-gray-700 max-w-3xl mx-auto">
                 <strong>From India to Global:</strong> Serving enterprises across healthcare, finance, retail, and manufacturing with proven AI automation solutions.
               </p>
             </div>
@@ -279,92 +279,91 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="pt-[5rem]">
-        <div className="wrapper grid md:grid-cols-2 gap-7">
-          <div data-aos="fade-up" className="space-y-4">
-            <p className="uppercase text-primary font-medium text-center md:text-start">
-              About us
-            </p>
-            <div className="md:hidden flex flex-col pb-3">
-              <OptimizedImage
-                src={aboutImg}
-                alt="About Us - KheyaMind AI Technologies"
-                priority={false}
-                className="h-full w-full aspect-video object-cover rounded-xl"
-              /> 
+      {/* About Us Section - Redesigned */}
+      <section className="pt-[3rem] sm:pt-[5rem] pb-[3rem] sm:pb-[5rem]">
+        <div className="wrapper">
+          <div data-aos="fade-up" className="max-w-6xl mx-auto">
+            <div className="text-center mb-8 sm:mb-12">
+              <p className="uppercase text-primary font-medium mb-4">About us</p>
+              <h3 className="section-heading mb-6">Welcome to KheyaMind.ai</h3>
+              <HrLine />
             </div>
-            <h3 className="section-heading">Welcome to KheyaMind.ai</h3>
-            <HrLine />
-            <p>
-              KheyaMind is a boutique AI consulting and solutions company based
-              in India with global aspirations. We specialize in deploying
-              AI-driven automation and digital products across enterprise
-              verticals, empowering clients to rethink operations, service
-              delivery, and intelligence.
-            </p>
             
-            {/* Industry Expertise & Case Studies */}
-            <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-primary">Industry Expertise & Proven Results</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h5 className="font-semibold text-sm text-secondary">Healthcare AI (HIPAA Compliant)</h5>
-                  <p className="text-sm text-gray-600 mt-1">Automated 80% of appointment scheduling for healthcare practice, reducing wait times by 60%</p>
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+              {/* Main Content */}
+              <div className="space-y-6">
+                <div className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl p-6 sm:p-8 border border-gray-100">
+                  <p className="text-lg leading-relaxed text-gray-700">
+                    KheyaMind is a <span className="text-primary font-semibold">boutique AI consulting and solutions company</span> based
+                    in India with global aspirations. We specialize in deploying
+                    AI-driven automation and digital products across enterprise
+                    verticals, empowering clients to rethink operations, service
+                    delivery, and intelligence.
+                  </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h5 className="font-semibold text-sm text-secondary">Retail & E-commerce</h5>
-                  <p className="text-sm text-gray-600 mt-1">Reduced customer service costs by 67% with intelligent chatbot handling 90% of inquiries</p>
+                
+                <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                  {[
+                    { icon: "🚀", title: "Innovative Solutions", desc: "Cutting-edge AI technology" },
+                    { icon: "🛟", title: "24/7 Support", desc: "Round-the-clock assistance" },
+                    { icon: "👥", title: "Expert Team", desc: "Seasoned AI professionals" },
+                    { icon: "🎯", title: "Quality Assurance", desc: "Rigorous testing standards" },
+                  ].map((item) => (
+                    <div key={item.title} className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                      <div className="text-2xl sm:text-3xl mb-2">{item.icon}</div>
+                      <h4 className="font-semibold text-sm sm:text-base text-gray-900 mb-1">{item.title}</h4>
+                      <p className="text-xs sm:text-sm text-gray-600">{item.desc}</p>
+                    </div>
+                  ))}
                 </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h5 className="font-semibold text-sm text-secondary">Finance & Banking</h5>
-                  <p className="text-sm text-gray-600 mt-1">Implemented fraud detection system reducing false positives by 45%</p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h5 className="font-semibold text-sm text-secondary">Manufacturing</h5>
-                  <p className="text-sm text-gray-600 mt-1">Quality control automation increased defect detection accuracy by 85%</p>
+              </div>
+
+              {/* Industry Expertise */}
+              <div className="space-y-6">
+                <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100">
+                  <h4 className="text-xl sm:text-2xl font-bold text-primary mb-6">Industry Expertise & Proven Results</h4>
+                  <div className="space-y-4">
+                    <div className="border-l-4 border-primary pl-4 py-2">
+                      <h5 className="font-semibold text-sm sm:text-base text-secondary">Healthcare AI (HIPAA Compliant)</h5>
+                      <p className="text-xs sm:text-sm text-gray-600 mt-1">Automated 80% of appointment scheduling, reducing wait times by 60%</p>
+                    </div>
+                    <div className="border-l-4 border-secondary pl-4 py-2">
+                      <h5 className="font-semibold text-sm sm:text-base text-secondary">Retail & E-commerce</h5>
+                      <p className="text-xs sm:text-sm text-gray-600 mt-1">Reduced customer service costs by 67% with 90% inquiry automation</p>
+                    </div>
+                    <div className="border-l-4 border-primary pl-4 py-2">
+                      <h5 className="font-semibold text-sm sm:text-base text-secondary">Finance & Banking</h5>
+                      <p className="text-xs sm:text-sm text-gray-600 mt-1">Implemented fraud detection reducing false positives by 45%</p>
+                    </div>
+                    <div className="border-l-4 border-secondary pl-4 py-2">
+                      <h5 className="font-semibold text-sm sm:text-base text-secondary">Manufacturing</h5>
+                      <p className="text-xs sm:text-sm text-gray-600 mt-1">Quality control automation increased accuracy by 85%</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-5 pt-5">
-              {[
-                "Innovative Solutions",
-                "24/7 Support",
-                "Experienced Experts",
-                "Quality Assurance",
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-2">
-                  <GiCheckMark size={25} className="text-primary" />
-                  <p>{item}</p>
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-col-reverse sm:flex-row items-center gap-5 sm:gap-10 pt-5">
-              <Link to="/about-us" className="primary-btn sm:w-fit w-full">
-                Know More
+            
+            {/* Call to Action */}
+            <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+              <Link to="/about-us" className="primary-btn w-full sm:w-auto">
+                Learn More About Us
               </Link>
-              <div className="flex gap-3 sm:justify-center sm:w-fit w-full">
-                <div className="bg-primary h-full aspect-square flex justify-center items-center p-3">
-                  <BiSupport size={25} className="text-white" />
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                <div className="bg-primary w-12 h-12 flex justify-center items-center rounded-lg">
+                  <BiSupport size={24} className="text-white" />
                 </div>
-                <div className="flex flex-col">
-                  <p className="">Call Us Now</p>
+                <div>
+                  <p className="text-sm text-gray-600">Need Help? Call Us Now</p>
                   <Link
                     to={`tel:${companyDetails.phone}`}
-                    className="font-semibold"
+                    className="font-semibold text-primary hover:text-secondary transition-colors"
                   >
                     {companyDetails.phone}
                   </Link>
                 </div>
               </div>
             </div>
-          </div>
-          <div data-aos="fade-up" className="hidden md:flex h-full flex-col">
-            <OptimizedImage
-              src={aboutImg}
-              alt="About Us - KheyaMind AI Technologies"
-              priority={false}
-              className="h-full w-full object-cover rounded-xl"
-            />
           </div>
         </div>
       </section>
@@ -441,44 +440,44 @@ const Home = () => {
       </section>
 
       {/* Technology Stack Section */}
-      <section className="py-[5rem] bg-gray-50">
+      <section className="py-[3rem] sm:py-[5rem] bg-gray-50">
         <div className="wrapper text-center">
-          <div data-aos="fade-up" className="max-w-4xl mx-auto space-y-6">
-            <h2 className="section-heading">
+          <div data-aos="fade-up" className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">
               Powered by Leading AI Technologies
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
               We leverage cutting-edge AI platforms and custom development to deliver enterprise-grade solutions
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8">
-              <div className="space-y-3 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                <div className="text-3xl">🤖</div>
-                <h4 className="font-semibold">OpenAI GPT-4</h4>
-                <p className="text-sm text-gray-600">Advanced language models</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 pt-6 sm:pt-8">
+              <div className="space-y-2 sm:space-y-3 p-3 sm:p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-2xl sm:text-3xl">🤖</div>
+                <h4 className="font-semibold text-sm sm:text-base">OpenAI GPT-5</h4>
+                <p className="text-xs sm:text-sm text-gray-600">Next-gen language models</p>
               </div>
-              <div className="space-y-3 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                <div className="text-3xl">⚡</div>
-                <h4 className="font-semibold">Claude AI</h4>
-                <p className="text-sm text-gray-600">Intelligent reasoning</p>
+              <div className="space-y-2 sm:space-y-3 p-3 sm:p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-2xl sm:text-3xl">⚡</div>
+                <h4 className="font-semibold text-sm sm:text-base">Claude AI</h4>
+                <p className="text-xs sm:text-sm text-gray-600">Intelligent reasoning</p>
               </div>
-              <div className="space-y-3 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                <div className="text-3xl">☁️</div>
-                <h4 className="font-semibold">Azure AI</h4>
-                <p className="text-sm text-gray-600">Microsoft cloud services</p>
+              <div className="space-y-2 sm:space-y-3 p-3 sm:p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-2xl sm:text-3xl">☁️</div>
+                <h4 className="font-semibold text-sm sm:text-base">Azure AI</h4>
+                <p className="text-xs sm:text-sm text-gray-600">Microsoft cloud services</p>
               </div>
-              <div className="space-y-3 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                <div className="text-3xl">🛠️</div>
-                <h4 className="font-semibold">Custom Models</h4>
-                <p className="text-sm text-gray-600">Tailored AI development</p>
+              <div className="space-y-2 sm:space-y-3 p-3 sm:p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-2xl sm:text-3xl">🛠️</div>
+                <h4 className="font-semibold text-sm sm:text-base">Custom Models</h4>
+                <p className="text-xs sm:text-sm text-gray-600">Tailored AI development</p>
               </div>
             </div>
-            <div className="pt-6">
-              <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
-                <span className="bg-white px-3 py-1 rounded-full border">AWS AI Services</span>
-                <span className="bg-white px-3 py-1 rounded-full border">Google Gemini</span>
-                <span className="bg-white px-3 py-1 rounded-full border">Hugging Face</span>
-                <span className="bg-white px-3 py-1 rounded-full border">TensorFlow</span>
-                <span className="bg-white px-3 py-1 rounded-full border">PyTorch</span>
+            <div className="pt-4 sm:pt-6">
+              <div className="flex flex-wrap justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600">
+                <span className="bg-white px-2 sm:px-3 py-1 rounded-full border">AWS AI Services</span>
+                <span className="bg-white px-2 sm:px-3 py-1 rounded-full border">Google Gemini</span>
+                <span className="bg-white px-2 sm:px-3 py-1 rounded-full border">Hugging Face</span>
+                <span className="bg-white px-2 sm:px-3 py-1 rounded-full border">TensorFlow</span>
+                <span className="bg-white px-2 sm:px-3 py-1 rounded-full border">PyTorch</span>
               </div>
             </div>
           </div>
@@ -528,85 +527,91 @@ const Home = () => {
       </section>
 
       {/* ROI Calculator Section */}
-      <section className="py-[5rem] bg-primary text-white">
+      <section className="py-[3rem] sm:py-[5rem] bg-gradient-to-br from-gray-900 to-gray-800 text-white">
         <div className="wrapper text-center">
-          <div data-aos="fade-up" className="max-w-4xl mx-auto space-y-6">
-            <h2 className="text-2xl md:text-3xl font-bold">
+          <div data-aos="fade-up" className="max-w-5xl mx-auto space-y-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
               Calculate Your AI ROI Potential
             </h2>
-            <p className="text-lg opacity-90">
+            <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto">
               See how much you could save with AI automation
             </p>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 mt-8">
-              <div className="grid md:grid-cols-3 gap-6 text-center">
-                <div className="space-y-4">
-                  <h3 className="text-xl font-semibold">Current Monthly Costs</h3>
-                  <div className="space-y-2">
-                    <p className="text-sm opacity-80">Customer Service Staff</p>
-                    <p className="text-2xl font-bold">₹5,00,000</p>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-sm opacity-80">Manual Processing</p>
-                    <p className="text-2xl font-bold">₹3,00,000</p>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <h3 className="text-xl font-semibold">With AI Automation</h3>
-                  <div className="space-y-2">
-                    <p className="text-sm opacity-80">75% Cost Reduction</p>
-                    <p className="text-2xl font-bold text-green-300">₹2,00,000 Saved</p>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-sm opacity-80">24/7 Availability</p>
-                    <p className="text-xl font-semibold text-green-300">∞ Uptime</p>
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mt-8 border border-white/10">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 text-center">
+                <div className="space-y-4 p-4 sm:p-6 bg-red-500/10 rounded-xl border border-red-500/20">
+                  <h3 className="text-lg sm:text-xl font-semibold text-red-400">Current Monthly Costs</h3>
+                  <div className="space-y-3">
+                    <div className="space-y-1">
+                      <p className="text-xs sm:text-sm text-gray-400">Customer Service Staff</p>
+                      <p className="text-xl sm:text-2xl font-bold text-white">₹5,00,000</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-xs sm:text-sm text-gray-400">Manual Processing</p>
+                      <p className="text-xl sm:text-2xl font-bold text-white">₹3,00,000</p>
+                    </div>
                   </div>
                 </div>
                 
-                <div className="space-y-4">
-                  <h3 className="text-xl font-semibold">Annual Savings</h3>
-                  <div className="space-y-2">
-                    <p className="text-sm opacity-80">Total Cost Reduction</p>
-                    <p className="text-3xl font-bold text-yellow-300">₹24,00,000</p>
+                <div className="space-y-4 p-4 sm:p-6 bg-blue-500/10 rounded-xl border border-blue-500/20">
+                  <h3 className="text-lg sm:text-xl font-semibold text-blue-400">With AI Automation</h3>
+                  <div className="space-y-3">
+                    <div className="space-y-1">
+                      <p className="text-xs sm:text-sm text-gray-400">75% Cost Reduction</p>
+                      <p className="text-xl sm:text-2xl font-bold text-green-400">₹2,00,000 Saved</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-xs sm:text-sm text-gray-400">24/7 Availability</p>
+                      <p className="text-lg sm:text-xl font-semibold text-green-400">∞ Uptime</p>
+                    </div>
                   </div>
-                  <div className="space-y-2">
-                    <p className="text-sm opacity-80">ROI Timeline</p>
-                    <p className="text-xl font-semibold">6-12 Months</p>
+                </div>
+                
+                <div className="space-y-4 p-4 sm:p-6 bg-green-500/10 rounded-xl border border-green-500/20">
+                  <h3 className="text-lg sm:text-xl font-semibold text-green-400">Annual Savings</h3>
+                  <div className="space-y-3">
+                    <div className="space-y-1">
+                      <p className="text-xs sm:text-sm text-gray-400">Total Cost Reduction</p>
+                      <p className="text-2xl sm:text-3xl font-bold text-white">₹24,00,000</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-xs sm:text-sm text-gray-400">ROI Timeline</p>
+                      <p className="text-lg sm:text-xl font-semibold text-white">6-12 Months</p>
+                    </div>
                   </div>
                 </div>
               </div>
               
-              <div className="mt-8 pt-6 border-t border-white/20">
-                <p className="text-sm opacity-80 mb-4">
-                  *Calculations based on average enterprise client results. Your actual savings may vary based on implementation scope.
+              <div className="mt-6 sm:mt-8 pt-6 border-t border-white/20">
+                <p className="text-xs sm:text-sm text-gray-400 mb-4 max-w-3xl mx-auto">
+                  *Calculations based on average enterprise client results. Your actual savings may vary based on implementation scope and business requirements.
                 </p>
-                <div className="flex flex-col sm:flex-row justify-center gap-4">
-                  <Link to="/contact-us" className="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 max-w-md mx-auto">
+                  <Link to="/contact-us" className="bg-primary hover:bg-primary/90 text-white px-4 sm:px-6 py-3 rounded-xl font-semibold transition-colors shadow-lg hover:shadow-xl">
                     Get Custom ROI Analysis
                   </Link>
-                  <Link to="/services" className="border border-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors">
+                  <Link to="/services" className="bg-white/10 hover:bg-white/20 border border-white/30 text-white px-4 sm:px-6 py-3 rounded-xl font-semibold transition-colors backdrop-blur-sm">
                     View AI Services
                   </Link>
                 </div>
               </div>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 text-sm">
-              <div className="space-y-1">
-                <p className="font-semibold">Implementation</p>
-                <p className="opacity-80">2-16 weeks</p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 text-xs sm:text-sm">
+              <div className="space-y-1 p-3 bg-white/5 rounded-lg">
+                <p className="font-semibold text-white">Implementation</p>
+                <p className="text-gray-400">2-16 weeks</p>
               </div>
-              <div className="space-y-1">
-                <p className="font-semibold">Support</p>
-                <p className="opacity-80">24/7 monitoring</p>
+              <div className="space-y-1 p-3 bg-white/5 rounded-lg">
+                <p className="font-semibold text-white">Support</p>
+                <p className="text-gray-400">24/7 monitoring</p>
               </div>
-              <div className="space-y-1">
-                <p className="font-semibold">Scalability</p>
-                <p className="opacity-80">Enterprise ready</p>
+              <div className="space-y-1 p-3 bg-white/5 rounded-lg">
+                <p className="font-semibold text-white">Scalability</p>
+                <p className="text-gray-400">Enterprise ready</p>
               </div>
-              <div className="space-y-1">
-                <p className="font-semibold">Compliance</p>
-                <p className="opacity-80">HIPAA, GDPR ready</p>
+              <div className="space-y-1 p-3 bg-white/5 rounded-lg">
+                <p className="font-semibold text-white">Compliance</p>
+                <p className="text-gray-400">HIPAA, GDPR ready</p>
               </div>
             </div>
           </div>
