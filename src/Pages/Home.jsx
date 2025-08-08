@@ -575,69 +575,69 @@ const Home = () => {
       </section>
 
       {/* ROI Calculator Section */}
-      <section className="py-[3rem] sm:py-[5rem] bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white">
+      <section className="py-[3rem] sm:py-[5rem] bg-gradient-to-br from-[#FFB703] to-[#FB8500] text-[#003049] sm:text-white">
         <div className="wrapper text-center">
           <div data-aos="fade-up" className="max-w-5xl mx-auto space-y-6">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
               Calculate Your AI ROI Potential
             </h2>
-            <p className="text-lg sm:text-xl text-blue-100 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-[#003049]/70 sm:text-white/90 max-w-2xl mx-auto">
               See how much you could save with AI automation
             </p>
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mt-8 border border-white/20">
+            <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mt-8 border border-white/30">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 text-center">
-                <div className="space-y-4 p-4 sm:p-6 bg-red-500/20 rounded-xl border border-red-300/30">
-                  <h3 className="text-lg sm:text-xl font-semibold text-red-200">Current Monthly Costs</h3>
+                <div className="space-y-4 p-4 sm:p-6 bg-red-500/25 backdrop-blur rounded-xl border border-red-400/40">
+                  <h3 className="text-lg sm:text-xl font-semibold text-red-700 sm:text-red-200">Current Monthly Costs</h3>
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <p className="text-xs sm:text-sm text-red-100">Customer Service Staff</p>
-                      <p className="text-xl sm:text-2xl font-bold text-white">₹5,00,000</p>
+                      <p className="text-xs sm:text-sm text-red-600 sm:text-red-100">Customer Service Staff</p>
+                      <p className="text-xl sm:text-2xl font-bold text-[#003049] sm:text-white">₹5,00,000</p>
                     </div>
                     <div className="space-y-1">
-                      <p className="text-xs sm:text-sm text-red-100">Manual Processing</p>
-                      <p className="text-xl sm:text-2xl font-bold text-white">₹3,00,000</p>
+                      <p className="text-xs sm:text-sm text-red-600 sm:text-red-100">Manual Processing</p>
+                      <p className="text-xl sm:text-2xl font-bold text-[#003049] sm:text-white">₹3,00,000</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="space-y-4 p-4 sm:p-6 bg-white/20 rounded-xl border border-white/30">
-                  <h3 className="text-lg sm:text-xl font-semibold text-blue-100">With AI Automation</h3>
+                <div className="space-y-4 p-4 sm:p-6 bg-white/25 backdrop-blur rounded-xl border border-white/40">
+                  <h3 className="text-lg sm:text-xl font-semibold text-[#003049] sm:text-white">With AI Automation</h3>
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <p className="text-xs sm:text-sm text-blue-100">75% Cost Reduction</p>
-                      <p className="text-xl sm:text-2xl font-bold text-green-300">₹2,00,000 Saved</p>
+                      <p className="text-xs sm:text-sm text-[#003049]/70 sm:text-white/90">75% Cost Reduction</p>
+                      <p className="text-xl sm:text-2xl font-bold text-green-600 sm:text-green-300">₹2,00,000 Saved</p>
                     </div>
                     <div className="space-y-1">
-                      <p className="text-xs sm:text-sm text-blue-100">24/7 Availability</p>
-                      <p className="text-lg sm:text-xl font-semibold text-green-300">∞ Uptime</p>
+                      <p className="text-xs sm:text-sm text-[#003049]/70 sm:text-white/90">24/7 Availability</p>
+                      <p className="text-lg sm:text-xl font-semibold text-green-600 sm:text-green-300">∞ Uptime</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="space-y-4 p-4 sm:p-6 bg-yellow-400/20 rounded-xl border border-yellow-300/30">
-                  <h3 className="text-lg sm:text-xl font-semibold text-yellow-200">Annual Savings</h3>
+                <div className="space-y-4 p-4 sm:p-6 bg-[#003049]/20 backdrop-blur rounded-xl border border-[#003049]/30">
+                  <h3 className="text-lg sm:text-xl font-semibold text-[#003049] sm:text-white">Annual Savings</h3>
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <p className="text-xs sm:text-sm text-yellow-100">Total Cost Reduction</p>
-                      <p className="text-2xl sm:text-3xl font-bold text-white">₹24,00,000</p>
+                      <p className="text-xs sm:text-sm text-[#003049]/70 sm:text-white/90">Total Cost Reduction</p>
+                      <p className="text-2xl sm:text-3xl font-bold text-[#003049] sm:text-white">₹24,00,000</p>
                     </div>
                     <div className="space-y-1">
-                      <p className="text-xs sm:text-sm text-yellow-100">ROI Timeline</p>
-                      <p className="text-lg sm:text-xl font-semibold text-white">6-12 Months</p>
+                      <p className="text-xs sm:text-sm text-[#003049]/70 sm:text-white/90">ROI Timeline</p>
+                      <p className="text-lg sm:text-xl font-semibold text-[#003049] sm:text-white">6-12 Months</p>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="mt-6 sm:mt-8 pt-6 border-t border-white/30">
-                <p className="text-xs sm:text-sm text-blue-100 mb-4 max-w-3xl mx-auto">
+              <div className="mt-6 sm:mt-8 pt-6 border-t border-white/40">
+                <p className="text-xs sm:text-sm text-[#003049]/60 sm:text-white/80 mb-4 max-w-3xl mx-auto">
                   *Calculations based on average enterprise client results. Your actual savings may vary based on implementation scope and business requirements.
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 max-w-md mx-auto">
-                  <Link to="/contact-us" className="bg-white text-blue-700 hover:bg-blue-50 px-4 sm:px-6 py-3 rounded-xl font-semibold transition-colors shadow-lg hover:shadow-xl">
+                  <Link to="/contact-us" className="bg-[#003049] text-white hover:bg-[#003049]/90 sm:bg-white sm:text-[#003049] sm:hover:bg-white/90 px-4 sm:px-6 py-3 rounded-xl font-semibold transition-colors shadow-lg hover:shadow-xl">
                     Get Custom ROI Analysis
                   </Link>
-                  <Link to="/services" className="bg-white/20 hover:bg-white/30 border border-white/40 text-white px-4 sm:px-6 py-3 rounded-xl font-semibold transition-colors backdrop-blur-sm">
+                  <Link to="/services" className="bg-white/30 hover:bg-white/40 border border-[#003049]/40 sm:border-white/40 text-[#003049] sm:text-white px-4 sm:px-6 py-3 rounded-xl font-semibold transition-colors backdrop-blur-sm">
                     View AI Services
                   </Link>
                 </div>
@@ -645,21 +645,21 @@ const Home = () => {
             </div>
             
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 text-xs sm:text-sm">
-              <div className="space-y-1 p-3 bg-white/10 rounded-lg border border-white/20">
-                <p className="font-semibold text-white">Implementation</p>
-                <p className="text-blue-100">2-16 weeks</p>
+              <div className="space-y-1 p-3 bg-white/15 backdrop-blur rounded-lg border border-white/30">
+                <p className="font-semibold text-[#003049] sm:text-white">Implementation</p>
+                <p className="text-[#003049]/70 sm:text-white/80">2-16 weeks</p>
               </div>
-              <div className="space-y-1 p-3 bg-white/10 rounded-lg border border-white/20">
-                <p className="font-semibold text-white">Support</p>
-                <p className="text-blue-100">24/7 monitoring</p>
+              <div className="space-y-1 p-3 bg-white/15 backdrop-blur rounded-lg border border-white/30">
+                <p className="font-semibold text-[#003049] sm:text-white">Support</p>
+                <p className="text-[#003049]/70 sm:text-white/80">24/7 monitoring</p>
               </div>
-              <div className="space-y-1 p-3 bg-white/10 rounded-lg border border-white/20">
-                <p className="font-semibold text-white">Scalability</p>
-                <p className="text-blue-100">Enterprise ready</p>
+              <div className="space-y-1 p-3 bg-white/15 backdrop-blur rounded-lg border border-white/30">
+                <p className="font-semibold text-[#003049] sm:text-white">Scalability</p>
+                <p className="text-[#003049]/70 sm:text-white/80">Enterprise ready</p>
               </div>
-              <div className="space-y-1 p-3 bg-white/10 rounded-lg border border-white/20">
-                <p className="font-semibold text-white">Compliance</p>
-                <p className="text-blue-100">HIPAA, GDPR ready</p>
+              <div className="space-y-1 p-3 bg-white/15 backdrop-blur rounded-lg border border-white/30">
+                <p className="font-semibold text-[#003049] sm:text-white">Compliance</p>
+                <p className="text-[#003049]/70 sm:text-white/80">HIPAA, GDPR ready</p>
               </div>
             </div>
           </div>
