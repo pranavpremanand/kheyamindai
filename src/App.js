@@ -14,6 +14,7 @@ import { createLazyComponent, initBundleOptimizations } from "./utils/bundleOpti
 import { initCriticalCSS } from "./utils/criticalCSS";
 import { initThirdPartyOptimizations } from "./utils/thirdPartyOptimization";
 import { initIconOptimizations } from "./utils/iconOptimization";
+import { initAllPerformanceOptimizations } from "./utils/performanceOptimization";
 import { HelmetProvider } from 'react-helmet-async';
 import { initializeAnimations } from './utils/animationConfig';
 import { initMobileFixes } from './utils/mobileFix';
@@ -43,37 +44,65 @@ const RealEstateAILanding = createLazyComponent(() =>
 
 function App() {
   useEffect(() => {
-    // Initialize critical CSS immediately
-    initCriticalCSS();
-    
-    // Initialize performance monitoring
-    initPerformanceMonitoring();
-    observePerformance();
-    
-    // Initialize bundle optimizations
-    initBundleOptimizations();
-    
-    // Initialize icon optimizations
-    initIconOptimizations();
-    
-    // Initialize third-party optimizations
-    initThirdPartyOptimizations();
-    
-    // Initialize animations - disable on mobile to prevent content hiding
-    const animationCleanup = initializeAnimations({
-      disable: window.innerWidth <= 768,
-      duration: 800
-    });
-    
-    // Initialize mobile fixes
-    const mobileFixCleanup = initMobileFixes();
-      
-      // Optimize existing images
-      optimizeExistingImages();
+    let mounted = true;
+    const cleanupFunctions = [];
+
+    // Initialize performance optimizations immediately
+    initAllPerformanceOptimizations();
+
+    const initializeApp = async () => {
+      try {
+        // Initialize critical features first
+        if (mounted) {
+          initCriticalCSS();
+          initPerformanceMonitoring();
+          observePerformance();
+        }
+        
+        // Initialize animations with better mobile detection and performance
+        if (mounted) {
+          const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+          const animationCleanup = initializeAnimations({
+            disable: isMobile,
+            duration: isMobile ? 0 : 400,
+            once: true,
+            offset: 100
+          });
+          cleanupFunctions.push(animationCleanup);
+        }
+        
+        // Initialize mobile fixes
+        if (mounted) {
+          const mobileFixCleanup = initMobileFixes();
+          cleanupFunctions.push(mobileFixCleanup);
+        }
+        
+        // Defer non-critical optimizations
+        requestIdleCallback(() => {
+          if (mounted) {
+            initBundleOptimizations();
+            initIconOptimizations();
+            initThirdPartyOptimizations();
+            optimizeExistingImages();
+          }
+        }, { timeout: 2000 });
+        
+      } catch (error) {
+        console.warn('App initialization error:', error);
+      }
+    };
+
+    initializeApp();
     
     return () => {
-      animationCleanup();
-      mobileFixCleanup();
+      mounted = false;
+      cleanupFunctions.forEach(cleanup => {
+        try {
+          cleanup && cleanup();
+        } catch (error) {
+          console.warn('Cleanup error:', error);
+        }
+      });
     };
   }, []);
 

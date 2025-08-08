@@ -216,20 +216,56 @@ export const getImageOptimizationRecommendations = () => {
  * Automatic image optimization for existing images
  */
 export const optimizeExistingImages = () => {
-  const images = document.querySelectorAll('img:not([data-optimized])');
-  
-  images.forEach((img) => {
-    // Add lazy loading if not present
-    if (!img.loading && !img.dataset.lazy) {
-      const rect = img.getBoundingClientRect();
-      if (rect.top > window.innerHeight + 100) {
-        img.loading = 'lazy';
-      }
-    }
+  // Use requestIdleCallback to prevent blocking main thread
+  const optimize = () => {
+    const images = document.querySelectorAll('img:not([data-optimized])');
     
-    // Add optimization flag
-    img.dataset.optimized = 'true';
-  });
+    images.forEach((img, index) => {
+      // Batch process in small chunks to prevent blocking
+      setTimeout(() => {
+        // Skip if already loaded or loading
+        if (img.complete || img.loading === 'lazy') {
+          img.dataset.optimized = 'true';
+          return;
+        }
+
+        const rect = img.getBoundingClientRect();
+        
+        // Add lazy loading for below-fold images
+        if (rect.top > window.innerHeight + 200) {
+          img.loading = 'lazy';
+        }
+        
+        // Add error handling
+        if (!img.onerror) {
+          img.onerror = () => {
+            console.warn('Image failed to load:', img.src);
+          };
+        }
+        
+        // Add load tracking for performance
+        if (!img.onload && img.src) {
+          const startTime = performance.now();
+          img.onload = () => {
+            const loadTime = performance.now() - startTime;
+            if (loadTime > 1000) {
+              console.warn(`Slow image load: ${img.src} took ${Math.round(loadTime)}ms`);
+            }
+          };
+        }
+        
+        // Add optimization flag
+        img.dataset.optimized = 'true';
+      }, index * 10); // Stagger processing
+    });
+  };
+
+  // Use requestIdleCallback if available, otherwise setTimeout
+  if (typeof requestIdleCallback !== 'undefined') {
+    requestIdleCallback(optimize, { timeout: 1000 });
+  } else {
+    setTimeout(optimize, 100);
+  }
 };
 
 /**

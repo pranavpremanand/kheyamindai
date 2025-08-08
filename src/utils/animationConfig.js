@@ -9,11 +9,18 @@ import 'aos/dist/aos.css';
 // Default AOS configuration
 const DEFAULT_AOS_CONFIG = {
     once: true,
-    duration: 800,
-    easing: 'ease-in-out-quart',
-    offset: -50,
-    delay: 100,
-    disable: window.innerWidth <= 768 ? true : false // Disable on mobile to prevent content hiding
+    duration: 600,
+    easing: 'ease-out-cubic',
+    offset: 50,
+    delay: 0,
+    disable: false,
+    startEvent: 'DOMContentLoaded',
+    initClassName: 'aos-init',
+    animatedClassName: 'aos-animate',
+    useClassNames: false,
+    disableMutationObserver: false,
+    debounceDelay: 50,
+    throttleDelay: 99
 };
 
 /**
@@ -21,33 +28,63 @@ const DEFAULT_AOS_CONFIG = {
  * @param {Object} customConfig - Optional custom configuration to override defaults
  */
 export const initializeAnimations = (customConfig = {}) => {
+    // Check if document is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => initializeAnimations(customConfig));
+        return () => {};
+    }
+
     const config = {
         ...DEFAULT_AOS_CONFIG,
         ...customConfig
     };
 
-    // Initialize AOS
-    AOS.init(config);
+    // Prevent double initialization
+    if (document.querySelector('.aos-init')) {
+        return () => {};
+    }
 
-    // Refresh AOS on window resize
-    window.addEventListener('resize', () => {
-        AOS.refresh();
-    });
+    // Initialize AOS only once DOM is ready
+    setTimeout(() => {
+        AOS.init(config);
+    }, 0);
 
-    // Refresh AOS when new content is loaded
+    let resizeTimeout;
+    const handleResize = () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            AOS.refresh();
+        }, 100);
+    };
+
+    // Add resize listener with debouncing
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    // Observe DOM changes with throttling
+    let mutationTimeout;
     const observer = new MutationObserver(() => {
-        AOS.refresh();
+        if (!mutationTimeout) {
+            mutationTimeout = setTimeout(() => {
+                AOS.refresh();
+                mutationTimeout = null;
+            }, 100);
+        }
     });
 
-    // Observe DOM changes
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
+    // Observe DOM changes only for specific containers
+    const containers = document.querySelectorAll('main, [data-aos]');
+    containers.forEach(container => {
+        observer.observe(container, {
+            childList: true,
+            subtree: false
+        });
     });
 
     return () => {
         observer.disconnect();
-        window.removeEventListener('resize', AOS.refresh);
+        window.removeEventListener('resize', handleResize);
+        clearTimeout(resizeTimeout);
+        clearTimeout(mutationTimeout);
     };
 };
 
