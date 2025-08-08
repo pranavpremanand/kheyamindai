@@ -28,6 +28,11 @@ const DEFAULT_AOS_CONFIG = {
  * @param {Object} customConfig - Optional custom configuration to override defaults
  */
 export const initializeAnimations = (customConfig = {}) => {
+    // Prevent double initialization globally
+    if (window.__aosInitialized) {
+        return () => {};
+    }
+
     // Check if document is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => initializeAnimations(customConfig));
@@ -39,15 +44,22 @@ export const initializeAnimations = (customConfig = {}) => {
         ...customConfig
     };
 
-    // Prevent double initialization
-    if (document.querySelector('.aos-init')) {
+    // Prevent double initialization with DOM check
+    if (document.querySelector('.aos-init') || window.__aosInitialized) {
         return () => {};
     }
 
-    // Initialize AOS only once DOM is ready
+    // Mark as initialized immediately
+    window.__aosInitialized = true;
+
+    // Initialize AOS with small delay to ensure all elements are ready
     setTimeout(() => {
-        AOS.init(config);
-    }, 0);
+        try {
+            AOS.init(config);
+        } catch (error) {
+            console.warn('AOS initialization error:', error);
+        }
+    }, 50);
 
     let resizeTimeout;
     const handleResize = () => {

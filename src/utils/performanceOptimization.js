@@ -95,58 +95,37 @@ export const initPerformanceOptimizations = () => {
  * Monitor and fix double loading issues
  */
 export const preventDoubleLoading = () => {
-  let isLoading = false;
-  
-  const handlePageLoad = () => {
-    if (isLoading) {
-      console.warn('Double loading detected and prevented');
-      return false;
-    }
-    
-    isLoading = true;
-    
-    // Reset after page is fully loaded
-    setTimeout(() => {
-      isLoading = false;
-    }, 2000);
-    
-    return true;
-  };
+  // Prevent double initialization
+  if (window.__doubleLoadingPrevention) {
+    return;
+  }
+  window.__doubleLoadingPrevention = true;
 
-  // Override navigation functions to prevent double loading
-  const originalPushState = window.history.pushState;
-  const originalReplaceState = window.history.replaceState;
+  let isNavigating = false;
   
-  window.history.pushState = function(...args) {
-    if (handlePageLoad()) {
-      return originalPushState.apply(window.history, args);
-    }
-  };
-  
-  window.history.replaceState = function(...args) {
-    if (handlePageLoad()) {
-      return originalReplaceState.apply(window.history, args);
-    }
-  };
-
-  // Monitor for duplicate network requests
+  // Monitor for duplicate network requests only
   const pendingRequests = new Set();
   
-  const originalFetch = window.fetch;
-  window.fetch = function(url, options = {}) {
-    const requestKey = `${url}:${JSON.stringify(options)}`;
-    
-    if (pendingRequests.has(requestKey)) {
-      console.warn('Duplicate request prevented:', url);
-      return Promise.reject(new Error('Duplicate request'));
-    }
-    
-    pendingRequests.add(requestKey);
-    
-    return originalFetch(url, options).finally(() => {
-      pendingRequests.delete(requestKey);
-    });
-  };
+  // Don't override history methods as they can cause issues with React Router
+  // Instead, monitor fetch requests to prevent duplicates
+  if (!window.__fetchIntercepted) {
+    const originalFetch = window.fetch;
+    window.fetch = function(url, options = {}) {
+      const requestKey = `${url}:${JSON.stringify(options)}`;
+      
+      if (pendingRequests.has(requestKey)) {
+        console.warn('Duplicate request prevented:', url);
+        return Promise.reject(new Error('Duplicate request'));
+      }
+      
+      pendingRequests.add(requestKey);
+      
+      return originalFetch(url, options).finally(() => {
+        setTimeout(() => pendingRequests.delete(requestKey), 100);
+      });
+    };
+    window.__fetchIntercepted = true;
+  }
 };
 
 /**
@@ -208,17 +187,21 @@ export const analyzeBundleSize = () => {
  * Initialize all performance optimizations
  */
 export const initAllPerformanceOptimizations = () => {
+  // Prevent multiple calls
+  if (window.__performanceOptimized) {
+    return;
+  }
+  window.__performanceOptimized = true;
+
   // Run immediately
   preventDoubleLoading();
   
-  // Run when DOM is ready
+  // Run when DOM is ready with minimal delay
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-      initPerformanceOptimizations();
-      setTimeout(optimizeCSS, 500);
+      setTimeout(initPerformanceOptimizations, 100);
     });
   } else {
-    initPerformanceOptimizations();
-    setTimeout(optimizeCSS, 500);
+    setTimeout(initPerformanceOptimizations, 100);
   }
 };

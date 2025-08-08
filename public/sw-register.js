@@ -37,10 +37,11 @@
         });
     });
 
-    // Listen for controller change events
+    // Listen for controller change events but don't auto-reload
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-      console.log('Service Worker controller changed - page will reload');
-      window.location.reload();
+      console.log('Service Worker controller changed');
+      // Don't auto-reload to prevent double loading
+      // window.location.reload();
     });
 
     // Handle service worker messages

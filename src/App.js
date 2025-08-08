@@ -44,55 +44,72 @@ const RealEstateAILanding = createLazyComponent(() =>
 
 function App() {
   useEffect(() => {
+    // Prevent double initialization
+    if (window.__appInitialized) {
+      return;
+    }
+    window.__appInitialized = true;
+
     let mounted = true;
     const cleanupFunctions = [];
 
-    // Initialize performance optimizations immediately
+    // Initialize performance optimizations immediately but only once
     initAllPerformanceOptimizations();
 
     const initializeApp = async () => {
       try {
         // Initialize critical features first
-        if (mounted) {
+        if (mounted && !window.__criticalInitialized) {
           initCriticalCSS();
           initPerformanceMonitoring();
           observePerformance();
+          window.__criticalInitialized = true;
         }
         
         // Initialize animations with better mobile detection and performance
-        if (mounted) {
+        if (mounted && !window.__animationsInitialized) {
           const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
           const animationCleanup = initializeAnimations({
             disable: isMobile,
-            duration: isMobile ? 0 : 400,
+            duration: isMobile ? 0 : 300,
             once: true,
-            offset: 100
+            offset: 50
           });
           cleanupFunctions.push(animationCleanup);
+          window.__animationsInitialized = true;
         }
         
         // Initialize mobile fixes
-        if (mounted) {
+        if (mounted && !window.__mobileFixesInitialized) {
           const mobileFixCleanup = initMobileFixes();
           cleanupFunctions.push(mobileFixCleanup);
+          window.__mobileFixesInitialized = true;
         }
         
-        // Defer non-critical optimizations
-        requestIdleCallback(() => {
-          if (mounted) {
-            initBundleOptimizations();
-            initIconOptimizations();
-            initThirdPartyOptimizations();
-            optimizeExistingImages();
-          }
-        }, { timeout: 2000 });
+        // Defer non-critical optimizations with longer delay to prevent conflicts
+        if (mounted) {
+          setTimeout(() => {
+            if (mounted && !window.__optimizationsInitialized) {
+              try {
+                initBundleOptimizations();
+                initIconOptimizations();
+                initThirdPartyOptimizations();
+                optimizeExistingImages();
+              } catch (error) {
+                console.warn('Non-critical optimization error:', error);
+              }
+              window.__optimizationsInitialized = true;
+            }
+          }, 1500);
+        }
         
       } catch (error) {
         console.warn('App initialization error:', error);
       }
     };
 
-    initializeApp();
+    // Small delay to ensure DOM is ready
+    setTimeout(initializeApp, 0);
     
     return () => {
       mounted = false;

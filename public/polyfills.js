@@ -72,10 +72,7 @@
   
   // 3. Apply after window load
   window.addEventListener('load', function() {
-    ensureIOSVisibility();
-    
-    // Also apply after a short delay to catch any late-loading content
-    setTimeout(ensureIOSVisibility, 500);
+    setTimeout(ensureIOSVisibility, 100);
   });
   
   // 4. Apply on orientation change (common issue trigger on iOS)
