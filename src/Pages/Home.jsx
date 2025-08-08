@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/file";
 import bannerVid from "../assets/vid/banner.mp4";
 import { Link } from "react-router-dom";
 import CountUp from "react-countup";
@@ -18,13 +18,12 @@ import {
   FaUserFriends,
   FaUsers,
 } from "react-icons/fa";
-import { GiCheckMark } from "react-icons/gi";
 import { BiSupport } from "react-icons/bi";
 import { ImPhone } from "react-icons/im";
 import aiEnterpriseBanner from "../assets/images/ai-enterprise-banner.webp";
 import SEO from "../Components/SEO/SEO";
 import LocalBusinessSchema from "../Components/SEO/LocalBusinessSchema";
-import LazyImage, { OptimizedImage } from "../Components/LazyImage";
+import LazyImage from "../Components/LazyImage";
 import InteractiveAIDemos from "../Components/InteractiveAIDemos";
 import {
   LazyTestimonials,

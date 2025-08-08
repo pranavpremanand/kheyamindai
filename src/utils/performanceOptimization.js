@@ -101,7 +101,7 @@ export const preventDoubleLoading = () => {
   }
   window.__doubleLoadingPrevention = true;
 
-  let isNavigating = false;
+  // let isNavigating = false; // Reserved for future navigation tracking
   
   // Monitor for duplicate network requests only
   const pendingRequests = new Set();

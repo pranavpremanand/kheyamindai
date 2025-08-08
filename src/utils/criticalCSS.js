@@ -334,7 +334,7 @@ export const initCriticalCSS = () => {
   });
 };
 
-export default {
+const criticalCSSUtils = {
   injectCriticalCSS,
   removeCriticalCSS,
   loadNonCriticalCSS,
@@ -342,3 +342,5 @@ export default {
   monitorCSSPerformance,
   initCriticalCSS
 };
+
+export default criticalCSSUtils;

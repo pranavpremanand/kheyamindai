@@ -128,10 +128,8 @@ export const monitorBundleSize = () => {
         resource.name.endsWith('.jsx')
       );
 
-      const totalSize = jsFiles.reduce((acc, file) =>
-        acc + file.encodedBodySize, 0
-      );
-
+      // Calculate total size for potential monitoring
+      // const totalSize = jsFiles.reduce((acc, file) => acc + file.encodedBodySize, 0);
       // console.log(`Total JS bundle size: ${(totalSize / 1024 / 1024).toFixed(2)}MB`);
 
       // Log large chunks

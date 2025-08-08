@@ -34,14 +34,14 @@ const THIRD_PARTY_SCRIPTS = {
   }
 };
 
-// Script loading strategies
-const LOADING_STRATEGIES = {
-  immediate: 0,
-  afterLoad: 1000,
-  onInteraction: 'interaction',
-  onIdle: 'idle',
-  onVisible: 'visible'
-};
+// Script loading strategies - commented out as it's not currently used
+// const LOADING_STRATEGIES = {
+//   immediate: 0,
+//   afterLoad: 1000,
+//   onInteraction: 'interaction',
+//   onIdle: 'idle',
+//   onVisible: 'visible'
+// };
 
 // Queue for deferred scripts
 let scriptQueue = [];
@@ -339,7 +339,7 @@ export const cleanupThirdPartyScripts = () => {
   }
 };
 
-export default {
+const thirdPartyUtils = {
   loadGoogleTagManager,
   loadGoogleAnalytics,
   loadHotjar,
@@ -351,3 +351,5 @@ export default {
   initThirdPartyOptimizations,
   cleanupThirdPartyScripts
 };
+
+export default thirdPartyUtils;

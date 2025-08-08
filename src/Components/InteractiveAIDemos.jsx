@@ -8,42 +8,21 @@ import {
   FaPlay, 
   FaStop,
   FaSpinner,
-  FaTimes,
   FaCheck,
   FaExclamationTriangle,
   FaVolumeUp,
   FaDownload
 } from 'react-icons/fa';
 
-// Type definitions
-interface Message {
-  id: string;
-  text: string;
-  sender: 'user' | 'ai';
-  timestamp: Date;
-  typing?: boolean;
-}
-
-interface VoiceState {
-  isRecording: boolean;
-  isProcessing: boolean;
-  transcript: string;
-  audioBlob: Blob | null;
-  response: string;
-}
-
-interface DocumentAnalysis {
-  fileName: string;
-  fileSize: string;
-  analysisResult: {
-    summary: string;
-    keyPoints: string[];
-    sentiment: string;
-    confidence: number;
-  } | null;
-  isProcessing: boolean;
-  error: string | null;
-}
+// Type definitions (for JSDoc - not using TypeScript)
+/**
+ * @typedef {Object} Message
+ * @property {string} id
+ * @property {string} text  
+ * @property {'user'|'ai'} sender
+ * @property {Date} timestamp
+ * @property {boolean} [typing]
+ */
 
 // Intelligent keyword-based response system
 const KEYWORD_RESPONSES = {
@@ -248,16 +227,7 @@ const InteractiveAIDemos = () => {
   });
   const fileInputRef = useRef(null);
 
-  // Auto-scroll messages only within chat container
-  const scrollToBottom = () => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ 
-        behavior: "smooth",
-        block: "end",
-        inline: "nearest"
-      });
-    }
-  };
+  // Auto-scroll messages only within chat container - removed unused function
 
   useEffect(() => {
     // Only auto-scroll if user is already focused on chat area
