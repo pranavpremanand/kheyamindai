@@ -45,14 +45,165 @@ interface DocumentAnalysis {
   error: string | null;
 }
 
-// Demo data for realistic AI responses
-const DEMO_RESPONSES = [
-  "I'm KheyaMind AI! I can help automate your customer service, process documents, and integrate with your existing systems. What would you like to know about AI automation?",
-  "Our AI solutions typically reduce operational costs by 75% while improving response times. We specialize in chatbots, voice AI, and custom automation for enterprises.",
-  "I can help you implement AI solutions in healthcare, finance, retail, and manufacturing. Each solution is customized to your specific industry requirements.",
-  "Our implementation timeline is typically 2-16 weeks depending on complexity. We provide 24/7 support and continuous optimization after deployment.",
-  "Yes, our AI solutions are fully compliant with HIPAA, GDPR, and other regulatory standards. Security and privacy are our top priorities."
-];
+// Intelligent keyword-based response system
+const KEYWORD_RESPONSES = {
+  // Pricing and Cost Related
+  pricing: {
+    keywords: ['price', 'pricing', 'cost', 'budget', 'investment', 'fee', 'rates', 'money', 'expensive', 'cheap', 'affordable'],
+    responses: [
+      "💰 Our AI solutions are designed to be cost-effective with transparent pricing. Basic chatbot integration starts from ₹2,50,000, while enterprise solutions range from ₹10-25 lakhs. We offer flexible payment plans and guarantee 300% ROI within 12 months. Would you like a customized quote?",
+      "📊 Pricing varies by complexity: Chatbot (₹2.5-8L), Voice AI (₹5-15L), Document Analysis (₹3-12L). Most clients see 75% cost reduction in operations within 6 months, making our solutions highly profitable. Can I help calculate potential savings for your business?",
+    ]
+  },
+
+  // Implementation and Timeline
+  implementation: {
+    keywords: ['implementation', 'timeline', 'deploy', 'setup', 'install', 'integrate', 'time', 'duration', 'weeks', 'months', 'launch', 'go-live'],
+    responses: [
+      "⚡ Implementation is fast and seamless! Simple chatbots: 2-4 weeks, Voice AI systems: 4-8 weeks, Enterprise solutions: 8-16 weeks. We handle everything - setup, integration, testing, and training. Plus 30 days free optimization post-launch!",
+      "🚀 Our proven deployment process: Week 1-2 (Analysis & Design), Week 3-4 (Development), Week 5-6 (Integration & Testing), Week 7+ (Launch & Optimization). We work alongside your team to ensure zero downtime during deployment.",
+    ]
+  },
+
+  // Industries and Sectors
+  industries: {
+    keywords: ['industry', 'healthcare', 'finance', 'retail', 'manufacturing', 'education', 'real estate', 'banking', 'insurance', 'sector'],
+    responses: [
+      "🏥 We excel across industries: Healthcare (HIPAA-compliant patient support), Finance (KYC automation, loan processing), Retail (24/7 customer service), Manufacturing (supply chain optimization), Real Estate (lead qualification). Which industry are you in?",
+      "🌟 Industry expertise includes: Banking (fraud detection, customer onboarding), Insurance (claims processing), Education (student support chatbots), E-commerce (order tracking, returns), Government (citizen services). Each solution is customized for industry-specific compliance and workflows.",
+    ]
+  },
+
+  // Services and Solutions
+  services: {
+    keywords: ['chatbot', 'voice', 'automation', 'document', 'analysis', 'customer service', 'support', 'ai', 'solutions', 'features', 'capabilities'],
+    responses: [
+      "🤖 Our core services: AI Chatbots (web, WhatsApp, social media), Voice AI (phone automation, IVR replacement), Document Analysis (contracts, invoices, reports), Customer Service Automation (24/7 multilingual support), and Custom AI Solutions tailored to your needs.",
+      "⚙️ Advanced capabilities: Natural Language Processing, Sentiment Analysis, Multi-language support (15+ languages), CRM Integration, Analytics Dashboard, Human handoff, API integrations, and White-label solutions. All powered by GPT-5 technology!",
+    ]
+  },
+
+  // ROI and Benefits
+  roi: {
+    keywords: ['roi', 'return', 'savings', 'benefits', 'efficiency', 'reduce', 'improve', 'productivity', 'profit', 'revenue', 'growth'],
+    responses: [
+      "📈 Guaranteed ROI: 75% reduction in customer service costs, 90% faster response times, 24/7 availability, 85% customer satisfaction improvement. Average client saves ₹24+ lakhs annually while increasing revenue by 40% through better customer engagement!",
+      "💡 Key benefits: Eliminate hiring costs (save ₹15L+ annually on support staff), Handle 10x more queries simultaneously, Reduce human errors by 95%, Increase lead conversion by 60%, and Scale operations without proportional cost increases. ROI typically achieved in 4-6 months!",
+    ]
+  },
+
+  // Support and Maintenance
+  support: {
+    keywords: ['support', 'maintenance', 'help', 'assistance', '24/7', 'training', 'ongoing', 'updates'],
+    responses: [
+      "🛠️ Comprehensive support included: 24/7 technical assistance, regular updates and improvements, performance monitoring, staff training sessions, dedicated account manager, and proactive optimization. We're your long-term AI partner, not just a vendor!",
+      "📞 Support tiers: Basic (email support, monthly reports), Premium (24/7 phone support, weekly optimization), Enterprise (dedicated team, real-time monitoring, custom features). All plans include free updates and security patches.",
+    ]
+  },
+
+  // Security and Compliance
+  security: {
+    keywords: ['security', 'privacy', 'gdpr', 'hipaa', 'compliance', 'data', 'protection', 'safe', 'secure', 'regulation'],
+    responses: [
+      "🔒 Enterprise-grade security: HIPAA, GDPR, SOC 2 compliant. Data encryption at rest and in transit, zero data retention policies, regular security audits, ISO 27001 certified infrastructure. Your data never leaves your approved regions and is fully under your control.",
+      "🛡️ Privacy by design: End-to-end encryption, role-based access controls, audit trails, data anonymization, secure API endpoints, multi-factor authentication, and regular penetration testing. We're trusted by 100+ enterprises with sensitive data.",
+    ]
+  },
+
+  // Company and About
+  company: {
+    keywords: ['about', 'company', 'team', 'experience', 'portfolio', 'clients', 'who', 'founded', 'background'],
+    responses: [
+      "🏢 KheyaMind AI is a leading AI consulting firm with 5+ years experience, 200+ successful implementations, and 95% client retention rate. Our team of 25+ AI experts, data scientists, and engineers has delivered solutions for startups to Fortune 500 companies.",
+      "⭐ Proud achievements: Featured on DesignRush Top AI Companies, served 150+ clients across 12 countries, processed 10M+ customer interactions monthly, saved clients ₹500+ crores in operational costs. We're the trusted AI partner for digital transformation.",
+    ]
+  },
+
+  // Getting Started
+  getting_started: {
+    keywords: ['start', 'begin', 'demo', 'trial', 'contact', 'consultation', 'free', 'quote', 'proposal'],
+    responses: [
+      "🚀 Ready to get started? Here's how: 1) Free 30-min consultation call, 2) Custom solution design & quote, 3) Proof of concept development, 4) Full implementation & launch. Book your free consultation now - we'll show you exactly how AI can transform your business!",
+      "💬 Next steps: Schedule a free discovery call, receive a custom AI roadmap for your business, get a detailed proposal with ROI projections, and start with a pilot project. No commitments required for the initial consultation. Let's build your AI future together!",
+    ]
+  },
+
+  // Default fallback responses
+  default: {
+    keywords: [],
+    responses: [
+      "🤔 That's an interesting question! I'd be happy to provide detailed information about our AI solutions, pricing, implementation timeline, or industry expertise. What specific aspect of AI automation would you like to know more about?",
+      "✨ I'm here to help you understand how KheyaMind AI can transform your business! Feel free to ask about our chatbot solutions, voice AI, document analysis, pricing, implementation process, or anything else. What's your main challenge I can help solve?",
+      "💡 Great question! Our AI solutions cover chatbots, voice automation, document processing, and custom AI development. We work across healthcare, finance, retail, and many other industries. What would you like to explore first - pricing, features, or implementation?",
+    ]
+  }
+};
+
+// Intelligent response function that analyzes user input and provides contextual responses
+const getIntelligentResponse = (userMessage) => {
+  const message = userMessage.toLowerCase();
+  const detectedTopics = [];
+  
+  // Common question patterns that help identify intent
+  const questionPatterns = {
+    pricing: [
+      'how much', 'what does it cost', 'what is the price', 'pricing details',
+      'cost of', 'how expensive', 'budget for', 'price range', 'what will it cost'
+    ],
+    implementation: [
+      'how long', 'when can', 'time to implement', 'how quickly', 'timeline for',
+      'how soon', 'delivery time', 'when will it be ready', 'implementation time'
+    ],
+    roi: [
+      'return on investment', 'how much can i save', 'what are the benefits',
+      'will it save money', 'cost savings', 'profit increase'
+    ],
+    getting_started: [
+      'how to start', 'how do i begin', 'where to start', 'next steps',
+      'get started', 'how to proceed', 'what should i do'
+    ]
+  };
+  
+  // Check for question patterns first
+  Object.entries(questionPatterns).forEach(([topic, patterns]) => {
+    const patternFound = patterns.some(pattern => message.includes(pattern));
+    if (patternFound) {
+      detectedTopics.push({ topic, priority: 10 }); // High priority for direct patterns
+    }
+  });
+  
+  // Analyze message for keywords and topics
+  Object.entries(KEYWORD_RESPONSES).forEach(([topic, data]) => {
+    if (topic === 'default') return;
+    
+    const keywordMatches = data.keywords.filter(keyword => 
+      message.includes(keyword) || 
+      message.includes(keyword + 's') || 
+      message.includes(keyword + 'ing') ||
+      message.includes(keyword + 'ed') ||
+      message.includes(keyword.replace('y', 'ies'))
+    );
+    
+    if (keywordMatches.length > 0) {
+      // Check if topic already exists from pattern matching
+      const existingTopic = detectedTopics.find(t => t.topic === topic);
+      if (existingTopic) {
+        existingTopic.priority += keywordMatches.length;
+      } else {
+        detectedTopics.push({ topic, priority: keywordMatches.length });
+      }
+    }
+  });
+
+  // Sort by priority (most matches first)
+  detectedTopics.sort((a, b) => b.priority - a.priority);
+  
+  // Get response for the highest priority topic, or default if no topics detected
+  const selectedTopic = detectedTopics.length > 0 ? detectedTopics[0].topic : 'default';
+  const responses = KEYWORD_RESPONSES[selectedTopic].responses;
+  
+  return responses[Math.floor(Math.random() * responses.length)];
+};
 
 const VOICE_DEMO_RESPONSES = [
   "Hello! I'm your AI voice assistant. I can handle customer inquiries, schedule appointments, and provide 24/7 support in multiple languages.",
@@ -67,7 +218,7 @@ const InteractiveAIDemos = () => {
   const [messages, setMessages] = useState([
     {
       id: '1',
-      text: "👋 Hi! I'm KheyaMind AI. Ask me about our AI solutions, pricing, or how we can automate your business processes!",
+      text: "👋 Hi! I'm KheyaMind AI. I can provide intelligent answers about our pricing, implementation timelines, industry expertise, ROI benefits, security compliance, and more. Try asking specific questions - I understand context and provide relevant responses!",
       sender: 'ai',
       timestamp: new Date()
     }
@@ -159,9 +310,9 @@ const InteractiveAIDemos = () => {
     setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
 
-    // Simulate AI response
-    const randomResponse = DEMO_RESPONSES[Math.floor(Math.random() * DEMO_RESPONSES.length)];
-    simulateTyping(randomResponse);
+    // Generate intelligent contextual response
+    const intelligentResponse = getIntelligentResponse(inputMessage);
+    simulateTyping(intelligentResponse);
   }, [inputMessage, isTyping, simulateTyping]);
 
   const handleKeyPress = useCallback((e) => {
@@ -327,7 +478,7 @@ const InteractiveAIDemos = () => {
     setMessages([
       {
         id: '1',
-        text: "👋 Hi! I'm KheyaMind AI. Ask me about our AI solutions, pricing, or how we can automate your business processes!",
+        text: "👋 Hi! I'm KheyaMind AI. I can provide intelligent answers about our pricing, implementation timelines, industry expertise, ROI benefits, security compliance, and more. Try asking specific questions - I understand context and provide relevant responses!",
         sender: 'ai',
         timestamp: new Date()
       }
@@ -474,7 +625,7 @@ const InteractiveAIDemos = () => {
             </form>
 
             <div className="text-xs text-gray-500 bg-blue-50 p-3 rounded-lg">
-              💡 <strong>Demo Features:</strong> Try asking about "pricing", "implementation time", "industries served", or "ROI calculations"
+              💡 <strong>Smart AI Demo:</strong> Ask about pricing, implementation timeline, industries we serve, ROI benefits, security compliance, support options, or getting started. The AI understands context and provides relevant answers!
             </div>
           </div>
         )}
