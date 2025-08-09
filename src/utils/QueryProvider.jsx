@@ -1,14 +1,26 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-// Create a client
+// Create a client with optimized defaults
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      cacheTime: 10 * 60 * 1000, // 10 minutes
+      staleTime: 10 * 60 * 1000, // 10 minutes - longer cache for better performance
+      gcTime: 15 * 60 * 1000, // 15 minutes (replaces cacheTime in v5)
       refetchOnWindowFocus: false,
-      retry: 1,
+      refetchOnReconnect: false, // Prevent unnecessary refetches
+      refetchInterval: false, // Disable automatic refetch intervals
+      retry: (failureCount, error) => {
+        // Don't retry on 404s or other client errors
+        if (error?.response?.status >= 400 && error?.response?.status < 500) {
+          return false;
+        }
+        return failureCount < 2; // Retry max 2 times for server errors
+      },
+      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000), // Exponential backoff
+    },
+    mutations: {
+      retry: false, // Don't retry mutations by default
     },
   },
 });

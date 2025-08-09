@@ -1,4 +1,4 @@
-import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import { useQuery, useInfiniteQuery, keepPreviousData } from "@tanstack/react-query";
 import { blogsApi, queryKeys } from "../utils/api";
 
 // Hook for fetching all published blogs (legacy)
@@ -19,8 +19,8 @@ export const useBlogsPaginated = (limit = 6, options = {}) => {
       return lastPage.hasMore ? lastPage.currentPage + 1 : undefined;
     },
     initialPageParam: 1,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 10 * 60 * 1000, // 10 minutes - use longer cache
+    gcTime: 15 * 60 * 1000, // 15 minutes
     ...options,
   });
 };
@@ -30,9 +30,9 @@ export const useBlogsPage = (page = 1, limit = 6, options = {}) => {
   return useQuery({
     queryKey: queryKeys.blogsPaginated(page, limit),
     queryFn: () => blogsApi.getBlogsPaginated(page, limit),
-    keepPreviousData: true,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 10 * 60 * 1000, // 10 minutes
+    placeholderData: keepPreviousData, // Updated API for React Query v5
+    staleTime: 10 * 60 * 1000, // 10 minutes
+    gcTime: 15 * 60 * 1000, // 15 minutes
     ...options,
   });
 };
