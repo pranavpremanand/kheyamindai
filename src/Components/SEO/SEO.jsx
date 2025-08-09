@@ -137,16 +137,13 @@ const SEO = ({
   return (
     <>
       <Helmet>
-        {/* Remove any existing canonical links first */}
-        <link rel="canonical" href="" />
-        
         {/* Basic Meta Tags */}
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
 
-        {/* Canonical URL */}
-        <link rel="canonical" href={canonicalUrl} />
+        {/* Canonical URL - Single, authoritative canonical tag */}
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content={type === 'blog' ? 'article' : 'website'} />

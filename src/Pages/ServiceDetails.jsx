@@ -27,6 +27,22 @@ const ServiceDetails = () => {
   // Ensure canonical URL is properly constructed
   const canonicalUrl = data.seo?.canonicalUrl || `https://www.kheyamind.ai/services/${slug}`;
   
+  // Service-specific FAQs for unique content
+  const serviceFAQs = data.faqs || [
+    {
+      question: `What industries benefit most from ${data.title}?`,
+      answer: `${data.title} solutions are particularly effective in ${data.industries?.join(', ') || 'healthcare, finance, retail, manufacturing, and professional services'}, providing significant operational improvements and cost savings.`
+    },
+    {
+      question: `How quickly can ${data.title} be implemented?`,
+      answer: `Implementation of ${data.title} typically takes ${data.implementationTime || '2-8 weeks'} depending on complexity and integration requirements. We provide full support throughout the process.`
+    },
+    {
+      question: `What ROI can I expect from ${data.title}?`,
+      answer: `Most clients see ${data.roiStats?.costReduction || '60-80%'} reduction in operational costs and ${data.roiStats?.efficiencyGain || '3-5x'} improvement in efficiency within the first 6 months of implementation.`
+    }
+  ];
+  
   // Validate service schema (development only)
   if (process.env.NODE_ENV === 'development') {
     validateServiceSchema(data, canonicalUrl);
@@ -45,7 +61,9 @@ const ServiceDetails = () => {
           title: data.title,
           description: data.seo?.description || data.desc,
           image: data.detailsPage.banner,
-          serviceData: data
+          serviceData: data,
+          breadcrumb: breadcrumbItems,
+          faqs: serviceFAQs
         }}
       />
       
@@ -69,7 +87,7 @@ const ServiceDetails = () => {
         <Breadcrumb items={breadcrumbItems} />
         
         <h1 data-aos="fade-up" className="section-heading">
-          {data.title}
+          {data.title} Services | KheyaMind AI
         </h1>
         
         <img

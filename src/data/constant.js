@@ -206,6 +206,21 @@ export const services = [
         "AI chatbots for business, conversational AI platform, customer support automation, intelligent virtual assistants, chatbot development services, automated customer service, AI-powered customer support, natural language processing chatbots, multi-channel chatbots, enterprise chatbot solutions",
       canonicalUrl: "https://www.kheyamind.ai/services/ai-chatbots",
     },
+    // Unique content data for better indexing
+    industries: ["E-commerce", "Healthcare", "Banking", "Insurance", "Real Estate", "Education"],
+    implementationTime: "2-4 weeks",
+    roiStats: {
+      costReduction: "75%",
+      efficiencyGain: "5x",
+      responseTimeImprovement: "98%"
+    },
+    uniqueFeatures: [
+      "Multi-language support (15+ languages)",
+      "Advanced NLP with context understanding",
+      "Seamless human handoff capabilities",
+      "Real-time analytics dashboard",
+      "CRM and database integrations"
+    ],
     detailsPage: {
       banner: require("../assets/images/banners/ai-chatbot.webp"),
       img1: require("../assets/images/service-details/chatbot1.webp"),
