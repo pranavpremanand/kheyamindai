@@ -24,14 +24,8 @@ export const blogsApi = {
   // Get all published blogs (legacy - for backward compatibility)
   getBlogs: async () => {
     try {
-      console.log('Fetching blogs from API with cache-busting...');
-      const response = await api.get("/blogs/published", {
-        headers: {
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache',
-          'Expires': '0',
-        },
-      });
+      console.log('Fetching blogs from API...');
+      const response = await api.get("/blogs/published");
       console.log(`API response status: ${response.status}`);
       console.log(`Found ${response.data?.blogs?.length || 0} blogs`);
       return response.data;
@@ -47,11 +41,6 @@ export const blogsApi = {
       console.log(`Fetching blogs page ${page} with limit ${limit}...`);
       const response = await api.get("/blogs/published", {
         params: { page, limit },
-        headers: {
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache',
-          'Expires': '0',
-        },
       });
       console.log(`API response status: ${response.status}`);
       console.log(`Found ${response.data?.blogs?.length || 0} blogs on page ${page}`);
